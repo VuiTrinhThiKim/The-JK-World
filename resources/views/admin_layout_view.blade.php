@@ -58,13 +58,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img alt="" src="{{asset('public/backend/images/avt.jpg')}}">
-                <span class="username">Kim Vui</span>
+                <span class="username">
+                    <?php
+                        $ad_username = Session::get('username');
+                        if($ad_username){
+                            echo $ad_username;
+                        }
+                    ?>
+                </span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
-                <li><a href="login.html"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                <li><a href="{{URL::to('/admin-logout')}}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -93,8 +100,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Danh mục sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="typography.html">Thêm danh mục mới</a></li>
-						<li><a href="glyphicon.html">Danh sách danh mục</a></li>
+						<li><a href="{{URL::to('/add-category')}}">Thêm danh mục mới</a></li>
+						<li><a href="{{URL::to('/all-categories')}}">Danh sách danh mục</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Sản phẩm</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm mới</a></li>
+                        <li><a href="{{URL::to('/all-products')}}">Danh sách sản phẩm</a></li>
                     </ul>
                 </li>
                 <!-- <li>
@@ -179,34 +196,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--main content start-->
 <section id="main-content">
 	<section class="wrapper">
-
-		<div class="agil-info-calendar">
-		<!-- calendar -->
-		<div class="col-md-6 agile-calendar">
-			<div class="calendar-widget">
-                <div class="panel-heading ui-sortable-handle">
-					<span class="panel-icon">
-                      <i class="fa fa-calendar-o"></i>
-                    </span>
-                    <span class="panel-title"> Calendar Widget</span>
-                </div>
-				<!-- grids -->
-					<div class="agile-calendar-grid">
-						<div class="page">
-							
-							<div class="w3l-calendar-left">
-								<div class="calendar-heading">
-									
-								</div>
-								<div class="monthly" id="mycalendar"></div>
-							</div>
-							
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-			</div>
-		</div>
-		<!-- //calendar -->	
+        @yield('admin_content')
     </section>
  <!-- footer -->
 		  <div class="footer">

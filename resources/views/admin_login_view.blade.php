@@ -30,9 +30,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="log-w3">
 <div class="w3layouts-main">
 	<h2>Đăng nhập</h2>
-		<form action="#" method="post">
-			<input type="email" class="ggg" name="Email" placeholder="Email" required="">
-			<input type="password" class="ggg" name="Password" placeholder="Mật khẩu" required="">
+		<?php 
+	        $ad_log_message = Session::get('message');
+	        if($ad_log_message) {
+	            echo '<span class="status_alert">'.$ad_log_message.'</span>';
+	            Session::put('message', null);
+	        }
+	    ?>
+		<form action="{{URL::to('/admin-dashboard')}}" method="post">
+			{{csrf_field()}}
+			<input type="text" class="ggg" name="username" placeholder="Tên đăng nhập" required="">
+			<input type="password" class="ggg" name="password" placeholder="Mật khẩu" required="">
 			<span><input type="checkbox" />Nhớ mật khẩu</span>
 			<h6><a href="#">Quên mật khẩu</a></h6>
 				<div class="clearfix"></div>
