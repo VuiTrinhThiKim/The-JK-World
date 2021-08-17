@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <img src="{{('public/frontend/images/nhat-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <img src="{{('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />
+                                    <!--<img src="{{('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />-->
                                 </div>
                             </div>
                             <div class="item">

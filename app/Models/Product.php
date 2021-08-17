@@ -5,13 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class Product extends Model
 {
     use HasFactory;
-
-    protected $table = 'admin';
-    
-    function __construct(){
-        parent::__construct();
-    }
 }

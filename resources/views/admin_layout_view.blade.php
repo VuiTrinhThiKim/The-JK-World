@@ -71,7 +71,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
-                <li><a href="{{URL::to('/admin-logout')}}"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                <li><a href="{{URL::to('/admin/logout')}}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -88,7 +88,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
-                    <a class="active" href="{{URL::to('/dashboard')}}">
+                    <a class="active" href="{{URL::to('/admin/dashboard')}}">
                         <i class="fa fa-dashboard"></i>
                         <span>Tổng quan</span>
                     </a>
@@ -97,21 +97,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Danh mục sản phẩm</span>
+                        <span>Danh mục - Category</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{URL::to('/add-category')}}">Thêm danh mục mới</a></li>
-						<li><a href="{{URL::to('/all-categories')}}">Danh sách danh mục</a></li>
+						<li><a href="{{URL::to('/admin/category/add')}}">Thêm danh mục mới</a></li>
+						<li><a href="{{URL::to('/admin/category/view-all')}}">Danh sách danh mục</a></li>
                     </ul>
                 </li>
+
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Sản phẩm</span>
+                        <span>Thương hiệu - Brand</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm mới</a></li>
-                        <li><a href="{{URL::to('/all-products')}}">Danh sách sản phẩm</a></li>
+                        <li><a href="{{URL::to('/admin/brand/add')}}">Thêm brand</a></li>
+                        <li><a href="{{URL::to('/admin/brand/view-all')}}">Danh sách brand</a></li>
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Sản phẩm - Product</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{URL::to('/admin/product/add')}}">Thêm sản phẩm mới</a></li>
+                        <li><a href="{{URL::to('/admin/product/view-all')}}">Danh sách sản phẩm</a></li>
                     </ul>
                 </li>
                 <!-- <li>

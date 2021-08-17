@@ -17,7 +17,7 @@
             <div class="panel-body">
                 @foreach($edit_category as $key => $edit_cate)
                 <div class="position-center">
-                    <form role="form" action="{{URL::to('/update-category/'.$edit_cate->category_id)}}" method="post">
+                    <form role="form" action="{{URL::to('/admin/category/update/'.$edit_cate->category_id)}}" method="post">
                     {{csrf_field() }}
                     <div class="form-group">
                         <label for="categoryName">Tên danh mục</label>

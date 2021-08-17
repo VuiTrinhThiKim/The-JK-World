@@ -7,24 +7,39 @@ use Redirect;
 use Session;
 use DB;
 
-
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
-    public function add_category(){
+    public function loginAuthentication() {
+        $ad_username = Session::get('username');
 
-    	return view('admin.add_category_view');
+        if($ad_username){
+            return Redirect::to('admin_login_view');
+        }
+        else {
+            return Redirect::to('admin')->send('Vui lòng đăng nhập');
+        }
+    }
+    public function add(){
+
+        $this->loginAuthentication();
+
+    	return view('admin.category.add_category_view');
     }
 
-    public function all_categories(){
-    	
+    public function view_all(){
+
+    	$this->loginAuthentication();
+
         $all_cate = DB::table('categories')->get();
-        $manager_cate = view('admin.all_categories_view') 
+        $manager_cate = view('admin.category.all_categories_view') 
                      -> with('all_categories', $all_cate);
 
-    	return view('admin_layout_view')->with('admin.all_categories_view', $manager_cate);
+    	return view('admin_layout_view')->with('admin.category.all_categories_view', $manager_cate);
     }
 
     public function update_category_status($category_id){
+
+        $this->loginAuthentication();
 
         $status_cate = DB::table('categories')->where('category_id', $category_id)
                                               ->get('status');
@@ -41,20 +56,24 @@ class CategoriesController extends Controller
         }
 
 
-        return Redirect::to('all-categories');
+        return Redirect::to('/admin/category/all-categories');
     }
 
-    public function edit_category($category_id){
+    public function edit($category_id){
+
+        $this->loginAuthentication();
 
         $edit_cate = DB::table('categories')->where('category_id',$category_id)
                                             ->get();
-        $manager_cate  = view('admin.edit_category_view')
+        $manager_cate  = view('admin.category.edit_category_view')
                       -> with('edit_category',$edit_cate);
 
-        return view('admin_layout_view')->with('admin.edit_category_view', $manager_cate);
+        return view('admin_layout_view')->with('admin.category.edit_category_view', $manager_cate);
     }
 
-    public function update_category(Request $request_update, $category_id){
+    public function update(Request $request_update, $category_id){
+
+        $this->loginAuthentication();
 
         $data_cate = array();
 
@@ -65,10 +84,12 @@ class CategoriesController extends Controller
                                ->update($data_cate);
 
         Session::put('messCate','Cập nhật danh mục thành công!!!');
-        return Redirect::to('all-categories');
+        return Redirect::to('/admin/category/all-categories');
     }
 
-    public function save_category(Request $request_cate){
+    public function save(Request $request_cate){
+
+        $this->loginAuthentication();
 
         $data_cate = array();
 
@@ -76,18 +97,26 @@ class CategoriesController extends Controller
         $data_cate['description'] = $request_cate->categoryDescription;
         $data_cate['status'] = $request_cate->categoryStatus;
 
-        DB::table('categories')->insert($data_cate);
-
-        Session::put('messCate','Thêm danh mục mới thành công!!!');
-        return view('admin.add_category_view');
+        if(DB::table('categories')->where('category_name',$request_cate->categoryName)
+                                  ->first() == null){
+            
+            DB::table('categories')->insert($data_cate);
+            Session::put('messCate','Thêm danh mục mới thành công!!!');
+        }
+        else {
+            Session::put('messCate','Lỗi: Danh mục '.$request_cate->categoryName.' đã có trên hệ thống!!!');
+        }
+        return view('admin.category.add_category_view');
     }
 
-    public function delete_category($category_id){
+    public function delete($category_id){
+
+        $this->loginAuthentication();
 
         DB::table('categories')->where('category_id', $category_id)
                                ->delete();
 
         Session::put('messCate','Xóa danh mục thành công!!!');
-        return Redirect::to('all-categories');
+        return Redirect::to('/admin/category/view-all');
     }
 }

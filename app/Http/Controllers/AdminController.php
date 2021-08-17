@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Http\Request;
+use App\Models\Admin;
 use Redirect;
 use Session;
 use DB;
@@ -12,13 +14,25 @@ session_start();
 
 class AdminController extends Controller
 {
+    public function loginAuthentication() {
+        $ad_username = Session::get('username');
+
+        if($ad_username){
+            return Redirect::to('admin_login_view');
+        }
+        else {
+            return Redirect::to('admin')->send('Vui lòng đăng nhập');
+        }
+    }
     public function index(){
 
     	return view('admin_login_view');
     }
 
-    public function show_dashboard(){
+    public function showDashboard(){
         
+        $this->loginAuthentication();
+
     	return view('admin.dashboard_view');
     }
 
@@ -34,7 +48,7 @@ class AdminController extends Controller
 		if($result){
             Session::put('username', $result->username);
             Session::put('id', $result->id);
-            return Redirect::to('/dashboard');
+            return Redirect::to('admin/dashboard');
         }
         else {
             Session::put('message', 'Sai mật khẩu!!!');

@@ -37,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	            Session::put('message', null);
 	        }
 	    ?>
-		<form action="{{URL::to('/admin-dashboard')}}" method="post">
+		<form action="{{URL::to('/admin/admin-dashboard')}}" method="post">
 			{{csrf_field()}}
 			<input type="text" class="ggg" name="username" placeholder="Tên đăng nhập" required="">
 			<input type="password" class="ggg" name="password" placeholder="Mật khẩu" required="">

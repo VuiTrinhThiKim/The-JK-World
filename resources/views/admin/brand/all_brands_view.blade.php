@@ -4,7 +4,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Danh sách danh mục sản phẩm
+      Danh sách các brand
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -43,37 +43,37 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
-            <th style="width:40%;">Tên danh mục</th>
-            <th>Thông tin danh mục</th>
+            <th style="width:40%;">Tên brand</th>
+            <th>Thông tin brand</th>
             <th>Hiển thị</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
         <tbody>
-          @foreach($all_categories as $key => $cate_item)
+          @foreach($all_brands as $key => $brand_item)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>{{ $cate_item->category_name}}</td>
-            <td>{{ $cate_item->description}}</span></td>
+            <td>{{ $brand_item->brand_name}}</td>
+            <td>{{ $brand_item->description}}</span></td>
             <td>
               <?php
-                if($cate_item->status == 0) {
+                if($brand_item->status == 0) {
                 ?>
-                  <a href="{{URL::to('/public-category/'.$cate_item->category_id)}}"><span class="fa fa-times text-danger text"></span></a>
+                  <a href="{{URL::to('/admin/brand/public-brand/'.$brand_item->brand_id)}}"><span class="fa fa-times text-danger text"></span></a>
                 <?php
                 }
                 else {
                   ?>
-                  <a href="{{URL::to('/unpublic-category/'.$cate_item->category_id)}}"><span class="fa fa-check text-success text-active"></span></a>
+                  <a href="{{URL::to('/admin/brand/unpublic-brand/'.$brand_item->brand_id)}}"><span class="fa fa-check text-success text-active"></span></a>
                 <?php
                 }
               ?>
             </td>
             <td>
-              <a href="{{URL::to('/edit-category/'.$cate_item->category_id)}}" class="edit-category" ui-toggle-class="">
+              <a href="{{URL::to('/admin/brand/edit/'.$brand_item->brand_id)}}" class="edit-brand" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-edit"></i>
               </a>
-              <a a onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')" href="{{URL::to('/delete-category/'.$cate_item->category_id)}}" class="delete-category" ui-toggle-class="">
+              <a a onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')" href="{{URL::to('/admin/brand/delete/'.$brand_item->brand_id)}}" class="delete-brand" ui-toggle-class="">
                 <i class="fa fa-times text-danger text"></i>
               </a>
             </td>
