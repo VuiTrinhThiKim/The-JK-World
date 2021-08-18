@@ -17,7 +17,7 @@
             <div class="panel-body">
                 @foreach($edit_product as $key => $edit_product)
                 <div class="position-center">
-                    <form role="form" action="{{URL::to('/admin/product/update/'.$edit_product->product_id)}}" method="post">
+                    <form role="form" action="{{URL::to('/admin/product/update/'.$edit_product->product_id)}}" method="post" enctype="multipart/form-data">
                     {{csrf_field() }}
                     <div class="form-group">
                         <label for="productName">Tên sản phẩm</label>

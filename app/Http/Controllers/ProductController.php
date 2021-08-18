@@ -103,7 +103,7 @@ class ProductController extends Controller
         if($request_update->hasFile('productImage')) {
 
 			$allowedfileExtension = ['jpg', 'jpeg', 'png'];
-			$files = $request->file('productImage');
+			$files = $request_update->file('productImage');
             // $flag = true -> save to DB
 			$flag = true;
 			// Check all files upload have extension is in $allowedfileExtension
@@ -126,7 +126,7 @@ class ProductController extends Controller
 					foreach ($request_update->productImage as $photo) {
 						$filename = $photo->storeAs('photos', $photo->getClientOriginalName());
 						ProductImages::insert([
-							'product_id' => $productID,
+							'product_id' => $product_id,
 							'image_name' => $filename
 						]);
 					}
