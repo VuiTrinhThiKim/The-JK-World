@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Redirect;
 use Session;
-use DB;
+use App\Models\Brand;
 
 class BrandController extends Controller
 {
@@ -30,7 +30,7 @@ class BrandController extends Controller
 
     	$this->loginAuthentication();
 
-        $all_brand = DB::table('brands')->get();
+        $all_brand = Brand::get();
         $manager_brand = view('admin.brand.all_brands_view') 
                      -> with('all_brands', $all_brand);
 
@@ -41,17 +41,17 @@ class BrandController extends Controller
 
         $this->loginAuthentication();
 
-        $status_cate = DB::table('brands')->where('brand_id', $brand_id)
-                                              ->get('status');
-        if($status_cate == '[{"status":0}]') {
-            DB::table('brands')->where('brand_id', $brand_id)
-                                   ->update(['status' => 1]);
+        $status_cate = Brand::where('brand_id', $brand_id)
+                                              ->value('brand_status');
+        if($status_cate == 0) {
+            Brand::where('brand_id', $brand_id)
+                                   ->update(['brand_status' => 1]);
 
             Session::put('messBrand','Hiển thị brand thành công!!!');
         }
         else {
-            DB::table('brands')->where('brand_id', $brand_id)
-                                   ->update(['status' => 0]);
+            Brand::where('brand_id', $brand_id)
+                                   ->update(['brand_status' => 0]);
             Session::put('messBrand','Ẩn brand thành công!!!');
         }
 
@@ -78,9 +78,9 @@ class BrandController extends Controller
         $data_cate = array();
 
         $data_cate['brand_name'] = $request_update->brandName;
-        $data_cate['description'] = $request_update->brandDescription;
+        $data_cate['brand_description'] = $request_update->brandDescription;
 
-        DB::table('brands')->where('brand_id',$brand_id)
+        Brand::where('brand_id',$brand_id)
                                ->update($data_cate);
 
         Session::put('messBrand','Cập nhật brand thành công!!!');
@@ -94,12 +94,12 @@ class BrandController extends Controller
         $data_brand = array();
         
         $data_brand['brand_name'] = $request_brand->brandName;
-        $data_brand['description'] = $request_brand->brandDescription;
-        $data_brand['status'] = $request_brand->brandStatus;
+        $data_brand['brand_description'] = $request_brand->brandDescription;
+        $data_brand['brand_status'] = $request_brand->brandStatus;
 
-        if(DB::table('brands')->where('brand_name',$request_brand->brandName)->first() == null){
+        if(Brand::where('brand_name',$request_brand->brandName)->first() == null){
 	        	
-	        DB::table('brands')->insert($data_brand);
+	        Brand::insert($data_brand);
 
 	        Session::put('messBrand','Thêm brand mới thành công!!!');
 	        return view('admin.brand.add_brand_view');
@@ -113,7 +113,7 @@ class BrandController extends Controller
         
         $this->loginAuthentication();
 
-        DB::table('brands')->where('brand_id', $brand_id)
+        Brand::where('brand_id', $brand_id)
                                ->delete();
 
         Session::put('messCate','Xóa brand thành công!!!');

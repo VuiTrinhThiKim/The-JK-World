@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label for="brandDescription">Thông tin brand</label>
-                        <textarea style="resize: none;" rows=9 class="form-control" id="brandDescription" name="brandDescription" required placeholder="Nhập thông tin">{{$edit_brand->description}}</textarea> 
+                        <textarea style="resize: none;" rows=9 class="form-control" id="brandDescription" name="brandDescription" required placeholder="Nhập thông tin">{{$edit_brand->brand_description}}</textarea> 
                     </div>
                     <button type="submit" name="updateBrand" class="btn btn-info">Cập nhật</button>
                 	</form>

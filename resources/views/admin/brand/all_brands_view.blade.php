@@ -29,10 +29,10 @@
     </div>
     <div class="table-responsive">
       <?php 
-        $statusCate_message = Session::get('messCate');
-        if($statusCate_message) {
-            echo '<span class="status_alert">'.$statusCate_message.'</span>';
-            Session::put('messCate', null);
+        $statusBrand_message = Session::get('messBrand');
+        if($statusBrand_message) {
+            echo '<span class="status_alert">'.$statusBrand_message.'</span>';
+            Session::put('messBrand', null);
         }
       ?>
       <table class="table table-striped b-t b-light">
@@ -54,10 +54,10 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{ $brand_item->brand_name}}</td>
-            <td>{{ $brand_item->description}}</span></td>
+            <td>{{ $brand_item->brand_description}}</span></td>
             <td>
               <?php
-                if($brand_item->status == 0) {
+                if($brand_item->brand_status == 0) {
                 ?>
                   <a href="{{URL::to('/admin/brand/public-brand/'.$brand_item->brand_id)}}"><span class="fa fa-times text-danger text"></span></a>
                 <?php
