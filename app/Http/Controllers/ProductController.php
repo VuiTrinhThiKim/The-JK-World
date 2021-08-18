@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Redirect;
 use Session;
-use DB;
+use App\Models\Product;
+use App\Models\ProductImages;
+use App\Models\Category;
+use App\Models\Brand;
 
 class ProductController extends Controller
 {
@@ -23,8 +26,8 @@ class ProductController extends Controller
 
         $this->loginAuthentication();
 
-        $category_list = DB::table('categories')->orderby('category_name', 'asc')->get();
-        $brand_list = DB::table('brands')->orderby('brand_name', 'asc')->get();
+        $category_list = Category::orderby('category_name', 'asc')->get();
+        $brand_list = Brand::orderby('brand_name', 'asc')->get();
 
         return view('admin.product.add_product_view')->with('category_list', $category_list)
         											 ->with('brand_list', $brand_list);
@@ -34,7 +37,8 @@ class ProductController extends Controller
 
     	$this->loginAuthentication();
 
-        $all_product = DB::table('products')->get();
+        $all_product = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orderby('products.product_id', 'asc')->get();
+        //dd($all_product);
         $manager_product = view('admin.product.all_products_view') 
                      -> with('all_products', $all_product);
 
@@ -45,33 +49,40 @@ class ProductController extends Controller
 
         $this->loginAuthentication();
 
-        $status_product = DB::table('products')->where('product_id', $product_id)
-                                              ->get('status');
-        if($status_product == '[{"status":0}]') {
-            DB::table('products')->where('product_id', $product_id)
-                                   ->update(['status' => 1]);
+        $status_product = Product::where('product_id', $product_id)
+                                              ->value('product_status');
+        if($status_product == 0) {
+            Product::where('product_id', $product_id)
+                                   ->update(['product_status' => 1]);
 
-            Session::put('messProduct','Hiển thị danh mục thành công!!!');
+            Session::put('messProduct','Hiển thị sản phẩm thành công!!!');
         }
         else {
-            DB::table('products')->where('product_id', $product_id)
-                                   ->update(['status' => 0]);
-            Session::put('messProduct','Ẩn danh mục thành công!!!');
+            Product::where('product_id', $product_id)
+                                   ->update(['product_status' => 0]);
+            Session::put('messProduct','Ẩn sản phẩm thành công!!!');
         }
 
-
-        return Redirect::to('/admin/product/all-products');
+        return Redirect::to('/admin/product/view-all');
     }
 
     public function edit($product_id){
 
         $this->loginAuthentication();
 
-        $edit_product = DB::table('products')->where('product_id',$product_id)
-                                            ->get();
-        $manager_product  = view('admin.product.edit_product_view')
-                      -> with('edit_product',$edit_product);
+        $category_list = Category::orderby('category_name', 'asc')->get();
+        $brand_list = Brand::orderby('brand_name', 'asc')->get();
 
+        $edit_product = Product::where('product_id',$product_id)
+                                            ->get();
+        $edit_product_img = ProductImages::where('product_id',$product_id)
+                                            ->get('image_name');
+        $manager_product  = view('admin.product.edit_product_view')
+                      ->with('edit_product', $edit_product)
+                      ->with('edit_product_img', $edit_product_img)
+                      ->with('category_list', $category_list)
+                      ->with('brand_list',$brand_list);
+        //dd($manager_product);
         return view('admin_layout_view')->with('admin.product.edit_product_view', $manager_product);
     }
 
@@ -82,49 +93,125 @@ class ProductController extends Controller
         $data_product = array();
 
         $data_product['product_name'] = $request_update->productName;
-        $data_product['description'] = $request_update->productDescription;
+        $data_product['product_description'] = $request_update->productDescription;
+        $data_product['content'] = $request_update->productContent;
+        $data_product['price'] = $request_update->productPrice;
+        $data_product['category_id'] = $request_update->categoryID;
+        $data_product['brand_id'] = $request_update->brandID;
 
-        DB::table('products')->where('product_id',$product_id)
+        //Check file upload
+        if($request_update->hasFile('productImage')) {
+
+			$allowedfileExtension = ['jpg', 'jpeg', 'png'];
+			$files = $request->file('productImage');
+            // $flag = true -> save to DB
+			$flag = true;
+			// Check all files upload have extension is in $allowedfileExtension
+			foreach($files as $file) {
+				$extension = $file->getClientOriginalExtension();
+				$check = in_array($extension,$allowedfileExtension);
+
+				if(!$check) {
+                    $flag = false;// -> donot save to DB
+					break;
+				}
+			}
+			if($flag) {
+	                // Update product
+					ProductImages::where('product_id', $product_id)
+                               ->delete();
+					Product::where('product_id',$product_id)
                                ->update($data_product);
+                    // Update img with product_id
+					foreach ($request_update->productImage as $photo) {
+						$filename = $photo->storeAs('photos', $photo->getClientOriginalName());
+						ProductImages::insert([
+							'product_id' => $productID,
+							'image_name' => $filename
+						]);
+					}
+					Session::put('messProduct','Cập nhật sản phẩm thành công');
+				} else {
+					Session::put('messProduct','Định dạng ảnh phải là jpg, jpeg hoặc png.');
+				}
+			}
 
-        Session::put('messProduct','Cập nhật danh mục thành công!!!');
-        return Redirect::to('/admin/product/all-products');
+        return Redirect::to('/admin/product/view-all');
     }
 
-    public function save(Request $request_product){
+
+    public function save(Request $request){
 
         $this->loginAuthentication();
 
+        $this->validate($request, [
+			'productName' => 'required',
+			'productContent'=>'required',]
+		);
+
         $data_product = array();
 
-        $data_product['product_name'] = $request_product->productName;
-        $data_product['description'] = $request_product->productDescription;
-        $data_product['content'] = $request_product->productContent;
-        $data_product['price'] = $request_product->productPrice;
-        $data_product['image'] = $request_product->productImage;
-        $data_product['category_id'] = $request_product->categoryID;
-        $data_product['brand_id'] = $request_product->brandID;
-        $data_product['status'] = $request_product->productStatus;
+        $data_product['product_name'] = $request->productName;
+        $data_product['product_description'] = $request->productDescription;
+        $data_product['content'] = $request->productContent;
+        $data_product['price'] = $request->productPrice;
+        $data_product['category_id'] = $request->categoryID;
+        $data_product['brand_id'] = $request->brandID;
+        $data_product['product_status'] = $request->productStatus;
 
-        if(DB::table('products')->where('product_name',$request_product->productName)
-                                  ->first() == null){
+       	//Check file upload
+        if($request->hasFile('productImage')) {
+
+			$allowedfileExtension = ['jpg', 'jpeg', 'png'];
+			$files = $request->file('productImage');
+            // $flag = true -> save to DB
+			$flag = true;
+			// Check all files upload have extension is in $allowedfileExtension
+			foreach($files as $file) {
+				$extension = $file->getClientOriginalExtension();
+				$check = in_array($extension,$allowedfileExtension);
+
+				if(!$check) {
+                    $flag = false;// -> donot save to DB
+					break;
+				}
+			}
+			if(Product::where('product_name',$request->productName)->first() == null){
             
-            DB::table('products')->insert($data_product);
-            Session::put('messProduct','Thêm danh mục mới thành công!!!');
-        }
-        else {
-            Session::put('messProduct','Lỗi: Danh mục '.$request_product->productName.' đã có trên hệ thống!!!');
-        }
-        return view('admin.product.add_product_view');
+	            if($flag) {
+	                // Save product
+					Product::insert($data_product);
+					// Get product_id
+					$productID = Product::where('product_name', $request->productName)->value('product_id');
+	                // Save img with product_id
+					foreach ($request->productImage as $photo) {
+						$filename = $photo->storeAs('photos', $photo->getClientOriginalName());
+						ProductImages::insert([
+							'product_id' => $productID,
+							'image_name' => $filename
+						]);
+					}
+					Session::put('messProduct','Thêm sản phẩm thành công');
+				} else {
+					Session::put('messProduct','Định dạng ảnh phải là jpg, jpeg hoặc png.');
+				}
+	        }
+	        else {
+	            Session::put('messProduct','Lỗi: Sản phẩm '.$request->productName.' đã có trên hệ thống!!!');
+	        }
+		}
+        
+        return Redirect::to('/admin/product/add');
     }
 
     public function delete($product_id){
 
         $this->loginAuthentication();
 
-        DB::table('products')->where('product_id', $product_id)
+        ProductImages::where('product_id', $product_id)
                                ->delete();
-
+        Product::where('product_id', $product_id)
+                               ->delete();
         Session::put('messProduct','Xóa danh mục thành công!!!');
         return Redirect::to('/admin/product/view-all');
     }

@@ -29,10 +29,10 @@
     </div>
     <div class="table-responsive">
       <?php 
-        $statusCate_message = Session::get('messCate');
-        if($statusCate_message) {
-            echo '<span class="status_alert">'.$statusCate_message.'</span>';
-            Session::put('messCate', null);
+        $statusProduct_message = Session::get('messProduct');
+        if($statusProduct_message) {
+            echo '<span class="status_alert">'.$statusProduct_message.'</span>';
+            Session::put('messProduct', null);
         }
       ?>
       <table class="table table-striped b-t b-light">
@@ -56,14 +56,14 @@
           @foreach($all_products as $key => $product_item)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>{{ $product_item->product_name}}</td>
-            <td>{{ $product_item->description}}</span></td>
-            <td>{{ $product_item->price}}</span></td>
-            <td>{{ $product_item->category_id}}</span></td>
-            <td>{{ $product_item->brand_id}}</span></td>
+            <td>{{$product_item->product_name}}</td>
+            <td>{{$product_item->product_description}}</span></td>
+            <td>{{$product_item->price}}</span></td>
+            <td>{{$product_item->category_name}}</span></td>
+            <td>{{$product_item->brand_name}}</span></td>
             <td>
               <?php
-                if($product_item->status == 0) {
+                if($product_item->product_status == 0) {
                 ?>
                   <a href="{{URL::to('/admin/product/public-product/'.$product_item->product_id)}}"><span class="fa fa-times text-danger text"></span></a>
                 <?php
