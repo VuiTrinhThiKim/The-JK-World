@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label for="categoryDescription">Thông tin danh mục</label>
-                        <textarea style="resize: none;" rows=9 class="form-control" id="categoryDescription" name="categoryDescription" placeholder="Nhập thông tin">{{$edit_cate->description}}</textarea> 
+                        <textarea style="resize: none;" rows=9 class="form-control" id="categoryDescription" name="categoryDescription" placeholder="Nhập thông tin">{{$edit_cate->category_description}}</textarea> 
                     </div>
                     <button type="submit" name="addCategory" class="btn btn-info">Cập nhật</button>
                 	</form>

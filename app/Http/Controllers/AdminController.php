@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Redirect;
 use Session;
-use DB;
 
 //Start session
 session_start();
@@ -42,7 +41,7 @@ class AdminController extends Controller
     	$username = $request_ad->username;
     	$password = md5($request_ad->password);
 
-    	$result = DB::table('admin') -> where('username', $username)
+    	$result = Admin::where('username', $username)
     							     -> where('password', $password)
     							     -> first();
 		if($result){
@@ -51,7 +50,7 @@ class AdminController extends Controller
             return Redirect::to('admin/dashboard');
         }
         else {
-            Session::put('message', 'Sai mật khẩu!!!');
+            Session::put('message', 'Sai tên đăng nhập hoặc mật khẩu!!!');
             return Redirect::to('/admin');
         }
     }

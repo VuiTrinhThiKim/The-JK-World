@@ -54,10 +54,10 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{ $cate_item->category_name}}</td>
-            <td>{{ $cate_item->description}}</span></td>
+            <td>{{ $cate_item->category_description}}</span></td>
             <td>
               <?php
-                if($cate_item->status == 0) {
+                if($cate_item->category_status == 0) {
                 ?>
                   <a href="{{URL::to('/admin/category/public-category/'.$cate_item->category_id)}}"><span class="fa fa-times text-danger text"></span></a>
                 <?php

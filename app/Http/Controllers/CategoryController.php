@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Redirect;
 use Session;
-use DB;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -30,7 +30,7 @@ class CategoryController extends Controller
 
     	$this->loginAuthentication();
 
-        $all_cate = DB::table('categories')->get();
+        $all_cate = Category::get();
         $manager_cate = view('admin.category.all_categories_view') 
                      -> with('all_categories', $all_cate);
 
@@ -41,29 +41,29 @@ class CategoryController extends Controller
 
         $this->loginAuthentication();
 
-        $status_cate = DB::table('categories')->where('category_id', $category_id)
-                                              ->get('status');
-        if($status_cate == '[{"status":0}]') {
-            DB::table('categories')->where('category_id', $category_id)
-                                   ->update(['status' => 1]);
+        $status_cate = Category::where('category_id', $category_id)
+                                              ->value('category_status');
+        if($status_cate == 0) {
+            Category::where('category_id', $category_id)
+                                   ->update(['category_status' => 1]);
 
             Session::put('messCate','Hiển thị danh mục thành công!!!');
         }
         else {
-            DB::table('categories')->where('category_id', $category_id)
-                                   ->update(['status' => 0]);
+            Category::where('category_id', $category_id)
+                                   ->update(['category_status' => 0]);
             Session::put('messCate','Ẩn danh mục thành công!!!');
         }
 
 
-        return Redirect::to('/admin/category/all-categories');
+        return Redirect::to('/admin/category/view-all');
     }
 
     public function edit($category_id){
 
         $this->loginAuthentication();
 
-        $edit_cate = DB::table('categories')->where('category_id',$category_id)
+        $edit_cate = Category::where('category_id',$category_id)
                                             ->get();
         $manager_cate  = view('admin.category.edit_category_view')
                       -> with('edit_category',$edit_cate);
@@ -78,13 +78,13 @@ class CategoryController extends Controller
         $data_cate = array();
 
         $data_cate['category_name'] = $request_update->categoryName;
-        $data_cate['description'] = $request_update->categoryDescription;
+        $data_cate['category_description'] = $request_update->categoryDescription;
 
-        DB::table('categories')->where('category_id',$category_id)
+        Category::where('category_id',$category_id)
                                ->update($data_cate);
 
         Session::put('messCate','Cập nhật danh mục thành công!!!');
-        return Redirect::to('/admin/category/all-categories');
+        return Redirect::to('/admin/category/view-all');
     }
 
     public function save(Request $request_cate){
@@ -94,13 +94,13 @@ class CategoryController extends Controller
         $data_cate = array();
 
         $data_cate['category_name'] = $request_cate->categoryName;
-        $data_cate['description'] = $request_cate->categoryDescription;
-        $data_cate['status'] = $request_cate->categoryStatus;
+        $data_cate['category_description'] = $request_cate->categoryDescription;
+        $data_cate['category_status'] = $request_cate->categoryStatus;
 
-        if(DB::table('categories')->where('category_name',$request_cate->categoryName)
+        if(Category::where('category_name',$request_cate->categoryName)
                                   ->first() == null){
             
-            DB::table('categories')->insert($data_cate);
+            Category::insert($data_cate);
             Session::put('messCate','Thêm danh mục mới thành công!!!');
         }
         else {
@@ -113,7 +113,7 @@ class CategoryController extends Controller
 
         $this->loginAuthentication();
 
-        DB::table('categories')->where('category_id', $category_id)
+        Category::where('category_id', $category_id)
                                ->delete();
 
         Session::put('messCate','Xóa danh mục thành công!!!');
