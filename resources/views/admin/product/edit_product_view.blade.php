@@ -25,14 +25,44 @@
                     </div>
                     <div class="form-group">
                         <label for="brandName">Hình ảnh</label>
-                        <input type="file" class="" id="productImage" name="productImage[]" multiple >
+                        <input type="file" class="" id="productImage" name="productImage[]" onload="imagesFileAsURL()">
                     </div>
                     <div class="form-group" id="showImage">
-                        @foreach($edit_product_img as $key => $edit_img)
-                            <img src="{{URL::to('/storage/app/'.$edit_img->image_name)}}" alt="{{('$edit_img->image_name')}}" width="250" height="250">
-
-                        @endforeach
+                        <img src="{{URL::to('/public/upload/products/'.$edit_product->product_image)}}" alt="{{('$edit_product->product_name')}}" width="250" height="250">
                     </div>
+                    <script type="text/javascript">
+                       
+                        function imagesFileAsURL(){
+
+                            var removeImage = document.getElementById('showImage');
+                            removeImage.parentNode.remove(removeImage);
+
+                            var fileSelected = document.getElementById('productImage').files;
+
+                            if(fileSelected.length > 0){
+                                
+                                for(var i = 0; i < fileSelected.length; i++){
+                                    var fileToLoad = fileSelected[i];
+
+                                    var fileReader = new FileReader();
+                                    fileReader.onload = function(fileLoaderEvent){
+
+                                        var srcImage = fileLoaderEvent.target.result;
+
+                                        var newImage = document.createElement('img');
+                                        newImage.src = srcImage;
+                                        newImage.class = "fileImage"
+                                        newImage.style.height = "200px";
+                                        newImage.style.width = "200px";
+
+                                        document.getElementById('showImage').innerHTML += newImage.outerHTML;
+                                    }
+
+                                    fileReader.readAsDataURL(fileToLoad);
+                                }
+                            }
+                        }
+                    </script>
                     <div class="form-group">
                         <label for="productPrice">Giá niêm yết</label>
                         <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="Chân Váy JK" required value="{{$edit_product->price}}" >
@@ -69,14 +99,6 @@
                                 <option value="{{$brand->brand_id}}" style="height: 150px; font-size: 14px;">{{$brand->brand_name}}</option>
                                 @endif
                             @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="productStatus">Hiển thị lên website</label>
-                        <select class="form-control input-sm m-bot15" name="productStatus">
-                            <option value="0" style="height: 150px; font-size: 14px;">Ẩn</option>
-                            <option value="1" style="height: 150px; font-size: 14px;">Hiển thị</option>
                         </select>
                     </div>
                     <button type="submit" name="updateProduct" class="btn btn-info">Cập nhật</button>

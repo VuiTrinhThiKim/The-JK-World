@@ -14,34 +14,54 @@
                 Session::put('messProduct', null);
             }
             ?>
-            @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <div class="panel-body">
                 <div class="position-center">
                     <form action="{{URL::to('/admin/product/save')}}" role="form" method="post"  enctype="multipart/form-data">
                     {{csrf_field() }}
                     <div class="form-group">
                         <label for="productName">Tên sản phẩm</label>
-                        <input type="text" class="form-control" id="productName" name="productName" placeholder="Chân Váy JK">
+                        <input type="text" class="form-control" id="productName" name="productName" placeholder="Chân Váy JK" required>
                     </div>
                     <div class="form-group">
                         <label for="brandName">Hình ảnh</label>
-                        <input type="file" class="" id="productImage" name="productImage[]" multiple >
+                        <input type="file" class="" id="productImage" name="productImage" onchange="imagesFileAsURL()" >
                     </div>
-                    <div class="row justify-content-center" id="showImage">
-                        <!--Hiện các ảnh đã chọn
-                        <script src="{{asset('public/backend/js/')}}"></script>-->
+                    <div class="form-group" id="showImage">
                     </div>
+                    <script type="text/javascript">
+                       
+                        function imagesFileAsURL(){
+
+                            var fileSelected = document.getElementById('productImage').files;
+
+                            if(fileSelected.length > 0){
+                                
+                                
+                                for(var i = 0; i < fileSelected.length; i++){
+                                    var fileToLoad = fileSelected[i];
+
+                                    var fileReader = new FileReader();
+                                    fileReader.onload = function(fileLoaderEvent){
+
+                                        var srcImage = fileLoaderEvent.target.result;
+
+                                        var newImage = document.createElement('img');
+                                        newImage.src = srcImage;
+                                        newImage.class = "fileImage"
+                                        newImage.style.height = "200px";
+                                        newImage.style.width = "200px";
+
+                                        document.getElementById('showImage').innerHTML += newImage.outerHTML;
+                                    }
+
+                                    fileReader.readAsDataURL(fileToLoad);
+                                }
+                            }
+                        }
+                    </script>
                     <div class="form-group">
                         <label for="productPrice">Giá niêm yết</label>
-                        <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="Chân Váy JK" >
+                        <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="Chân Váy JK" required>
                     </div>
                     <div class="form-group">
                         <label for="productDescription">Mô tả sản phẩm</label>
@@ -49,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <label for="productContent">Chi tiết sản phẩm</label>
-                        <textarea style="resize: none;" rows=9 class="form-control" id="brandDescription" name="productContent" placeholder="Nhập thông tin" ></textarea> 
+                        <textarea style="resize: none;" rows=9 class="form-control" id="brandDescription" name="productContent" placeholder="Nhập thông tin" required></textarea> 
                     </div>
 
                     <div class="form-group">

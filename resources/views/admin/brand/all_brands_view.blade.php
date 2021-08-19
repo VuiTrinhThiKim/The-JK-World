@@ -73,7 +73,7 @@
               <a href="{{URL::to('/admin/brand/edit/'.$brand_item->brand_id)}}" class="edit-brand" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-edit"></i>
               </a>
-              <a a onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')" href="{{URL::to('/admin/brand/delete/'.$brand_item->brand_id)}}" class="delete-brand" ui-toggle-class="">
+              <a a onclick="return confirm('Bạn có chắc chắn muốn xóa brand này?')" href="{{URL::to('/admin/brand/delete/'.$brand_item->brand_id)}}" class="delete-brand" ui-toggle-class="">
                 <i class="fa fa-times text-danger text"></i>
               </a>
             </td>

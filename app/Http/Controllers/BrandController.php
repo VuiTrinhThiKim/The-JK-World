@@ -75,13 +75,12 @@ class BrandController extends Controller
 
         $this->loginAuthentication();
 
-        $data_cate = array();
+        $data_brand = array();
 
-        $data_cate['brand_name'] = $request_update->brandName;
-        $data_cate['brand_description'] = $request_update->brandDescription;
+        $data_brand['brand_name'] = $request_update->brandName;
+        $data_brand['brand_description'] = $request_update->brandDescription;
 
-        Brand::where('brand_id',$brand_id)
-                               ->update($data_cate);
+        Brand::where('brand_id',$brand_id)->update($data_brand);
 
         Session::put('messBrand','Cập nhật brand thành công!!!');
         return Redirect::to('/admin/brand/view-all');
