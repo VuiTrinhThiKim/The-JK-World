@@ -5,38 +5,36 @@
 <div class="features_items"><!--features_items-->
     <h2 class="title text-center">Sản phẩm mới</h2>
     @foreach($product_list as $key => $product)
-    <div class="col-sm-4">
-        <div class="product-image-wrapper">
-            <div class="single-products">
-                    <div class="productinfo text-center">
-                        <img src="{{URL::to('/storage/app/'.)}}" alt="" />
-                        <h2>260000 VNĐ</h2>
-                        <p>Chân váy Đông Lâm Xã</p>
-                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                    </div>
-                    <div class="product-overlay">
-                        <div class="overlay-content">
-                            <h2>260000 VNĐ</h2>
-                            <p>Chân váy Đông Lâm Xã</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+    <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}">
+        <div class="col-sm-4">
+            <div class="product-image-wrapper">
+                <div class="single-products">
+                        <div class="productinfo text-center">
+                            <img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+                            <h2>{{number_format($product->price).' ₫'}}</h2>
+                            <p>{{$product->product_name}}</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                         </div>
-                    </div>
-            </div>
-            <div class="choose">
-                <ul class="nav nav-pills nav-justified">
-                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                </ul>
+                        
+                </div>
+                <div class="choose">
+                    <ul class="nav nav-pills nav-justified">
+                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
     @endforeach   
 </div><!--features_items-->
 
 <div class="category-tab"><!--category-tab-->
     <div class="col-sm-12">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#tshirt" data-toggle="tab">Chân váy JK</a></li>
+            @foreach($category_list as $key => $category)
+            <li class="active"><a href="{{URL::to('/danh-muc/'.$category->category_id)}}" data-toggle="tab">{{$category->category_name}}</a></li>
+            @endforeach
     </div>
     <div class="tab-content">
         <div class="tab-pane fade active in" id="tshirt" >

@@ -57,7 +57,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="index.html"><img src="{{('public/frontend/images/home/thejkworld_logo.png')}}" alt="" width="139" height="39" /></a>
+                            <a href="index.html"><img src="{{URL::to('public/frontend/images/home/thejkworld_logo.png')}}" alt="" width="139" height="39" /></a>
                         </div>
                         <div class="btn-group pull-right">
                             <div class="btn-group">
@@ -159,7 +159,7 @@
                                     <button type="button" class="btn btn-default get">Mua ngay</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{('public/frontend/images/nhat-nguyet.jpg')}}" class="girl img-responsive" alt="" />
+                                    <img src="{{URL::to('public/frontend/images/nhat-nguyet.jpg')}}" class="girl img-responsive" alt="" />
                                     <!--<img src="{{('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />-->
                                 </div>
                             </div>
@@ -171,8 +171,8 @@
                                     <button type="button" class="btn btn-default get">Mua ngay</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{('public/frontend/images/nhi-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <img src="{{('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />
+                                    <img src="{{URL::to('public/frontend/images/nhi-nguyet.jpg')}}" class="girl img-responsive" alt="" />
+                                    <img src="{{URL::to('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />
                                 </div>
                             </div>
                             
@@ -184,8 +184,8 @@
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{('public/frontend/images/tam-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <img src="{{('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />
+                                    <img src="{{URL::to('public/frontend/images/tam-nguyet.jpg')}}" class="girl img-responsive" alt="" />
+                                    <img src="{{URL::to('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />
                                 </div>
                             </div>
                             
@@ -210,28 +210,18 @@
                 <div class="col-sm-3">
                     <div class="left-sidebar">
                         <h2>Danh mục sản phẩm</h2>
-                        <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                        <div class="panel-group category-products" id="accordian"><!--category-products-->
                             @foreach($category_list as $key => $category)
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordian" href="{{URL::to('/danh-muc/'.$category->category_id)}}">
+                                        <a href="{{URL::to('/danh-muc/'.$category->category_id)}}">
                                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                             {{$category->category_name}}
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="sportswear" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li><a href="#">Nike </a></li>
-                                            <li><a href="#">Under Armour </a></li>
-                                            <li><a href="#">Adidas </a></li>
-                                            <li><a href="#">Puma</a></li>
-                                            <li><a href="#">ASICS </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                
                             </div>
                             
                             @endforeach
@@ -442,5 +432,11 @@
     <script src="{{asset('public/frontend/js/price-range.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('public/frontend/js/main.js')}}"></script>
+    <script src="{{asset('public/backend/ckeditor/ckeditor.js')}}"></script>
+    <script type="text/javascript">
+        CKEDITOR.inline( 'productContent', {
+            removePlugins: 'toolbar'
+        } );
+    </script>
 </body>
 </html>
