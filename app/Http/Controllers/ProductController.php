@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Redirect;
 use Session;
 use App\Models\Product;
-use App\Models\ProductImages;
 use App\Models\Category;
 use App\Models\Brand;
 
@@ -22,6 +21,9 @@ class ProductController extends Controller
             return Redirect::to('admin')->send('Vui lòng đăng nhập');
         }
     }
+
+
+
     public function add(){
 
         $this->loginAuthentication();
@@ -65,6 +67,7 @@ class ProductController extends Controller
 
         return Redirect::to('/admin/product/view-all');
     }
+
 
     public function edit($product_id){
 
@@ -131,8 +134,8 @@ class ProductController extends Controller
             $product_img = Product::where('product_id', $product_id)->value('product_image');
             $data_product['product_image'] = $product_img;
             Product::where('product_id', $product_id)->update($data_product);
-                    // Get product_id
-                    Session::put('messProduct','Cập nhật sản phẩm thành công');
+            // Get product_id
+            Session::put('messProduct','Cập nhật sản phẩm thành công');
         return Redirect::to('/admin/product/view-all');
         }
     }
@@ -140,12 +143,7 @@ class ProductController extends Controller
 
     public function save(Request $request){
 
-        $this->loginAuthentication();
-
-        $this->validate($request, [
-			'productName' => 'required',
-			'productContent'=>'required',]
-		);
+        $this->loginAuthentication();        
 
         $data_product = array();
 
@@ -186,13 +184,19 @@ class ProductController extends Controller
                     return Redirect::to('/admin/product/add');
 				} else {
 					Session::put('messProduct','Định dạng ảnh phải là jpg, jpeg hoặc png.');
+                    return Redirect::to('/admin/product/add');
 				}
 	        }
 	        else {
 	            Session::put('messProduct','Lỗi: Sản phẩm '.$request->productName.' đã có trên hệ thống!!!');
+                return Redirect::to('/admin/product/add');
 	        }
 		}
-        
+        $data_product['product_image'] = 'no-pic.jpg';
+        // Save product
+        Product::insert($data_product);
+        // Get product_id
+        Session::put('messProduct','Thêm sản phẩm thành công');
         return Redirect::to('/admin/product/add');
     }
 
@@ -206,5 +210,29 @@ class ProductController extends Controller
                                ->delete();
         Session::put('messProduct','Xóa danh mục thành công!!!');
         return Redirect::to('/admin/product/view-all');
+    }
+
+    
+    //Web role
+    public function show_product_detail($product_id){
+        $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
+        $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        $product_details = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+            ->where('products.product_id', $product_id)->get();
+
+        //Get category id
+        foreach ($product_details as $key => $value) {
+            $category_id = $value->category_id;
+        }
+
+        $related_products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+            ->where('categories.category_id', $category_id)
+            ->whereNotIn('products.product_id', [$product_id])->get();
+
+        return view('page.product.product_view')->with('category_list', $category_list)
+                                     ->with('brand_list', $brand_list)
+                                     ->with('product_details', $product_details)
+                                     ->with('related_products', $related_products);
+
     }
 }

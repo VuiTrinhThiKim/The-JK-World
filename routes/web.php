@@ -12,13 +12,15 @@ use App\Http\Controllers\HomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Web-theme
+//Web page
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
+Route::get('/danh-muc/{category_id}', 'CategoryController@show_category');
+Route::get('/thuong-hieu/{brand_id}', 'BrandController@show_brand');
+Route::get('/chi-tiet-san-pham/{product_id}', 'ProductController@show_product_detail');
 
-
-
+//Admin page
 Route::prefix('admin')->group(function(){
 
 	//Show Login Admin Panel

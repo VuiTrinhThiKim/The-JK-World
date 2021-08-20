@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Redirect;
 use Session;
+use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Product;
 
 class BrandController extends Controller
 {
@@ -117,5 +119,18 @@ class BrandController extends Controller
 
         Session::put('messCate','Xóa brand thành công!!!');
         return Redirect::to('/admin/brand/view-all');
+    }
+
+    //Web role
+    public function show_brand($brand_id){
+        $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
+        $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        $brand_name = Brand::where('brand_id', $brand_id)->value('brand_name');
+        $brand_by_id = Product::join('brands', 'products.brand_id', '=', 'brands.brand_id')->where('products.brand_id', $brand_id)->get();
+
+        return view('page.brand.brand_view')->with('category_list', $category_list)
+                                     ->with('brand_list', $brand_list)
+                                     ->with('brand_name', $brand_name)
+                                     ->with('brand_by_id', $brand_by_id);
     }
 }

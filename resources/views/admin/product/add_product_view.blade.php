@@ -35,8 +35,7 @@
                             var fileSelected = document.getElementById('productImage').files;
 
                             if(fileSelected.length > 0){
-                                
-                                
+
                                 for(var i = 0; i < fileSelected.length; i++){
                                     var fileToLoad = fileSelected[i];
 
@@ -47,7 +46,7 @@
 
                                         var newImage = document.createElement('img');
                                         newImage.src = srcImage;
-                                        newImage.class = "fileImage"
+                                        newImage.className = "preview-image";
                                         newImage.style.height = "200px";
                                         newImage.style.width = "200px";
 
@@ -65,11 +64,11 @@
                     </div>
                     <div class="form-group">
                         <label for="productDescription">Mô tả sản phẩm</label>
-                        <textarea style="resize: none;" rows=4 class="form-control" id="productDescription" name="productDescription" placeholder="Nhập thông tin" ></textarea> 
+                        <textarea style="resize: none;" rows=4 class="form-control" id="productDescription" name="productDescription" placeholder="Nhập thông tin" ></textarea>
                     </div>
                     <div class="form-group">
                         <label for="productContent">Chi tiết sản phẩm</label>
-                        <textarea style="resize: none;" rows=9 class="form-control" id="brandDescription" name="productContent" placeholder="Nhập thông tin" required></textarea> 
+                        <textarea style="resize: none;" rows=9 class="form-control" id="productContent" name="productContent" placeholder="Nhập thông tin" required></textarea>
                     </div>
 
                     <div class="form-group">

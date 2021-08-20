@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Redirect;
 use Session;
 use App\Models\Category;
+use App\Models\Brand;
+use App\Models\Product;
 
 class CategoryController extends Controller
 {
+    //Admin role
     public function loginAuthentication() {
         $ad_username = Session::get('username');
 
@@ -118,5 +121,18 @@ class CategoryController extends Controller
 
         Session::put('messCate','Xóa danh mục thành công!!!');
         return Redirect::to('/admin/category/view-all');
+    }
+
+    //Web role
+    public function show_category($category_id){
+        $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
+        $category_name = Category::where('category_id', $category_id)->value('category_name');
+        $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        $category_by_id = Product::join('categories', 'products.category_id', '=', 'categories.category_id')->where('products.category_id', $category_id)->get();
+
+        return view('page.category.category_view')->with('category_list', $category_list)
+                                     ->with('category_name', $category_name)
+                                     ->with('brand_list', $brand_list)
+                                     ->with('category_by_id', $category_by_id);
     }
 }
