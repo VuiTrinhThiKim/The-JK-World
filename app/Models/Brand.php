@@ -11,6 +11,8 @@ class Brand extends Model
 
     protected $table = 'brands';
 
+    protected $primaryKey = 'brand_id';
+
     function __construct(){
         parent::__construct();
     }

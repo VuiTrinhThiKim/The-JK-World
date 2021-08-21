@@ -24,8 +24,8 @@
                         <input type="text" value="{{$edit_product->product_name}}" class="form-control" id="productName" name="productName" placeholder="Chân Váy JK" required>
                     </div>
                     <div class="form-group">
-                        <label for="brandName">Hình ảnh</label>
-                        <input type="file" class="" id="productImage" name="productImage[]" onload="imagesFileAsURL()">
+                        <label for="productImage">Hình ảnh</label>
+                        <input type="file" class="" id="productImage" name="productImage" onload="imagesFileAsURL()">
                     </div>
                     <div class="form-group" id="showImage">
                         <img src="{{URL::to('/public/upload/products/'.$edit_product->product_image)}}" alt="{{('$edit_product->product_name')}}" width="250" height="250">

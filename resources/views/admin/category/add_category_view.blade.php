@@ -16,7 +16,7 @@
             ?>
             <div class="panel-body">
                 <div class="position-center">
-                    <form action="{{URL::to('/admin/category/save')}}" role="form" method="post">
+                    <form action="{{URL::to('/admin/category/add')}}" role="form" method="post">
                     {{csrf_field() }}
                     <div class="form-group">
                         <label for="categoryName">Tên danh mục</label>

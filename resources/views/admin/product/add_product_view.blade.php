@@ -16,7 +16,7 @@
             ?>
             <div class="panel-body">
                 <div class="position-center">
-                    <form action="{{URL::to('/admin/product/save')}}" role="form" method="post"  enctype="multipart/form-data">
+                    <form action="{{URL::to('/admin/product/add')}}" role="form" method="post"  enctype="multipart/form-data">
                     {{csrf_field() }}
                     <div class="form-group">
                         <label for="productName">Tên sản phẩm</label>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label for="brandName">Hình ảnh</label>
-                        <input type="file" class="" id="productImage" name="productImage" onchange="imagesFileAsURL()" >
+                        <input type="file" class="" id="productImage" name="productImage" onchange="imagesFileAsURL()">
                     </div>
                     <div class="form-group" id="showImage">
                     </div>

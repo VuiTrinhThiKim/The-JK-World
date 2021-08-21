@@ -16,7 +16,7 @@
             ?>
             <div class="panel-body">
                 <div class="position-center">
-                    <form action="{{URL::to('/admin/brand/save')}}" role="form" method="post">
+                    <form action="{{URL::to('/admin/brand/add')}}" role="form" method="post">
                     {{csrf_field() }}
                     <div class="form-group">
                         <label for="brandName">Tên thương hiệu</label>
