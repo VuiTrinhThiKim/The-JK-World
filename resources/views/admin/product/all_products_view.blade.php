@@ -44,7 +44,7 @@
               </label>
             </th>
             <th style="width:20%;">Tên sản phẩm</th>
-            <th>Mô tả</th>
+            <th>Hình ảnh</th>
             <th>Giá niêm yết</th>
             <th>Danh mục</th>
             <th>Brand</th>
@@ -57,7 +57,9 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$product_item->product_name}}</td>
-            <td>{{$product_item->product_description}}</span></td>
+            <td>
+                <img src="{{URL::to('/public/upload/products/'.$product_item->product_image)}}" url="{{$product_item->product_image}}" width="80" height="80"></span>
+            </td>
             <td>{{$product_item->price}}</span></td>
             <td>{{$product_item->category_name}}</span></td>
             <td>{{$product_item->brand_name}}</span></td>

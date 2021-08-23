@@ -19,11 +19,21 @@
                     <form action="{{URL::to('/admin/product/add')}}" role="form" method="post"  enctype="multipart/form-data">
                     {{csrf_field() }}
                     <div class="form-group">
-                        <label for="productName">Tên sản phẩm</label>
-                        <input type="text" class="form-control" id="productName" name="productName" placeholder="Chân Váy JK" required>
+                        <span class="required-field">Bắt buộc nhập các trường có dấu (*)</span>
                     </div>
                     <div class="form-group">
-                        <label for="brandName">Hình ảnh</label>
+                        <label for="productName">Tên sản phẩm<span class="required-field"> (*)</span></label>
+                        <input type="text" class="form-control" id="productName" name="productName" value="{{old('productName')}}" placeholder="Chân Váy JK">
+                        @if ($errors->has('productName'))
+                            @error('productName')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Hình ảnh</label>
                         <input type="file" class="" id="productImage" name="productImage" onchange="imagesFileAsURL()">
                     </div>
                     <div class="form-group" id="showImage">
@@ -59,20 +69,41 @@
                         }
                     </script>
                     <div class="form-group">
-                        <label for="productPrice">Giá niêm yết</label>
-                        <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="Chân Váy JK" required>
+                        <label for="productPrice">Giá niêm yết<span class="required-field"> (*)</span></label>
+                        <input type="text" class="form-control" id="productPrice" name="productPrice" value="{{old('productPrice')}}" placeholder="Chân Váy JK">
+                        @if ($errors->has('productPrice'))
+                            @error('productPrice')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
                     </div>
                     <div class="form-group">
-                        <label for="productDescription">Mô tả sản phẩm</label>
-                        <textarea style="resize: none;" rows=4 class="form-control" id="productDescription" name="productDescription" placeholder="Nhập thông tin" ></textarea>
+                        <label for="productDescription">Mô tả sản phẩm<span class="required-field"> (*)</span></label>
+                        <textarea style="resize: none;" rows=4 class="form-control" id="productDescription" name="productDescription" placeholder="Nhập thông tin" >{{old('productDescription')}}</textarea>
+                        @if ($errors->has('productDescription'))
+                            @error('productDescription')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
                     </div>
                     <div class="form-group">
-                        <label for="productContent">Chi tiết sản phẩm</label>
-                        <textarea style="resize: none;" rows=9 class="form-control" id="productContent" name="productContent" placeholder="Nhập thông tin" required></textarea>
+                        <label for="productContent">Chi tiết sản phẩm<span class="required-field"> (*)</span></label>
+                        <textarea style="resize: none;" rows=9 class="form-control" id="productContent" name="productContent" value="{{old('productContent')}}" placeholder="Nhập thông tin"></textarea>
+                        @if ($errors->has('productContent'))
+                            @error('productContent')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
                     </div>
 
                     <div class="form-group">
-                        <label for="categoryID">Chọn danh mục</label>
+                        <label for="categoryID">Chọn danh mục<span class="required-field"> (*)</span></label>
                         <select class="form-control input-sm m-bot15" name="categoryID" >
                             @foreach($category_list as $key => $category)
                             <option value="{{$category->category_id}}" style="height: 150px; font-size: 14px;">{{$category->category_name}}</option>
@@ -81,7 +112,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="brandID">Chọn brand</label>
+                        <label for="brandID">Chọn brand<span class="required-field"> (*)</span></label>
                         <select class="form-control input-sm m-bot15" name="brandID" >
                             @foreach($brand_list as $key => $brand)
                             <option value="{{$brand->brand_id}}" style="height: 150px; font-size: 14px;">{{$brand->brand_name}}</option>
@@ -90,7 +121,7 @@
                     </div>
 
                     <div class="form-group">
-                    	<label for="productStatus">Hiển thị lên website</label>
+                    	<label for="productStatus">Hiển thị lên website?<span class="required-field"> (*)</span></label>
                         <select class="form-control input-sm m-bot15" name="productStatus">
                             <option value="0" style="height: 150px; font-size: 14px;">Ẩn</option>
                             <option value="1" style="height: 150px; font-size: 14px;">Hiển thị</option>

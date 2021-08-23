@@ -19,15 +19,32 @@
                     <form action="{{URL::to('/admin/category/add')}}" role="form" method="post">
                     {{csrf_field() }}
                     <div class="form-group">
-                        <label for="categoryName">Tên danh mục</label>
-                        <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Chân Váy JK" required>
+                        <span class="required-field">Bắt buộc nhập các trường có dấu (*)</span>
                     </div>
                     <div class="form-group">
-                        <label for="categoryDescription">Thông tin danh mục</label>
-                        <textarea style="resize: none;" rows=9 class="form-control" id="categoryDescription" name="categoryDescription" required placeholder="Nhập thông tin"></textarea> 
+                        <label for="categoryName">Tên danh mục<span class="required-field"> (*)</span></label>
+                        <input type="text" class="form-control" id="categoryName" name="categoryName" value="{{old('categoryName')}}" placeholder="Chân Váy JK">
+                        @if ($errors->has('categoryName'))
+                            @error('categoryName')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
                     </div>
                     <div class="form-group">
-                    	<label for="categoryStatus">Hiển thị danh mục lên website</label>
+                        <label for="categoryDescription">Thông tin danh mục<span class="required-field"> (*)</span></label>
+                        <textarea style="resize: none;" rows=9 class="form-control" id="categoryDescription" name="categoryDescription" placeholder="Nhập thông tin">{{old('categoryDescription')}}</textarea> 
+                        @if ($errors->has('categoryDescription'))
+                            @error('categoryDescription')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
+                    </div>
+                    <div class="form-group">
+                    	<label for="categoryStatus">Hiển thị danh mục lên website?<span class="required-field"> (*)</span></label>
                         <select class="form-control input-sm m-bot15" name="categoryStatus" required>
                             <option value="0" style="height: 150px; font-size: 14px;">Ẩn</option>
                             <option value="1" style="height: 150px; font-size: 14px;">Hiển thị</option>

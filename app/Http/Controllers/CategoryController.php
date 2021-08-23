@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 use Session;
 use Redirect;
 
@@ -48,7 +49,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $category = new Category;
 
@@ -92,7 +93,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category, $category_id)
+    public function update(CategoryRequest $request, Category $category, $category_id)
     {
         $cate = Category::where('category_id',$category_id)->first();
 
@@ -143,8 +144,7 @@ class CategoryController extends Controller
 
         $this->loginAuthentication();
 
-        $status_cate = Category::where('category_id', $category_id)
-                                              ->value('category_status');
+        $status_cate = Category::find($category_id)->value('category_status');
         if($status_cate == 0) {
             Category::where('category_id', $category_id)
                                    ->update(['category_status' => 1]);

@@ -20,12 +20,29 @@
                     <form role="form" action="{{URL::to('/admin/category/update/'.$edit_cate->category_id)}}" method="post">
                     {{csrf_field() }}
                     <div class="form-group">
-                        <label for="categoryName">Tên danh mục</label>
-                        <input type="text" value="{{$edit_cate->category_name}}" class="form-control" id="categoryName" name="categoryName" placeholder="Chân Váy JK">
+                        <span class="required-field">Bắt buộc nhập các trường có dấu (*)</span>
                     </div>
                     <div class="form-group">
-                        <label for="categoryDescription">Thông tin danh mục</label>
+                        <label for="categoryName">Tên danh mục<span class="required-field"> (*)</span></label>
+                        <input type="text" value="{{$edit_cate->category_name}}" class="form-control" id="categoryName" name="categoryName" placeholder="Chân Váy JK">
+                        @if ($errors->has('categoryName'))
+                            @error('categoryName')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryDescription">Thông tin danh mục<span class="required-field"> (*)</span></label>
                         <textarea style="resize: none;" rows=9 class="form-control" id="categoryDescription" name="categoryDescription" placeholder="Nhập thông tin">{{$edit_cate->category_description}}</textarea> 
+                        @if ($errors->has('categoryDescription'))
+                            @error('categoryDescription')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
                     </div>
                     <button type="submit" name="addCategory" class="btn btn-info">Cập nhật</button>
                 	</form>

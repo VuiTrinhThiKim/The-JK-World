@@ -1678,7 +1678,11 @@ p.hd-title {
     color: #fad733;
 }
 .text-danger {
+    font-size: 14px;
+    font-weight: bold;
     color: #f05050;
+    font-style: italic;
+    text-align: right;
 }
 .btn-default {
     color: #58666e !important;
@@ -3146,5 +3150,8 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 }
 .status_alert {
     color: red;
-    text-align: center;
+}
+.required-field {
+    color: red;
+    font-weight: bold;
 }

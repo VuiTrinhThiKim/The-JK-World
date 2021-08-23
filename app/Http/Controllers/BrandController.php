@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
+use App\Http\Requests\BrandRequest;
 use Illuminate\Http\Request;
 use Session;
 use Redirect;
@@ -48,7 +49,7 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(BrandRequest $request) {
 
         $brand = new Brand;
 
@@ -93,7 +94,7 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand, $brand_id) {
+    public function update(BrandRequest $request, Brand $brand, $brand_id) {
 
         $brand = Brand::where('brand_id',$brand_id)->first();
 
@@ -144,9 +145,8 @@ class BrandController extends Controller
 
         $this->loginAuthentication();
 
-        $status_cate = Brand::where('brand_id', $brand_id)
-                                              ->value('brand_status');
-        if($status_cate == 0) {
+        $status = Brand::find($brand_id)->value('brand_status');
+        if($status == 0) {
             Brand::where('brand_id', $brand_id)
                                    ->update(['brand_status' => 1]);
 
@@ -167,7 +167,7 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show_brand(Brand $brand, $brand_id)
+    public function show_brand($brand_id)
     {
         $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
         $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();

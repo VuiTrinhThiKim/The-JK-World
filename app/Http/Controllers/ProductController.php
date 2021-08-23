@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 use Session;
 use Redirect;
 
@@ -53,7 +54,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $product = new Product;
 
@@ -104,7 +105,7 @@ class ProductController extends Controller
                 return Redirect::to('/admin/product/view-all');
             }
         }
-        $product->product_image = 'no-pic.jpg';
+        $product->product_image = 'no-pic.png';
         // Save product
         $product->save();
         // Get product_id
@@ -142,7 +143,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product, $product_id)
+    public function update(ProductRequest $request, Product $product, $product_id)
     {
         $product = Product::where('product_id',$product_id)->first();
 
@@ -222,6 +223,25 @@ class ProductController extends Controller
         return view('admin_layout_view')->with('admin.product.all_products_view', $manager_product);
     }
 
+    public function update_product_status($product_id){
+
+        $this->loginAuthentication();
+
+        $status_product = Product::find($product_id)->value('product_status');
+        if($status_product == 0) {
+            Product::where('product_id', $product_id)
+                                   ->update(['product_status' => 1]);
+
+            Session::put('messProduct','Hiển thị sản phẩm thành công!!!');
+        }
+        else {
+            Product::where('product_id', $product_id)
+                                   ->update(['product_status' => 0]);
+            Session::put('messProduct','Ẩn sản phẩm thành công!!!');
+        }
+
+        return Redirect::to('/admin/product/view-all');
+    }
     /**
      * Display the specified resource.
      *
