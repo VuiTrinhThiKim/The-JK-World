@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,6 @@ Route::prefix('admin')->group(function(){
 		Route::get('/add', [CategoryController::class, 'create']);
 		//Add to db
 		Route::post('/add', [CategoryController::class, 'store']);
-
 		//Category Status
 		Route::get('/public-category/{category_id}', [CategoryController::class, 'update_category_status']);
 		Route::get('/unpublic-category/{category_id}', [CategoryController::class, 'update_category_status']);
@@ -65,7 +65,6 @@ Route::prefix('admin')->group(function(){
 		Route::get('/add', [BrandController::class, 'create']);
 		//Add to db
 		Route::post('/add', [BrandController::class, 'store']);
-
 		//Brand Status
 		Route::get('/public-brand/{brand_id}', [BrandController::class, 'update_brand_status']);
 		Route::get('/unpublic-brand/{brand_id}', [BrandController::class, 'update_brand_status']);
@@ -85,8 +84,6 @@ Route::prefix('admin')->group(function(){
 		Route::get('/add', [ProductController::class, 'create']);
 		//Add to db
 		Route::post('/add', [ProductController::class, 'store']);
-
-
 		//Product Status
 		Route::get('/public-product/{product_id}', [ProductController::class, 'update_product_status']);
 		Route::get('/unpublic-product/{product_id}', [ProductController::class, 'update_product_status']);
@@ -96,6 +93,25 @@ Route::prefix('admin')->group(function(){
 		Route::post('/update/{product_id}', [ProductController::class, 'update']);
 		//Delete Product
 		Route::get('/delete/{product_id}', [ProductController::class, 'destroy']);
+
+	});
+
+	Route::group(['prefix'=>'user'], function(){
+		//All Product
+		Route::get('/view-all', [UserController::class, 'view_all']);
+		//Add Product
+		Route::get('/add', [UserController::class, 'create']);
+		//Add to db
+		Route::post('/add', [UserController::class, 'store']);
+		//Product Status
+		Route::get('/public-user/{user_id}', [UserController::class, 'update_product_status']);
+		Route::get('/unpublic-user/{user_id}', [UserController::class, 'update_product_status']);
+		//Edit Product
+		Route::get('/edit/{user_id}', [UserController::class, 'edit']);
+		//Update Product
+		Route::post('/update/{user_id}', [UserController::class, 'update']);
+		//Delete Product
+		Route::get('/delete/{user_id}', [UserController::class, 'destroy']);
 
 	});
 });
