@@ -80,6 +80,17 @@
                         @endif
                     </div>
                     <div class="form-group">
+                        <label for="productWeight">Cân nặng - kg<span class="required-field"> (*)</span></label>
+                        <input type="number" step="0.01" min="0" class="form-control" id="productWeight" name="productWeight" value="{{old('productWeight')}}" placeholder="Chân Váy JK">
+                        @if ($errors->has('productWeight'))
+                            @error('productWeight')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <label for="productDescription">Mô tả sản phẩm<span class="required-field"> (*)</span></label>
                         <textarea style="resize: none;" rows=4 class="form-control" id="productDescription" name="productDescription" placeholder="Nhập thông tin" >{{old('productDescription')}}</textarea>
                         @if ($errors->has('productDescription'))

@@ -99,7 +99,10 @@ class CategoryController extends Controller
 
         $cate->category_name = $request->get('categoryName');
         $cate->category_description = $request->get('categoryDescription');
-
+        if(Category::where('category_name',$cate->category_name)->where('category_id', '<>', $category_id)->first() != null) {
+            Session::put('messCate','Lỗi: Trùng tên với danh mục khác!!!');
+            return Redirect::to('/admin/category/edit/'.$category_id);
+        } 
         $cate->save();
         Session::put('messCate','Cập nhật danh mục thành công!!!');
         return Redirect::to('/admin/category/view-all');

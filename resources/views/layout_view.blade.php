@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Home | The JK World</title>
+    <title>Trang chủ | The JK World</title>
     <link href="{{asset('public/frontend/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/prettyPhoto.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/price-range.css')}}" rel="stylesheet">
@@ -112,7 +113,7 @@
                         </div>
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="{{URL::to('/home')}}" class="active">Trang chủ</a></li>
+                                <li><a href="{{URL::to('/trang-chu')}}" class="active">Trang chủ</a></li>
                                 <li class="dropdown"><a href="#">Danh mục<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="shop.html">Sản phẩm</a></li>
@@ -428,6 +429,7 @@
   
     <script src="{{asset('public/frontend/js/jquery.js')}}"></script>
     <script src="{{asset('public/frontend/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.scrollUp.min.js')}}"></script>
     <script src="{{asset('public/frontend/js/price-range.js')}}"></script>
     <script src="{{asset('public/frontend/js/jquery.prettyPhoto.js')}}"></script>
@@ -437,6 +439,50 @@
         CKEDITOR.inline( 'productContent', {
             removePlugins: 'toolbar'
         } );
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //Click button Them Vao Gio Hang
+            $('.add-to-cart').click(function(){
+                //Get product_id form button data
+                var id = $(this).data('product_id');
+                //Set value for variables
+                var cart_product_id = $('.cart_product_id_' + id).val();
+                var cart_product_name = $('.cart_product_name_' + id).val();
+                var cart_product_image = $('.cart_product_image_' + id).val();
+                var cart_product_price = $('.cart_product_price_' + id).val();
+                var cart_product_qty = $('.cart_product_qty_' + id).val();
+                var _token = $('input[name="_token"]').val();
+                //Start ajax
+                $.ajax({
+                    url: '{{url('/add-to-cart-ajax')}}',
+                    method: 'POST',
+                    data:{cart_product_id:cart_product_id,
+                        cart_product_name:cart_product_name,
+                        cart_product_price:cart_product_price,
+                        cart_product_image:cart_product_image,
+                        cart_product_qty:cart_product_qty,
+                        _token:_token},
+                    success:function(){
+
+                        swal({
+                                title: "Đã thêm sản phẩm vào giỏ hàng!",
+                                text: "Bạn có thể tiếp tục mua hàng hoặc đến giỏ hàng để tiến hành thanh toán",
+                                showCancelButton: true,
+                                cancelButtonText: "Xem tiếp",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Đi đến giỏ hàng",
+                                closeOnConfirm: false
+                            },
+                            function() {
+                                window.location.href = "{{url('/gio-hang')}}";
+                            });
+
+                    }
+
+                });
+            });
+        });
     </script>
 </body>
 </html>

@@ -100,7 +100,10 @@ class BrandController extends Controller
 
         $brand->brand_name = $request->get('brandName');
         $brand->brand_description = $request->get('brandDescription');
-
+        if(Brand::where('brand_name',$brand->brand_name)->where('brand_id', '<>', $brand_id)->first() != null) {
+            Session::put('messBrand','Lỗi: Trùng tên với sản phẩm khác!!!');
+            return Redirect::to('/admin/brand/edit/'.$brand_id);
+        } 
         $brand->save();
         Session::put('messBrand','Cập nhật brand thành công!!!');
         return Redirect::to('/admin/brand/view-all');

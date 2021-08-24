@@ -41,17 +41,23 @@
 			<h2>{{$product->product_name}}</h2>
 			<p>Mã sản phẩm: {{$product->product_id}}</p>
 			<img src="images/product-details/rating.png" alt="" />
-			<span>
-				<span>{{number_format($product->price).' ₫'}}</span>
-			</span>
-			<span>
-				<label>Số lượng:</label>
-				<input type="number" min="1" max="4" value="3" />
-				<button type="button" class="btn btn-fefault cart">
-					<i class="fa fa-shopping-cart"></i>
-					Thêm vào giỏ hàng
-				</button>
-			</span>
+
+			<form action="{{URL::to('/gio-hang')}}" method="post">
+				{{csrf_field()}}
+				<span>
+					<span>{{number_format($product->price).' ₫'}}</span>
+				</span>
+				<span>
+					<label>Số lượng:</label>
+					<input name="productQuantity" type="number" min="1" max="4" value="3" />
+					<input name="productId" type="hidden" value="{{$product->product_id}}" />
+					<button type="submit" class="btn btn-fefault cart">
+						<i class="fa fa-shopping-cart"></i>
+						Thêm vào giỏ hàng
+					</button>
+				</span>
+			</form>
+			<p><b>Khối lượng:</b> {{$product->weight}} kg</p>
 			<p><b>Brand:</b> {{$product->brand_name}}</p>
 			<p><b>Danh mục:</b> {{$product->category_name}}</p>
 			<p><b>Trạng thái:</b> In Stock</p>
@@ -116,7 +122,7 @@
 							<img src="images/home/gallery4.jpg" alt="" />
 							<h2>$56</h2>
 							<p>Easy Polo Black Edition</p>
-							<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+							<button type="submit" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
 						</div>
 					</div>
 				</div>

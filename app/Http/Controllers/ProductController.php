@@ -62,6 +62,7 @@ class ProductController extends Controller
         $product->product_description = $request->get('productDescription');
         $product->content = $request->get('productContent');
         $product->price = $request->get('productPrice');
+        $product->weight = $request->get('productWeight');
         $product->category_id = $request->get('categoryID');
         $product->brand_id = $request->get('brandID');
         $product->product_status = $request->get('productStatus');
@@ -151,9 +152,14 @@ class ProductController extends Controller
         $product->product_description = $request->get('productDescription');
         $product->content = $request->get('productContent');
         $product->price = $request->get('productPrice');
+        $product->weight = $request->get('productWeight');
         $product->category_id = $request->get('categoryID');
         $product->brand_id = $request->get('brandID');
 
+        if(Product::where('product_name',$product->product_name)->where('product_id', '<>', $product_id)->first() != null) {
+            Session::put('messProduct','Lỗi: Trùng tên sản phẩm!!!');
+            return Redirect::to('/admin/product/edit/'.$product_id);
+        } 
         $image = $request->file('productImage');
         //Check file upload
         if($image) {

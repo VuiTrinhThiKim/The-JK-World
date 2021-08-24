@@ -28,6 +28,7 @@ class ProductRequest extends FormRequest
             'productDescription' => 'required|min:10',
             'productContent' => 'required|min: 10',
             'productPrice' => 'required|numeric|min:1000',
+            'productWeight' => 'required|min:0',
         ];
     }
 
@@ -48,6 +49,8 @@ class ProductRequest extends FormRequest
             'productPrice.required' => 'Giá sản phẩm không được bỏ trống',
             'productPrice.numeric' => 'Giá sản phẩm phải là số',
             'productPrice.min' => 'Giá sản phẩm phải ít nhất 1000₫',
+            'productWeight.required' => 'Cân nặng không được bỏ trống',
+            'productWeight.min' => 'Cân nặng phải từ 0kg',
         ];
     }
 }

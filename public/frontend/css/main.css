@@ -1550,8 +1550,8 @@ h2.title {
   border-style: solid;
   border-color:transparent transparent transparent #EF6C7D;
   position: absolute;
-  top: 11px;
-  left:48px;
+  top: 0.66em;
+  left:75px;
 
 }
 
@@ -1627,7 +1627,7 @@ h2.title {
 
 .cart_product {
   display: block;
-  margin: 15px -70px 10px 25px;
+  margin: 10px;
 }
 
 .cart_quantity_button a {
@@ -1647,6 +1647,7 @@ h2.title {
   color: #696763;
   float: left;
   font-size: 16px;
+  vertical-align: center;
   text-align: center;
   font-family: 'Roboto',sans-serif;
   
@@ -1965,7 +1966,7 @@ h2.title {
 
 #cart_items .cart_info 
 .table.table-condensed.total-result tr {
-  border-bottom: 0
+  border-bottom: 0;
 }
 
 #cart_items .cart_info 

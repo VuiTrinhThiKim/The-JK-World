@@ -10,7 +10,7 @@
             <?php 
             $addCate_message = Session::get('messCate');
             if($addCate_message) {
-                echo '<span class="text-alert">'.$addCate_message.'</span>';
+                echo '<span class="text-danger">'.$addCate_message.'</span>';
                 Session::put('messCate', null);
             }
             ?>
