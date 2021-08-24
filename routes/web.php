@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +20,18 @@ use App\Http\Controllers\UserController;
 |
 */
 //Web page
-Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/trang-chu', [HomeController::class, 'index']);
 
-Route::get('/danh-muc/{category_id}', 'CategoryController@show_category');
-Route::get('/thuong-hieu/{brand_id}', 'BrandController@show_brand');
-Route::get('/chi-tiet-san-pham/{product_id}', 'ProductController@show_product_detail');
+Route::get('/danh-muc/{category_id}', [CategoryController::class, 'show_category']);
+Route::get('/thuong-hieu/{brand_id}', [BrandController::class, 'show_brand']);
+Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'show_product_detail']);
+//Cart
+Route::post('/gio-hang', [CartController::class, 'index']);
+Route::post('/add-to-cart-ajax',[CartController::class, 'add_to_cart_ajax']);
+Route::get('/gio-hang', [CartController::class, 'show_cart']);
+Route::get('/xoa-san-pham-khoi-gio-hang/{cardId}', [CartController::class, 'delete_to_cart']);
+
 
 //Admin page
 Route::prefix('admin')->group(function(){
