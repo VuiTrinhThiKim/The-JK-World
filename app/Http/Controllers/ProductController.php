@@ -44,8 +44,8 @@ class ProductController extends Controller
         $category_list = Category::orderby('category_name', 'asc')->get();
         $brand_list = Brand::orderby('brand_name', 'asc')->get();
 
-        return view('admin.product.add_product_view')->with('category_list', $category_list)
-                                                     ->with('brand_list', $brand_list);
+        return view('admin.product.add_product_view')
+                ->with('category_list', $category_list)->with('brand_list', $brand_list);
     }
 
     /**
