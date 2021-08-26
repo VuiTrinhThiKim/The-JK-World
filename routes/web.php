@@ -8,7 +8,8 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\CheckoutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,12 @@ Route::post('/add-to-cart-ajax',[CartController::class, 'add_to_cart_ajax']);
 Route::get('/gio-hang', [CartController::class, 'show_cart']);
 Route::get('/xoa-san-pham-khoi-gio-hang/{cardId}', [CartController::class, 'delete_to_cart']);
 
+Route::get('/tim-kiem', [HomeController::class, 'search']);
+Route::get('/lien-he', [ContactUsController::class, 'index']);
+
+Route::get('/login-to-checkout', [CheckoutController::class, 'checkout_login']);
+Route::post('/tao-tai-khoan', [CheckoutController::class, 'create_customer']);
+Route::get('/thanh-toan', [CheckoutController::class, 'checkout']);
 
 //Admin page
 Route::prefix('admin')->group(function(){

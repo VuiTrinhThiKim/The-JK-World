@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Product;
+use Session;
 
+session_start();
 class HomeController extends Controller
 {
     public function index(){
@@ -25,5 +27,23 @@ class HomeController extends Controller
     								 ->with('brand_list', $brand_list)
     								 ->with('product_list', $product_list)
     								 ->with('related_products',$related_products);
+    }
+
+    public function search(Request $request){
+
+        $keywords = $request->keywords;
+
+        $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
+        $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        $search_cate = Category::where('category_status', '1')->where('category_name', 'like', '%'.$keywords.'%')->get();
+        $search_brand = Brand::where('brand_status', '1')->where('brand_name', 'like', '%'.$keywords.'%')->get();
+        $search_product = Product::where('product_name', 'like', '%'.$keywords.'%')->get();
+
+        session::put('keywords', $keywords);
+        return view('page.search_view')->with('category_list', $category_list)
+                                     ->with('brand_list', $brand_list)
+                                     ->with('search_cate', $search_cate)
+                                     ->with('search_brand', $search_brand)
+                                     ->with('search_product', $search_product);
     }
 }
