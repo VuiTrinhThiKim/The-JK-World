@@ -19,7 +19,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $category_list = Category::orderby('category_name', 'asc')->get();
+        $brand_list = Brand::orderby('brand_name', 'asc')->get();
+        
+        return view('page.user.login_view')->with('category_list', $category_list)->with('brand_list', $brand_list);
     }
 
     /**
