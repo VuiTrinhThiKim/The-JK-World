@@ -10,6 +10,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CustomerController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,16 +32,23 @@ Route::get('/thuong-hieu/{brand_id}', [BrandController::class, 'show_brand']);
 Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'show_product_detail']);
 //Cart
 Route::post('/gio-hang', [CartController::class, 'index']);
-Route::post('/add-to-cart-ajax',[CartController::class, 'add_to_cart_ajax']);
-Route::get('/gio-hang', [CartController::class, 'show_cart']);
+Route::get('/xem-gio-hang', [CartController::class, 'show_cart']);
 Route::get('/xoa-san-pham-khoi-gio-hang/{cardId}', [CartController::class, 'delete_to_cart']);
+Route::post('/cap-nhat-so-luong/{cardId}', [CartController::class, 'update_quantity']);
+//Route::get('/gio-hang', [CartController::class, 'cart_ajax']);
+//Route::post('/add-to-cart-ajax',[CartController::class, 'add_to_cart_ajax']);
 
 Route::get('/tim-kiem', [HomeController::class, 'search']);
 Route::get('/lien-he', [ContactUsController::class, 'index']);
 
 Route::get('/login-to-checkout', [CheckoutController::class, 'checkout_login']);
-Route::post('/tao-tai-khoan', [CheckoutController::class, 'create_customer']);
-Route::get('/thanh-toan', [CheckoutController::class, 'checkout']);
+Route::get('/thong-tin-giao-hang', [CheckoutController::class, 'checkout']);
+Route::post('/luu-thong-tin-giao-hang', [CheckoutController::class, 'save_shipping']);
+
+Route::post('/tao-tai-khoan', [CustomerController::class, 'create_customer']);
+Route::post('/dang-nhap', [CustomerController::class, 'login']);
+Route::get('/dang-xuat', [CustomerController::class, 'logout']);
+
 
 //Admin page
 Route::prefix('admin')->group(function(){

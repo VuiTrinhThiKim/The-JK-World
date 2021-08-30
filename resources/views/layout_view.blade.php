@@ -90,11 +90,36 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                <?php
+                                    $customer_name = Session::get('username');
+                                    if ($customer_name != null) {
+                                ?>
+                                        <li><a href="#"><i class="fa fa-user"></i> Chào, {{$customer_name}}</a></li>
+                                <?php
+                                    }
+                                    else {
+                                ?>
+                                        <li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                <?php
+                                    }
+                                ?>
+                                
                                 <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li>
                                 <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
-                                <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-                                <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+                                <li><a href="{{URL::to('/xem-gio-hang')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                                <?php
+                                    $customer_id = Session::get('customer_id');
+                                    if ($customer_id != null) {
+                                ?>
+                                        <li><a href="{{URL::to('/dang-xuat')}}"><i class="fa fa-lock"></i> Đăng xuất</a></li>
+                                <?php
+                                    }
+                                    else {
+                                ?>
+                                        <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+                                <?php
+                                    }
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -128,7 +153,7 @@
                                         <li><a href="blog-single.html">Blog Single</a></li>
                                     </ul>
                                 </li> 
-                                <li><a href="{{URL::to('/gio-hang')}}">Giỏ hàng</a></li>
+                                <li><a href="{{URL::to('/xem-gio-hang')}}">Giỏ hàng</a></li>
                                 <li><a href="{{URL::to('/lien-he')}}">Liên hệ</a></li>
                             </ul>
                         </div>
@@ -441,50 +466,6 @@
         CKEDITOR.inline( 'productContent', {
             removePlugins: 'toolbar'
         } );
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            //Click button Them Vao Gio Hang
-            $('.add-to-cart').click(function(){
-                //Get product_id form button data
-                var id = $(this).data('product_id');
-                //Set value for variables
-                var cart_product_id = $('.cart_product_id_' + id).val();
-                var cart_product_name = $('.cart_product_name_' + id).val();
-                var cart_product_image = $('.cart_product_image_' + id).val();
-                var cart_product_price = $('.cart_product_price_' + id).val();
-                var cart_product_qty = $('.cart_product_qty_' + id).val();
-                var _token = $('input[name="_token"]').val();
-                //Start ajax
-                $.ajax({
-                    url: '{{url('/add-to-cart-ajax')}}',
-                    method: 'POST',
-                    data:{cart_product_id:cart_product_id,
-                        cart_product_name:cart_product_name,
-                        cart_product_price:cart_product_price,
-                        cart_product_image:cart_product_image,
-                        cart_product_qty:cart_product_qty,
-                        _token:_token},
-                    success:function(){
-
-                        swal({
-                                title: "Đã thêm sản phẩm vào giỏ hàng!",
-                                text: "Bạn có thể tiếp tục mua hàng hoặc đến giỏ hàng để tiến hành thanh toán",
-                                showCancelButton: true,
-                                cancelButtonText: "Xem tiếp",
-                                confirmButtonClass: "btn-success",
-                                confirmButtonText: "Đi đến giỏ hàng",
-                                closeOnConfirm: false
-                            },
-                            function() {
-                                window.location.href = "{{url('/gio-hang')}}";
-                            });
-
-                    }
-
-                });
-            });
-        });
     </script>
 </body>
 </html>

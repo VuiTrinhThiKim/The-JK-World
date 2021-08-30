@@ -14,13 +14,15 @@
 			  <!-- Wrapper for slides -->
 			    <div class="carousel-inner">
 					<div class="item active">
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt=""></a>
+					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
+					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
+					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
 					</div>
 					<div class="item">
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt=""></a>
+					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
 					</div>
 					<div class="item">
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt=""></a>
+					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
 					</div>
 					
 				</div>
@@ -49,7 +51,7 @@
 				</span>
 				<span>
 					<label>Số lượng:</label>
-					<input name="productQuantity" type="number" min="1" max="4" value="3" />
+					<input name="productQuantity" type="number" min="1" max="4" value="1" />
 					<input name="productId" type="hidden" value="{{$product->product_id}}" />
 					<button type="submit" class="btn btn-fefault cart">
 						<i class="fa fa-shopping-cart"></i>
