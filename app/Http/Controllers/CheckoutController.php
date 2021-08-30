@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Shipping;
 use Session;
 use Redirect;
 use Hash;
@@ -32,38 +33,23 @@ class CheckoutController extends Controller
 	            ->with('category_list', $category_list)->with('brand_list', $brand_list);
     }
 
-    public function create_customer(Request $request){
+    
 
-    	$customer = new Customer;
+    public function save_shipping(Request $request, Shipping $shipping){
 
-        $hash_pass = Hash::make($request->get('password'));
+        $shipping = new Shipping();
 
-        $customer->username = $request->get('username');
-        $customer->password= $hash_pass;
-        $customer->first_name = $request->get('firstName');
-        $customer->last_name = $request->get('lastName');
-        $customer->phone = $request->get('customerPhone');
-        $customer->email = $request->get('customerEmail');
+        $shipping->customer_name = $request->customerFullName;
+        $shipping->customer_email = $request->customerEmail;
+        $shipping->customer_phone = $request->customerPhone;
+        $shipping->shipping_address = $request->customerAddress;
+        $shipping->shipping_note = $request->customerNote;
 
-        if(Customer::where('username',$customer->username)->first() != null) {
-            Session::put('messCustomer','Lỗi: Tên đăng nhập đã được sử dụng!!!');
-            return Redirect::to('/login-to-checkout');
-        }
-        if(Customer::where('phone',$customer->phone)->first() != null) {
-            Session::put('messCustomer','Lỗi: Số điện thoại đã được sử dụng!!!');
-            return Redirect::to('/login-to-checkout');
-        }
-        if(Customer::where('email',$customer->email)->first() != null) {
-            Session::put('messCustomer','Lỗi: Email đã được sử dụng!!!');
-            return Redirect::to('/login-to-checkout');
-        }
-        $customer->save();
-        Session::put('messCustomer','Tạo tài khoản thành công');
-        // Put customer_id
-        $customer_name = $request->get('firstName').' '.$request->get('lastName');;
-        dd($customer_name);
-        Session::put('customer_id', $customer->customer_id());
-        Session::put('customer_name', $customer_name);
-        return Redirect::to('/thanh-toan');
+        $shipping->save();
+        $current_shipping_id = $shipping->shipping_id();
+
+        Session::put('shipping_id', $current_shipping_id);
+
+        return Redirect::to('/payment');
     }
 }

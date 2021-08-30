@@ -10,32 +10,32 @@
 				</ol>
 			</div><!--/breadcrums-->
 
-			<div class="register-req">
+			<!--<div class="register-req">
 				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-			</div><!--/register-req-->
+			</div>/register-req-->
 
-			<div class="shopper-informations">
+			<div class="shopper-informations" >
 				<div class="row">
-					<div class="col-sm-8 clearfix">
+					<div class="col-sm-12 clearfix">
 						<div class="bill-to">
-							<p>Thông tin cá nhân</p>
+							<p>Thông tin giao hàng</p>
 							<div class="form-one">
-								<form>
-									<input type="email" placeholder="Email*">
-									<input type="text" placeholder="Họ và tên">
-									<input type="text" placeholder="Địa chỉ">
-									<input type="text" placeholder="Phone *">
+								<form action="{{URL::to('/luu-thong-tin-giao-hang')}}" method="post">
+									<label for="customerEmail">Email</label>
+									<input type="email"name="customerEmail" placeholder="Email*">
+									<label for="customerFullName">Họ và tên</label>
+									<input type="text" name="customerFullName" placeholder="Họ và tên">
+									<label for="customerAddress">Địa chỉ</label>
+									<input type="text" name="customerAddress"placeholder="Địa chỉ">
+									<label for="customerPhone">Điện thoại</label>
+									<input type="text"name="customerPhone" placeholder="VD: 0123456789">
+									<label for="customerNote">Ghi chú</label>
+									<textarea name="customerNote" placeholder="  Nhập ghi chú cho đơn hàng của bạn" rows="5"></textarea>
+									<button type="submit" class="btn btn-default btn-save shipping-save"><i class="fa fa-save"></i> Lưu thông tin giao hàng</button>
 								</form>
 							</div>
 						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="order-message">
-							<p>Ghi chú</p>
-							<textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-							<label><input type="checkbox"> Ghi chú cho đơn hàng của bạn</label>
-						</div>	
-					</div>					
+					</div>			
 				</div>
 			</div>
 			<div class="review-payment">

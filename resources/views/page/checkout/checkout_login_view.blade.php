@@ -7,10 +7,18 @@
 			<div class="col-sm-12 col-sm-offset-1">
 				<div class="login-form"><!--login form-->
 					<h2><strong>Đăng nhập tài khoản</strong></h2>
-					<form action="#">
+					<?php 
+		            $messCustomer = Session::get('messCustomer');
+		            if($messCustomer) {
+		                echo '<span class="text-alert">'.$messCustomer.'</span>';
+		                Session::put('messCustomer', null);
+		            }
+		            ?>
+					<form action="{{URL::to('/dang-nhap')}}" method="post">
+						{{csrf_field()}}
 						<label for="username">Tên đăng nhập<span class="required-field"> (*)</span></label>
 						<input type="text" name="username" placeholder="Tên đăng nhập" />
-						<label for="username">Mật khẩu<span class="required-field"> (*)</span></label>
+						<label for="password">Mật khẩu<span class="required-field"> (*)</span></label>
 						<input type="password" name="password" placeholder="Mật khẩu" />
 						<span>
 							<input type="checkbox" class="checkbox"> 
