@@ -30,7 +30,7 @@
 						<td class="cart_product">
 							<a href="#"><img src="{{URL::to('/public/upload/products/'.$cart_item->options->image)}}" alt="{{$cart_item->image}}" width="60" height="60" /></a>
 						</td>
-						<td class="cart_description">
+						<td class="cart_description" style="width: 30%;">
 							<h4><a href="">{{$cart_item->name}}</a></h4>
 							<!--<p>							</p>-->
 						</td>
@@ -39,13 +39,21 @@
 						</td>
 						<td class="cart_quantity">
 							<div class="cart_quantity_button">
-								<a class="cart_quantity_up" href=""> + </a>
-								<input class="cart_quantity_input" type="text" name="quantity" value="{{$cart_item->qty}}" autocomplete="off" size="2">
-								<a class="cart_quantity_down" href=""> - </a>
+								<form action="{{URL::to('/cap-nhat-so-luong/'.$cart_item->rowId)}}" method="post">
+									{{csrf_field()}}
+									<input class="cart_quantity_input" type="number" name="itemQuantity" min="1" max="10" value="{{$cart_item->qty}}" autocomplete="off" size="2">
+									<input type="hidden" name="rowId" value="{{$cart_item->rowId}}">
+									<button type="submit" class="btn btn-default btn-save"><i class="fa fa-save"></i></button>
+								</form>
 							</div>
 						</td>
 						<td class="cart_total">
-							<p class="cart_total_price">{{Cart::subtotal().' ₫'}}</p>
+							<p class="cart_total_price">
+								<?php
+									$subtotal = $cart_item->price * $cart_item->qty;
+									echo number_format($subtotal).' ₫';
+								?>
+							</p>
 						</td>
 						<td class="cart_delete">
 							<a onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')"  class="cart_quantity_delete" href="{{URL::to('/xoa-san-pham-khoi-gio-hang/'.$cart_item->rowId)}}"><i class="fa fa-times"></i></a>
@@ -54,6 +62,9 @@
 					@endforeach
 				</tbody>
 			</table>
+		</div>
+		<div>
+			<button>Xóa giỏ hàng</button>
 		</div>
 	</div>
 </section> <!--/#cart_items-->
@@ -85,13 +96,7 @@
 							<label>Tỉnh/Thành phố:</label>
 							<select>
 								<option>United States</option>
-								<option>Bangladesh</option>
-								<option>UK</option>
-								<option>India</option>
-								<option>Pakistan</option>
-								<option>Ucrane</option>
-								<option>Canada</option>
-								<option>Dubai</option>
+								
 							</select>
 							
 						</li>
@@ -99,13 +104,7 @@
 							<label>Quận/Huyện:</label>
 							<select>
 								<option>Select</option>
-								<option>Dhaka</option>
-								<option>London</option>
-								<option>Dillih</option>
-								<option>Lahore</option>
-								<option>Alaska</option>
-								<option>Canada</option>
-								<option>Dubai</option>
+								
 							</select>
 						
 						</li>
@@ -113,13 +112,7 @@
 							<label>Phường/Xã:</label>
 							<select>
 								<option>Select</option>
-								<option>Dhaka</option>
-								<option>London</option>
-								<option>Dillih</option>
-								<option>Lahore</option>
-								<option>Alaska</option>
-								<option>Canada</option>
-								<option>Dubai</option>
+								
 							</select>
 						
 						</li>
@@ -137,7 +130,20 @@
 						<li>Thành tiền<span>{{Cart::total().' ₫'}}</span></li>
 					</ul>
 						<a class="btn btn-default update" href="">Cập nhật</a>
-						<a class="btn btn-default check_out" href="">Thanh toán</a>
+						<?php
+                            $customer_id = Session::get('customer_id');
+                            if ($customer_id != null) {
+                        ?>
+                                <a class="btn btn-default check_out" href="{{URL::to('/thong-tin-giao-hang')}}">Tiếp tục</a>
+                        <?php
+                            }
+                            else {
+                        ?>
+                                <a class="btn btn-default check_out" href="{{URL::to('/login-to-checkout')}}">Thanh toán</a>
+                        <?php
+                            }
+                        ?>
+						
 				</div>
 			</div>
 		</div>

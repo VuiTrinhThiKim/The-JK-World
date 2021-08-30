@@ -34,36 +34,10 @@ class CartController extends Controller
         $data['options']['image'] = $product->product_image;
 
         Cart::add($data);
-        return Redirect::to('/gio-hang');
+        return Redirect::to('/xem-gio-hang');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show_cart()
     {
         $category_list = Category::where('category_status', '1')->orderby('category_id', 'desc')->get();
@@ -93,9 +67,12 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update_quantity(Request $request, Cart $cart, $rowId)
     {
-        //
+        $qty = $request->itemQuantity;
+        Cart::update($rowId, $qty);
+
+        return Redirect::to('/xem-gio-hang');
     }
 
     /**
@@ -107,51 +84,13 @@ class CartController extends Controller
     public function delete_to_cart($rowId)
     {
         Cart::remove($rowId);
-        return Redirect::to('/gio-hang');
+        
+        return Redirect::to('/xem-gio-hang');
     }
 
     public function destroy($cartId)
     {
         //
     }
-
-    public function add_to_cart_ajax(Request $request){
-
-        $data = $request->all();
-        $session_id = substr(md5(microtime()),rand(0,26),5);
-        $cart = Session::get('cart');
-
-        if($cart==true){
-            $is_avaiable = 0;
-
-            if($is_avaiable == 0){
-
-                $cart[] = array(
-                'session_id' => $session_id,
-                'product_id' => $data['cart_product_id'],
-                'product_name' => $data['cart_product_name'],
-                'product_price' => $data['cart_product_price'],
-                'product_image' => $data['cart_product_image'],
-                'product_qty' => $data['cart_product_qty'],
-                );
-                Session::put('cart',$cart);
-            }
-        }
-        else{
-
-            $cart[] = array(
-                'session_id' => $session_id,
-                'product_id' => $data['cart_product_id'],
-                'product_name' => $data['cart_product_name'],
-                'product_price' => $data['cart_product_price'],
-                'product_image' => $data['cart_product_image'],
-                'product_qty' => $data['cart_product_qty'],
-            );
-            Session::put('cart',$cart);
-        }
-       
-        Session::save();
-
-    } 
 
 }
