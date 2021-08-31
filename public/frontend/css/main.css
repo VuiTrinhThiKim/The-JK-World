@@ -2542,3 +2542,11 @@ h2.title {
   margin: 15px 0 0;
   border: 1px solid #EF6C7D;
 }
+
+.btn-order {
+  margin-top: 15px;
+  background: #EF6C7D;
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 16px;
+}

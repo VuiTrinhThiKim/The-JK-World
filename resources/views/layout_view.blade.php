@@ -28,6 +28,8 @@
 <body>
     <?php 
     $keywords = Session::get('keywords');
+    echo Session::get('customer_id');
+    echo Session::get('shipping_id');
     ?>
     <header id="header"><!--header-->
         <div class="header_top"><!--header_top-->
@@ -99,13 +101,32 @@
                                     }
                                     else {
                                 ?>
-                                        <li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                        <li><a href="{{URL::to('/login-to-checkout')}}"><i class="fa fa-user"></i> Tài khoản</a></li>
                                 <?php
                                     }
                                 ?>
                                 
                                 <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li>
-                                <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                <?php
+                                    $customer_id = Session::get('customer_id');
+                                    $shipping_id = Session::get('shipping_id');
+                                    if($customer_id != null && $shipping_id != null) {
+                                ?>
+                                        <li><a href="{{URL::to('/thanh-toan')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                <?php
+                                    }
+                                    else if($customer_id != null) {
+                                ?>
+                                        <li><a href="{{URL::to('/xem-gio-hang')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                <?php
+                                    }
+                                    else{
+                                ?>
+                                        <li><a href="{{URL::to('/login-to-checkout')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                <?php
+                                    }
+                                ?>
+                                
                                 <li><a href="{{URL::to('/xem-gio-hang')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                                 <?php
                                     $customer_id = Session::get('customer_id');
@@ -116,7 +137,7 @@
                                     }
                                     else {
                                 ?>
-                                        <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+                                        <li><a href="{{URL::to('/login-to-checkout')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
                                 <?php
                                     }
                                 ?>

@@ -20,13 +20,18 @@ class HomeController extends Controller
         //Get category id
         $category_id = '1';
 
-        $related_products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
-            ->where('categories.category_id', $category_id)->get();
+        $related_products_active = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+            ->where('categories.category_id', $category_id)->limit(3)->get();
 
-    	return view('page.home_view')->with('category_list', $category_list)
-    								 ->with('brand_list', $brand_list)
-    								 ->with('product_list', $product_list)
-    								 ->with('related_products',$related_products);
+        $related_products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+            ->where('categories.category_id', $category_id)->skip(3)->take(6)->get();
+
+    	return view('page.home_view')
+                ->with('category_list', $category_list)
+                ->with('brand_list', $brand_list)
+    			->with('product_list', $product_list)
+                ->with('related_products_active',$related_products_active)
+                ->with('related_products',$related_products);
     }
 
     public function search(Request $request){

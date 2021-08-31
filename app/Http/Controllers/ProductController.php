@@ -266,14 +266,20 @@ class ProductController extends Controller
             $category_id = $value->category_id;
         }
 
+        $related_products_active = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+            ->where('categories.category_id', $category_id)
+            ->whereNotIn('products.product_id', [$product_id])->limit(3)->get();
+
         $related_products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
             ->where('categories.category_id', $category_id)
-            ->whereNotIn('products.product_id', [$product_id])->get();
+            ->whereNotIn('products.product_id', [$product_id])->skip(3)->take(6)->get();
 
-        return view('page.product.product_view')->with('category_list', $category_list)
-                                     ->with('brand_list', $brand_list)
-                                     ->with('product_details', $product_details)
-                                     ->with('related_products', $related_products);
+        return view('page.product.product_view')
+                    ->with('category_list', $category_list)
+                    ->with('brand_list', $brand_list)
+                    ->with('product_details', $product_details)
+                    ->with('related_products', $related_products)
+                    ->with('related_products_active', $related_products_active);
     }
 
     

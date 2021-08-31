@@ -25,7 +25,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($cart_content as $cart_item)
+					@foreach($cart_content as $key => $cart_item)
 					<tr>
 						<td class="cart_product">
 							<a href="#"><img src="{{URL::to('/public/upload/products/'.$cart_item->options->image)}}" alt="{{$cart_item->image}}" width="60" height="60" /></a>
