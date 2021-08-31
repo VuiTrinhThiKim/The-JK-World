@@ -14,7 +14,7 @@ session_start();
 class AdminController extends Controller
 {
     public function loginAuthentication() {
-        $ad_username = Session::get('username');
+        $ad_username = Session::get('ad_username');
 
         if($ad_username){
             return Redirect::to('admin_login_view');
@@ -36,17 +36,17 @@ class AdminController extends Controller
     }
 
     //Check admin login
-    public function dashboard(Request $request_ad){
+    public function dashboard(Request $request){
 
-    	$username = $request_ad->username;
-    	$password = md5($request_ad->password);
+    	$username = $request->get('username');
+    	$password = md5($request->password);
 
     	$result = Admin::where('username', $username)
     							     -> where('password', $password)
     							     -> first();
 		if($result){
-            Session::put('username', $result->username);
-            Session::put('id', $result->id);
+            Session::put('ad_username', $result->username);
+            Session::put('ad_id', $result->id);
             return Redirect::to('admin/dashboard');
         }
         else {

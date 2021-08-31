@@ -60,7 +60,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <img alt="" src="{{asset('public/backend/images/avt.jpg')}}">
                 <span class="username">
                     <?php
-                        $ad_username = Session::get('username');
+                        $ad_username = Session::get('ad_username');
                         if($ad_username){
                             echo $ad_username;
                         }
@@ -100,7 +100,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Người dùng - User</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{URL::to('/admin/user/add')}}">Thêm người dung mới</a></li>
+                        <li><a href="{{URL::to('/admin/user/add')}}">Thêm người dùng mới</a></li>
                         <li><a href="{{URL::to('/admin/user/view-all')}}">Danh sách người dùng</a></li>
                     </ul>
                 </li>
@@ -129,12 +129,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-book"></i>
+                        <i class="fa fa-product-hunt"></i>
                         <span>Sản phẩm - Product</span>
                     </a>
                     <ul class="sub">
                         <li><a href="{{URL::to('/admin/product/add')}}">Thêm sản phẩm mới</a></li>
                         <li><a href="{{URL::to('/admin/product/view-all')}}">Danh sách sản phẩm</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>Đơn hàng - Order</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{URL::to('/admin/product/add')}}">Thêm sản phẩm mới</a></li>
+                        <li><a href="{{URL::to('/admin/product/view-all')}}">Danh sách đơn hàng</a></li>
                     </ul>
                 </li>
                 <!-- <li>
