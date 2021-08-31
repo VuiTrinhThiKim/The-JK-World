@@ -5,22 +5,26 @@
 		<div class="container" style="width: 100%;">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
-				  <li><a href="#">Trang chủ</a></li>
-				  <li class="active">Thanh toán</li>
+				  <li><a href="{{URL::to('/trang-chu')}}">Trang chủ</a></li>
+				  <li class="active">Thông tin giao hàng</li>
 				</ol>
 			</div><!--/breadcrums-->
 
 			<!--<div class="register-req">
 				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
 			</div>/register-req-->
-
-			<div class="shopper-informations" >
+			<?php
+				$customer_id = Session::get('customer_id');
+			?>
+			<div class="shopper-informations">
 				<div class="row">
 					<div class="col-sm-12 clearfix">
 						<div class="bill-to">
 							<p>Thông tin giao hàng</p>
 							<div class="form-one">
 								<form action="{{URL::to('/luu-thong-tin-giao-hang')}}" method="post">
+									{{csrf_field()}}
+									<input type="hidden" name="customerId" value="{{$customer_id}}">
 									<label for="customerEmail">Email</label>
 									<input type="email"name="customerEmail" placeholder="Email*">
 									<label for="customerFullName">Họ và tên</label>
@@ -38,7 +42,7 @@
 					</div>			
 				</div>
 			</div>
-			<div class="review-payment">
+			<!--<div class="review-payment">
 				<h2>Xem lại và thanh toán</h2>
 			</div>
 
@@ -107,16 +111,16 @@
 				</table>
 			</div>
 			<div class="payment-options">
-					<span>
-						<label><input type="checkbox"> Direct Bank Transfer</label>
-					</span>
-					<span>
-						<label><input type="checkbox"> Check Payment</label>
-					</span>
-					<span>
-						<label><input type="checkbox"> Paypal</label>
-					</span>
-				</div>
+				<span>
+					<label><input type="checkbox"> Direct Bank Transfer</label>
+				</span>
+				<span>
+					<label><input type="checkbox"> Check Payment</label>
+				</span>
+				<span>
+					<label><input type="checkbox"> Paypal</label>
+				</span>
+			</div>-->
 		</div>
 	</section> <!--/#cart_items-->
 @endsection
