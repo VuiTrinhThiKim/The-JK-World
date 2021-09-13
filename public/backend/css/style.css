@@ -3155,3 +3155,19 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
     color: red;
     font-weight: bold;
 }
+
+.role_item{
+    float: right;
+    width: 50%;
+    padding: 15px 0px 15px 15px;
+    border: 1px solid #fff;
+    outline: none;
+    font-size: 14px;
+    color: #fff;
+    margin: 14px 0px;
+    background: none;   
+}
+.option_item {
+    color: black;
+    font-size: 14px;
+}

@@ -63,7 +63,8 @@ Route::prefix('admin')->group(function(){
 	Route::post('/admin-dashboard', [AdminController::class, 'dashboard']);
 	//Admin Logout
 	Route::get('/logout', [AdminController::class, 'logout']);
-
+	//Show Add New Addmin Account
+	Route::get('/create', [AdminController::class, 'showCreate']);
 	Route::group(['prefix'=>'category'], function(){
 		//All Categories
 		Route::get('/view-all', [CategoryController::class, 'view_all']);

@@ -21,24 +21,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/js/jquery2.0.3.min.js')}}"></script>
 </head>
 <body>
-<div class="log-w3">
+<div class="reg-w3">
 <div class="w3layouts-main">
-	<h2>Đăng nhập</h2>
-		<?php 
-	        $ad_log_message = Session::get('message');
-	        if($ad_log_message) {
-	            echo '<span class="status_alert">'.$ad_log_message.'</span>';
-	            Session::put('message', null);
-	        }
-	    ?>
+	<h2>Thêm tài khoản</h2>
 		<form action="{{URL::to('/admin/admin-dashboard')}}" method="post">
-			{{csrf_field()}}
-			<input type="text" class="ggg" name="username" placeholder="Tên đăng nhập" required="">
-			<input type="password" class="ggg" name="password" placeholder="Mật khẩu" required="">
-			<span><input type="checkbox" />Nhớ mật khẩu</span>
-			<h6><a href="#">Quên mật khẩu</a></h6>
-				<div class="clearfix"></div>
-				<input type="submit" value="Đăng nhập" name="login">
+			<input type="text" class="ggg" name="adUsername" placeholder="Tên đăng nhập" required="">
+			<input type="email" class="ggg" name="adEmail" placeholder="Địa chỉ email" required="">
+			<input type="text" class="ggg" name="adPhone" placeholder="Số điện thoại" required="">
+			<input type="text" class="ggg" name="adFirstName" placeholder="Họ" required="">
+			<input type="text" class="ggg" name="adLastName" placeholder="Tên" required="">
+			<input type="text" class="ggg" name="adAddress" placeholder="Địa chỉ" required="">
+			<input type="password" class="ggg" name="password" placeholder="PASSWORD" required="">
+			<input type="password" class="ggg" name="password_confirmation" placeholder="PASSWORD" required="">
+			<label class="admin_role" for="roleId">Loại tài khoản</label>
+            <select class="role_item" name="roleId" required>
+                <option value="1" class="option_item">Manager</option>
+                <option value="1" class="option_item">Staff</option>
+            </select>
+			<div class="clearfix"></div>
+			<input type="submit" value="submit" name="register">
 		</form>
 </div>
 </div>

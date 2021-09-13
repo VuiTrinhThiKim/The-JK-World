@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Redirect;
 use Session;
+use Hash;
 
 //Start session
 session_start();
@@ -35,6 +36,10 @@ class AdminController extends Controller
     	return view('admin.dashboard_view');
     }
 
+    public function showCreate(){
+
+        return view('admin.add_admin_view');
+    }
     //Check admin login
     public function dashboard(Request $request){
 
