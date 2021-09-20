@@ -98,7 +98,8 @@
 			<div class="col-sm-12">
 				<div class="product-image-wrapper">
 					<div class="single-products">
-						<textarea rows=9 class="form-control cke_inner cke_top" id="productContent" name="productContent" disabled>{{$product->content}}</textarea>
+						<p>{!!$product->content!!}</p>
+						<!--<textarea rows=9 class="form-control cke_inner cke_top" id="productContent" name="productContent" disabled>{{$product->content}}</textarea>-->
 					</div>
 				</div>
 			</div>

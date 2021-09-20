@@ -23,7 +23,7 @@ class ProductController extends Controller
     }
 
     public function loginAuthentication() {
-        $ad_username = Session::get('username');
+        $ad_username = Session::get('ad_username');
 
         if($ad_username){
             return Redirect::to('admin_login_view');
@@ -41,11 +41,9 @@ class ProductController extends Controller
     {
         $this->loginAuthentication();
 
-        $category_list = Category::orderby('category_name', 'asc')->get();
-        $brand_list = Brand::orderby('brand_name', 'asc')->get();
+        
 
-        return view('admin.product.add_product_view')
-                ->with('category_list', $category_list)->with('brand_list', $brand_list);
+        return view('admin.product.add_product_view');
     }
 
     /**
@@ -124,15 +122,11 @@ class ProductController extends Controller
     {
         $this->loginAuthentication();
 
-        $category_list = Category::orderby('category_name', 'asc')->get();
-        $brand_list = Brand::orderby('brand_name', 'asc')->get();
 
         $edit_product = Product::where('product_id',$product_id)
                                             ->get();
         $manager_product  = view('admin.product.edit_product_view')
-                      ->with('edit_product', $edit_product)
-                      ->with('category_list', $category_list)
-                      ->with('brand_list',$brand_list);
+                      ->with('edit_product', $edit_product);
         //dd($manager_product);
         return view('admin_layout_view')->with('admin.product.edit_product_view', $manager_product);
     }
@@ -156,7 +150,7 @@ class ProductController extends Controller
         $product->category_id = $request->get('categoryID');
         $product->brand_id = $request->get('brandID');
 
-        if(Product::where('product_name',$product->product_name)->where('product_id', '<>', $product_id)->first() != null) {
+        if(Product::where('product_name', 'LIKE BINARY', $product->product_name)->where('product_id', '<>', $product_id)->first() != null) {
             Session::put('messProduct','Lỗi: Trùng tên sản phẩm!!!');
             return Redirect::to('/admin/product/edit/'.$product_id);
         } 
@@ -256,8 +250,8 @@ class ProductController extends Controller
      */
     public function show_product_detail($product_id)
     {
-        $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
-        $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        $category_published = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
+        $brand_published = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
         $product_details = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
             ->where('products.product_id', $product_id)->get();
 
@@ -275,12 +269,11 @@ class ProductController extends Controller
             ->whereNotIn('products.product_id', [$product_id])->skip(3)->take(6)->get();
 
         return view('page.product.product_view')
-                    ->with('category_list', $category_list)
-                    ->with('brand_list', $brand_list)
+                    ->with('category_published', $category_published)
+                    ->with('brand_published', $brand_published)
                     ->with('product_details', $product_details)
                     ->with('related_products', $related_products)
                     ->with('related_products_active', $related_products_active);
     }
 
-    
 }
