@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Http\Requests\BrandRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Session;
 use Redirect;
 
@@ -22,7 +23,7 @@ class BrandController extends Controller
         //
     }
     public function loginAuthentication() {
-        $ad_username = Session::get('username');
+        $ad_username = Session::get('ad_username');
 
         if($ad_username){
             return Redirect::to('admin_login_view');
@@ -57,7 +58,17 @@ class BrandController extends Controller
         $brand->brand_description = $request->get('brandDescription');
         $brand->brand_status = $request->get('brandStatus');
 
-        if(Brand::where('brand_name',$request->brandName)->first() == null){
+        $slug = Str::of($brand->brand_name)->slug('-');
+        if(Brand::where('brand_slug', $slug)->first() == null)
+        {
+            $brand->brand_slug = $slug;
+        }
+        else {
+            $brand->brand_slug = $slug.'-'.rand(0,255);
+        }
+
+        if(Brand::where('brand_name', 'LIKE BINARY', $request->brandName)->first() == false)
+        {
                 
             $brand->save();
 
@@ -100,7 +111,20 @@ class BrandController extends Controller
 
         $brand->brand_name = $request->get('brandName');
         $brand->brand_description = $request->get('brandDescription');
-        if(Brand::where('brand_name',$brand->brand_name)->where('brand_id', '<>', $brand_id)->first() != null) {
+
+        $slug = Str::of($brand->brand_name)->slug('-');
+
+        if(Brand::where('brand_slug', $slug)
+                ->where('brand_id', $brand_id)->first() != null)
+        {
+            $brand->brand_slug = $slug;
+        }
+        else {
+            $brand->brand_slug = $slug.'-'.rand(0,255);
+        }
+        if(Brand::where('brand_name', 'LIKE BINARY', $brand->brand_name)
+                ->where('brand_id', '<>', $brand_id)->first() != null)
+        {
             Session::put('messBrand','Lỗi: Trùng tên với sản phẩm khác!!!');
             return Redirect::to('/admin/brand/edit/'.$brand_id);
         } 
@@ -185,4 +209,13 @@ class BrandController extends Controller
                                      ->with('brand_by_id', $brand_by_id);
     }
     
+    public function search(Request $request)
+    {
+        $keywords = $request->keywords;
+
+        $search_brand = Brand::where('brand_name', 'LIKE BINARY', '%'.$keywords.'%')->get();
+
+        session::put('keywords', $keywords);
+        return view('admin.brand.search_brand')->with('search_brand', $search_brand);
+    }
 }

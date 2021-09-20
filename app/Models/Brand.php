@@ -13,7 +13,8 @@ class Brand extends Model
 
     protected $primaryKey = 'brand_id';
 
-    function __construct(){
-        parent::__construct();
+   	public function products()
+    {
+        return $this->belongsTo('App\Models\Product', 'brand_id', 'product_id');
     }
 }
