@@ -22,7 +22,7 @@ class CategoryController extends Controller
     }
 
     public function loginAuthentication() {
-        $ad_username = Session::get('username');
+        $ad_username = Session::get('ad_username');
 
         if($ad_username){
             return Redirect::to('admin_login_view');
@@ -57,7 +57,7 @@ class CategoryController extends Controller
         $category->category_description = $request->get('categoryDescription');
         $category->category_status = $request->get('categoryStatus');
 
-        if(Category::where('category_name',$request->categoryName)->first() == null){
+        if(Category::where('category_name','LIKE BINARY', $request->categoryName)->first() == null){
                 
             $category->save();
 
@@ -183,4 +183,35 @@ class CategoryController extends Controller
                                      ->with('category_by_id', $category_by_id);
     }
 
+    public function search(Request $request)
+    {
+        $keywords = $request->keywords;
+
+        $result = Category::where('category_name', 'LIKE BINARY', '%'.$keywords.'%')->get();
+
+        session::put('keywords', $keywords);
+        return view('admin.category.search_category')->with('result', $result);
+    }
+
+    public function filter(Request $request)
+    {
+        $filter_value = $request->filter;
+        //dd($filter_value);
+        switch ($filter_value) {
+            case '0':
+                return Redirect::to('/admin/category/view-all');
+            case '1':
+                $result = Category::orderByDesc('category_name')->get();
+                return view('admin.category.search_category')->with('result', $result);
+            case '2':
+                $result = Category::orderBy('category_name')->get();
+                return view('admin.category.search_category')->with('result', $result);
+            case '3':
+                dd($filter_value);
+                break;
+            default:
+                return Redirect::to('/admin/category/view-all');
+                break;
+        }
+    }
 }
