@@ -8,23 +8,29 @@
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
-        <select class="input-sm form-control w-sm inline v-middle">
-          <option value="0">Bulk action</option>
-          <option value="1">Delete selected</option>
-          <option value="2">Bulk edit</option>
-          <option value="3">Export</option>
-        </select>
-        <button class="btn btn-sm btn-default">Apply</button>                
+        <form action="{{URL::to('/admin/category/filter')}}">
+          {{csrf_field()}}
+          <select class="input-sm form-control w-sm inline v-middle" name="filter">
+            <option value="0">Xem tất cả</option>
+            <option value="1">Sắp xếp giảm dần</option>
+            <option value="2">Sắp xếp tăng dần</option>
+            <option value="3">Xuất</option>
+          </select>
+          <button class="btn btn-sm btn-default" type="submit">Apply</button>
+        </form>            
       </div>
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-        </div>
+        <form action="{{URL::to('/admin/category/search')}}" method="get">
+            {{csrf_field()}}
+          <div class="input-group">
+            <input type="text" name="keywords" class="input-sm form-control" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="submit">Go!</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
     <div class="table-responsive">

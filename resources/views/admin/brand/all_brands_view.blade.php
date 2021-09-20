@@ -19,12 +19,15 @@
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-        </div>
+        <form action="{{URL::to('/admin/brand/search')}}" method="get">
+            {{csrf_field()}}
+          <div class="input-group">
+            <input type="text" name="keywords" class="input-sm form-control" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="submit">Go!</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
     <div class="table-responsive">

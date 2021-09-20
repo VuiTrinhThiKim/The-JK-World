@@ -23,6 +23,7 @@ use App\Http\Controllers\CustomerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test', [ProductController::class, 'show_Brand']);
 //Web page
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/trang-chu', [HomeController::class, 'index']);
@@ -81,8 +82,10 @@ Route::prefix('admin')->group(function(){
 		Route::post('/update/{category_id}', [CategoryController::class, 'update']);
 		//Delete Category
 		Route::get('/delete/{category_id}', [CategoryController::class, 'destroy']);
-		//Save Category
-
+		//Search Category
+		Route::get('/search', [CategoryController::class, 'search']);
+		//Filter Category
+		Route::get('/filter', [CategoryController::class, 'filter']);
 	});
 
 	Route::group(['prefix'=>'brand'], function(){
@@ -101,7 +104,8 @@ Route::prefix('admin')->group(function(){
 		Route::post('/update/{brand_id}', [BrandController::class, 'update']);
 		//Delete Brand
 		Route::get('/delete/{brand_id}', [BrandController::class, 'destroy']);
-
+		//Search Brand
+		Route::get('/search', [BrandController::class, 'search']);
 	});
 
 	Route::group(['prefix'=>'product'], function(){
@@ -120,7 +124,6 @@ Route::prefix('admin')->group(function(){
 		Route::post('/update/{product_id}', [ProductController::class, 'update']);
 		//Delete Product
 		Route::get('/delete/{product_id}', [ProductController::class, 'destroy']);
-
 	});
 
 	Route::group(['prefix'=>'user'], function(){
