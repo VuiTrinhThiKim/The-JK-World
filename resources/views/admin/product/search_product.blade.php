@@ -20,17 +20,23 @@
             <option value="6">Đang bị ẩn khỏi web</option>
           </select>
           <button class="btn btn-sm btn-default" type="submit">Áp dụng</button>
-        </form>        
+        </form>         
       </div>
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Tên sản phẩm">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Tìm!</button>
-          </span>
-        </div>
+        <?php
+          $keywords = Session::get('keywords');
+        ?>
+        <form action="{{URL::to('/admin/product/search')}}" method="get">
+            {{csrf_field()}}
+          <div class="input-group">
+            <input type="text" name="keywords" value="{{$keywords}}" class="input-sm form-control" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="submit">Tìm!</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
     <div class="table-responsive">
@@ -59,7 +65,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($all_products as $key => $product_item)
+          @foreach($result as $key => $product_item)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$product_item->product_name}}</td>

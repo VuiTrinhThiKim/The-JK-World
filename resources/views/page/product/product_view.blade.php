@@ -51,7 +51,7 @@
 				</span>
 				<span>
 					<label>Số lượng:</label>
-					<input name="productQuantity" type="number" min="1" max="4" value="1" />
+					<input name="productQuantity" type="number" min="1" max="{{$product->product_qty}}" value="1" />
 					<input name="productId" type="hidden" value="{{$product->product_id}}" />
 					<button type="submit" class="btn btn-fefault cart">
 						<i class="fa fa-shopping-cart"></i>
