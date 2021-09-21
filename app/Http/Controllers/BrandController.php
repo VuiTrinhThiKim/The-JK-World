@@ -146,7 +146,7 @@ class BrandController extends Controller
         $products = Product::where('brand_id', $brand_id)->get();
 
         foreach ($products as $key => $product) {
-        	$product->brand_id = '0';
+        	$product->brand_id = '1';
 
         	$product->save();
         }
@@ -161,9 +161,11 @@ class BrandController extends Controller
 
         $this->loginAuthentication();
 
-        $all_brand = Brand::get();
+        $brands = Brand::paginate(5);
+        //dd($brands->links());
+        $count_brand = Brand::count();
         $manager_brand = view('admin.brand.all_brands_view') 
-                     -> with('all_brands', $all_brand);
+                     -> with('brands', $brands);
 
         return view('admin_layout_view')->with('admin.brand.all_brands_view', $manager_brand);
     }
@@ -194,28 +196,55 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show_brand($brand_id)
+    public function show_brand($brand_slug)
     {
-        $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
-        $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        $brand_id = Brand::where('brand_slug', $brand_slug)->value('brand_id');
+
         $brand_name = Brand::where('brand_id', $brand_id)->value('brand_name');
 
-        $brand_by_id = Product::join('brands', 'products.brand_id', '=', 'brands.brand_id')
-                            ->where('products.brand_id', $brand_id)->get();
-
-        return view('page.brand.brand_view')->with('category_list', $category_list)
-                                     ->with('brand_list', $brand_list)
+        $products_brand =  Brand::find($brand_id)->products->where('product_status', 1);
+        //dd($products_brand);
+        return view('page.brand.brand_view')
                                      ->with('brand_name', $brand_name)
-                                     ->with('brand_by_id', $brand_by_id);
+                                     ->with('products_brand', $products_brand);
     }
     
     public function search(Request $request)
     {
         $keywords = $request->keywords;
 
-        $search_brand = Brand::where('brand_name', 'LIKE BINARY', '%'.$keywords.'%')->get();
+        $result = Brand::where('brand_name', 'LIKE BINARY', '%'.$keywords.'%')->get();
 
         session::put('keywords', $keywords);
-        return view('admin.brand.search_brand')->with('search_brand', $search_brand);
+        return view('admin.brand.search_brand')->with('result', $result);
+    }
+
+    public function filter(Request $request)
+    {
+        $filter_value = $request->filter;
+        //dd($filter_value);
+        switch ($filter_value) {
+            case '0':
+                return Redirect::to('/admin/brand/view-all');
+            case '1':
+                Session::put('filter', 'A-Z');
+                $result = Brand::orderBy('brand_name')->paginate(5);
+                //dd($result);
+                return view('admin.brand.search_brand')->with('result', $result);
+            case '2':
+                Session::put('filter', 'Z-A');
+                $result = Brand::orderByDesc('brand_name')->paginate(5);
+                return view('admin.brand.search_brand')->with('result', $result);
+            case '3':
+                Session::put('filter', 'Đang hiển thị trên web');
+                $result = Brand::where('brand_status', 1)->paginate(5);
+                return view('admin.brand.search_brand')->with('result', $result);
+            case '4':
+                Session::put('filter', 'Đang bị ẩn khỏi web');
+                $result = Brand::where('brand_status', 0)->paginate(5);
+                return view('admin.brand.search_brand')->with('result', $result);
+            default:
+                return Redirect::to('/admin/brand/view-all');
+        }
     }
 }

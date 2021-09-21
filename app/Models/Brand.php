@@ -13,8 +13,10 @@ class Brand extends Model
 
     protected $primaryKey = 'brand_id';
 
+    protected $fillable = ['brand_id','brand_name', 'brand_description', 'brand_status'];
+    
    	public function products()
     {
-        return $this->belongsTo('App\Models\Product', 'brand_id', 'product_id');
+        return $this->hasMany(Product::class, 'brand_id', 'brand_id');
     }
 }
