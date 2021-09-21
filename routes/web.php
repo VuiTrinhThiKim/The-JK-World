@@ -28,9 +28,9 @@ Route::get('/test', [ProductController::class, 'show_Brand']);
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/trang-chu', [HomeController::class, 'index']);
 
-Route::get('/danh-muc/{category_id}', [CategoryController::class, 'show_category']);
-Route::get('/thuong-hieu/{brand_id}', [BrandController::class, 'show_brand']);
-Route::get('/chi-tiet-san-pham/{product_id}', [ProductController::class, 'show_product_detail']);
+Route::get('/danh-muc/{category_slug}', [CategoryController::class, 'show_category']);
+Route::get('/thuong-hieu/{brand_slug}', [BrandController::class, 'show_brand']);
+Route::get('/chi-tiet-san-pham/{product_slug}', [ProductController::class, 'show_product_detail']);
 //Cart
 Route::post('/gio-hang', [CartController::class, 'index']);
 Route::get('/xem-gio-hang', [CartController::class, 'show_cart']);
@@ -106,6 +106,8 @@ Route::prefix('admin')->group(function(){
 		Route::get('/delete/{brand_id}', [BrandController::class, 'destroy']);
 		//Search Brand
 		Route::get('/search', [BrandController::class, 'search']);
+		//Filter Brand
+		Route::get('/filter', [BrandController::class, 'filter']);
 	});
 
 	Route::group(['prefix'=>'product'], function(){
@@ -124,6 +126,10 @@ Route::prefix('admin')->group(function(){
 		Route::post('/update/{product_id}', [ProductController::class, 'update']);
 		//Delete Product
 		Route::get('/delete/{product_id}', [ProductController::class, 'destroy']);
+		//Search Product
+		Route::get('/search', [ProductController::class, 'search']);
+		//Filter Product
+		Route::get('/filter', [ProductController::class, 'filter']);
 	});
 
 	Route::group(['prefix'=>'user'], function(){

@@ -265,12 +265,12 @@
                     <div class="left-sidebar">
                         <h2>Danh mục sản phẩm</h2>
                         <div class="panel-group category-products" id="accordian"><!--category-products-->
-                            @foreach($category_list as $key => $category)
+                            @foreach($categories_actived as $key => $category)
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a href="{{URL::to('/danh-muc/'.$category->category_id)}}">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        <a href="{{URL::to('/danh-muc/'.$category->category_slug)}}">
+                                            <input type="hidden" name="categoryId" value="{{$category->category_slug}}">
                                             {{$category->category_name}}
                                         </a>
                                     </h4>
@@ -285,10 +285,10 @@
                             <h2>Brands</h2>
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked">
-                                    @foreach($brand_list as $key => $brand)
+                                    @foreach($brands_actived as $key => $brand)
                                     <li>
-                                        <a href="{{URL::to('/thuong-hieu/'.$brand->brand_id)}}">
-                                            <span class="pull-right">(50)</span>{{$brand->brand_name}}
+                                        <a href="{{URL::to('/thuong-hieu/'.$brand->brand_slug)}}">
+                                            {{$brand->brand_name}}
                                         </a>
                                     </li>
                                     @endforeach
