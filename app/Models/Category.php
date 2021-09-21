@@ -11,10 +11,10 @@ class Category extends Model
 
     protected $primaryKey = 'category_id';
 
-    protected $fillable = ['category_name', 'description', 'status'];
+    protected $fillable = ['category_id','category_name', 'category_description', 'category_status'];
 
     public function products()
     {
-        return $this->hasMany('App\Product');
+        return $this->hasMany(Product::class, 'category_id', 'category_id');
     }
 }

@@ -3,8 +3,11 @@
 @section('admin_content')
 <div class="table-agile-info">
   <div class="panel panel-default">
+    <?php
+      $filter = Session::get('filter');
+    ?>
     <div class="panel-heading">
-      Danh sách danh mục sản phẩm
+      Danh mục sản phẩm {{$filter}}
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -12,9 +15,10 @@
           {{csrf_field()}}
           <select class="input-sm form-control w-sm inline v-middle" name="filter">
             <option value="0">Xem tất cả</option>
-            <option value="1">Sắp xếp giảm dần</option>
-            <option value="2">Sắp xếp tăng dần</option>
-            <option value="3">Xuất</option>
+            <option value="1">Sắp xếp theo tên từ A-Z</option>
+            <option value="2">Sắp xếp theo tên từ Z-A</option>
+            <option value="3">Đang hiển thị trên web</option>
+            <option value="4">Đang bị ẩn khỏi web</option>
           </select>
           <button class="btn btn-sm btn-default" type="submit">Apply</button>
         </form>              
@@ -91,20 +95,45 @@
         </tbody>
       </table>
     </div>
+    <?php
+      $categories = $result;
+    ?>
     <footer class="panel-footer">
       <div class="row">
-        
-        <div class="col-sm-5 text-center">
-          <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+
+        <div class="col-sm-5 text-left">
+          <small class="text-muted inline m-t-sm m-b-sm">Trang {{$categories->currentPage()}} của {{$categories->lastPage()}}</small>
         </div>
         <div class="col-sm-7 text-right text-center-xs">                
           <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+            <li>
+              <a href="{{ $categories->url(0) }}">
+                <i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>
+              </a>
+            </li>
+            @if($categories->currentPage() < 2)
+            <li>
+              <a href="{{ $categories->url(0) }}">
+                <i class="fa fa-chevron-left"></i>
+                </a>
+            </li>
+            @else
+            <li>
+              <a href="{{ $categories->previousPageUrl() }}">
+                <i class="fa fa-chevron-left"></i>
+                </a>
+            </li>
+            @endif
+            <li>
+              <a href="{{ $categories->nextPageUrl() }}">
+                <i class="fa fa-chevron-right"></i>
+              </a>
+            </li>
+            <li>
+              <a href="{{ $categories->url($categories->lastPage()) }}">
+                <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>
+              </a>
+            </li> 
           </ul>
         </div>
       </div>

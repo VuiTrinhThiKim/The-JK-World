@@ -121,7 +121,7 @@ class CategoryController extends Controller
         $products = Product::where('category_id', $category_id)->get();
 
         foreach ($products as $key => $product) {
-            $product->category_id = '0';
+            $product->category_id = '1';
 
             $product->save();
         }
@@ -136,9 +136,9 @@ class CategoryController extends Controller
 
         $this->loginAuthentication();
 
-        $all_cate = Category::get();
+        $categories = Category::paginate(5);
         $manager_cate = view('admin.category.all_categories_view') 
-                     -> with('all_categories', $all_cate);
+                     -> with('categories', $categories);
 
         return view('admin_layout_view')->with('admin.category.all_categories_view', $manager_cate);
     }
@@ -169,18 +169,15 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show_category(Category $category_list, $category_id)
+    public function show_category(Category $category_list, $category_slug)
     {
-        $category_list = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
+        $category_id = Category::where('category_slug', $category_slug)->value('category_id');
         $category_name = Category::where('category_id', $category_id)->value('category_name');
-        $brand_list = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
 
-        $category_by_id = Product::join('categories', 'products.category_id', '=', 'categories.category_id')->where('products.category_id', $category_id)->get();
-
-        return view('page.category.category_view')->with('category_list', $category_list)
-                                     ->with('category_name', $category_name)
-                                     ->with('brand_list', $brand_list)
-                                     ->with('category_by_id', $category_by_id);
+        $products_category =  Category::find($category_id)->products->where('product_status', 1);
+        //dd($products_category);
+        return view('page.category.category_view')->with('category_name', $category_name)
+                                     ->with('products_category', $products_category);
     }
 
     public function search(Request $request)
@@ -201,17 +198,23 @@ class CategoryController extends Controller
             case '0':
                 return Redirect::to('/admin/category/view-all');
             case '1':
-                $result = Category::orderByDesc('category_name')->get();
+                Session::put('filter', 'A-Z');
+                $result = Category::orderBy('category_name')->paginate(5);
                 return view('admin.category.search_category')->with('result', $result);
             case '2':
-                $result = Category::orderBy('category_name')->get();
+                Session::put('filter', 'Z-A');
+                $result = Category::orderByDesc('category_name')->paginate(5);
                 return view('admin.category.search_category')->with('result', $result);
             case '3':
-                dd($filter_value);
-                break;
+                Session::put('filter', 'Đang hiển thị trên web');
+                $result = Category::where('category_status', 1)->paginate(5);
+                return view('admin.category.search_category')->with('result', $result);
+            case '4':
+                Session::put('filter', 'Đang bị ẩn khỏi web');
+                $result = Category::where('category_status', 0)->paginate(5);
+                return view('admin.category.search_category')->with('result', $result);
             default:
                 return Redirect::to('/admin/category/view-all');
-                break;
         }
     }
 }
