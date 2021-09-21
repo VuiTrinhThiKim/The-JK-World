@@ -32,5 +32,10 @@ class AppServiceProvider extends ServiceProvider
         $brand_list = Brand::orderby('brand_name', 'asc')->get();
         View::share('category_list', $category_list);
         View::share('brand_list', $brand_list);
+
+        $categories_actived = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
+        $brands_actived = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        View::share('categories_actived', $categories_actived);
+        View::share('brands_actived', $brands_actived);
     }
 }
