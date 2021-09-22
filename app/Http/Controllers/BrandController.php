@@ -213,34 +213,41 @@ class BrandController extends Controller
     {
         $keywords = $request->keywords;
 
-        $result = Brand::where('brand_name', 'LIKE BINARY', '%'.$keywords.'%')->get();
+        $result = Brand::where('brand_name', 'LIKE BINARY', '%'.$keywords.'%')->paginate(5);
 
-        session::put('keywords', $keywords);
+        Session::put('keywords', $keywords);
+        Session::forget('filter');
+        Session::forget('filter_id');
         return view('admin.brand.search_brand')->with('result', $result);
     }
 
     public function filter(Request $request)
     {
         $filter_value = $request->filter;
+        Session::forget('keywords');
         //dd($filter_value);
         switch ($filter_value) {
             case '0':
                 return Redirect::to('/admin/brand/view-all');
             case '1':
                 Session::put('filter', 'A-Z');
+                Session::put('filter_id', 1);
                 $result = Brand::orderBy('brand_name')->paginate(5);
                 //dd($result);
                 return view('admin.brand.search_brand')->with('result', $result);
             case '2':
                 Session::put('filter', 'Z-A');
+                Session::put('filter_id', 2);
                 $result = Brand::orderByDesc('brand_name')->paginate(5);
                 return view('admin.brand.search_brand')->with('result', $result);
             case '3':
                 Session::put('filter', 'Đang hiển thị trên web');
+                Session::put('filter_id', 3);
                 $result = Brand::where('brand_status', 1)->paginate(5);
                 return view('admin.brand.search_brand')->with('result', $result);
             case '4':
                 Session::put('filter', 'Đang bị ẩn khỏi web');
+                Session::put('filter_id', 4);
                 $result = Brand::where('brand_status', 0)->paginate(5);
                 return view('admin.brand.search_brand')->with('result', $result);
             default:

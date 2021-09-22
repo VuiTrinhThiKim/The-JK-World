@@ -5,6 +5,7 @@
   <div class="panel panel-default">
     <?php
       $filter = Session::get('filter');
+      $filter_id = Session::get('filter_id');
     ?>
     <div class="panel-heading">
       Danh sách các brand {{$filter}}
@@ -97,43 +98,22 @@
         </tbody>
       </table>
     </div>
+
     <footer class="panel-footer">
       <div class="row">
 
         <div class="col-sm-5 text-left">
-          <small class="text-muted inline m-t-sm m-b-sm">Trang {{$brands->currentPage()}} của {{$brands->lastPage()}}</small>
+          <small class="text-muted inline m-t-sm m-b-sm">Tìm thấy {{$brands->total()}} kết quả. Trang {{$brands->currentPage()}} của {{$brands->lastPage()}}</small>
         </div>
+        <!--Pagination-->
         <div class="col-sm-7 text-right text-center-xs">                
-          <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li>
-              <a href="{{ $brands->url(0) }}">
-                <i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>
-              </a>
-            </li>
-            @if($brands->currentPage() < 2)
-            <li>
-              <a href="{{ $brands->url(0) }}">
-                <i class="fa fa-chevron-left"></i>
-                </a>
-            </li>
-            @else
-            <li>
-              <a href="{{ $brands->previousPageUrl() }}">
-                <i class="fa fa-chevron-left"></i>
-                </a>
-            </li>
+            @if(isset($filter_id))
+            {{ $brands->appends(['filter' => $filter_id])->links('admin.pagination') }}
             @endif
-            <li>
-              <a href="{{ $brands->nextPageUrl() }}">
-                <i class="fa fa-chevron-right"></i>
-              </a>
-            </li>
-            <li>
-              <a href="{{ $brands->url($brands->lastPage()) }}">
-                <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>
-              </a>
-            </li> 
-          </ul>
+            
+            @if(isset($keywords))
+            {{ $brands->appends(['keywords' => $keywords])->links('admin.pagination') }}
+            @endif
         </div>
       </div>
     </footer>
