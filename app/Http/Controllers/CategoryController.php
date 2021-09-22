@@ -184,33 +184,40 @@ class CategoryController extends Controller
     {
         $keywords = $request->keywords;
 
-        $result = Category::where('category_name', 'LIKE BINARY', '%'.$keywords.'%')->get();
+        $result = Category::where('category_name', 'LIKE BINARY', '%'.$keywords.'%')->paginate(5);
 
-        session::put('keywords', $keywords);
+        Session::put('keywords', $keywords);
+        Session::forget('filter');
+        Session::forget('filter_id');
         return view('admin.category.search_category')->with('result', $result);
     }
 
     public function filter(Request $request)
     {
         $filter_value = $request->filter;
+        Session::forget('keywords');
         //dd($filter_value);
         switch ($filter_value) {
             case '0':
                 return Redirect::to('/admin/category/view-all');
             case '1':
                 Session::put('filter', 'A-Z');
+                Session::put('filter_id', 1);
                 $result = Category::orderBy('category_name')->paginate(5);
                 return view('admin.category.search_category')->with('result', $result);
             case '2':
                 Session::put('filter', 'Z-A');
+                Session::put('filter_id', 2);
                 $result = Category::orderByDesc('category_name')->paginate(5);
                 return view('admin.category.search_category')->with('result', $result);
             case '3':
                 Session::put('filter', 'Đang hiển thị trên web');
+                Session::put('filter_id', 3);
                 $result = Category::where('category_status', 1)->paginate(5);
                 return view('admin.category.search_category')->with('result', $result);
             case '4':
                 Session::put('filter', 'Đang bị ẩn khỏi web');
+                Session::put('filter_id', 4);
                 $result = Category::where('category_status', 0)->paginate(5);
                 return view('admin.category.search_category')->with('result', $result);
             default:

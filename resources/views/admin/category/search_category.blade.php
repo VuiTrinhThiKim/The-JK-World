@@ -4,7 +4,10 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <?php
+      $keywords = Session::get('keywords');
+
       $filter = Session::get('filter');
+      $filter_id = Session::get('filter_id');
     ?>
     <div class="panel-heading">
       Danh mục sản phẩm {{$filter}}
@@ -26,9 +29,6 @@
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
-        <?php
-          $keywords = Session::get('keywords');
-        ?>
         <form action="{{URL::to('/admin/category/search')}}" method="get">
             {{csrf_field()}}
           <div class="input-group">
@@ -104,37 +104,15 @@
         <div class="col-sm-5 text-left">
           <small class="text-muted inline m-t-sm m-b-sm">Trang {{$categories->currentPage()}} của {{$categories->lastPage()}}</small>
         </div>
+        <!--Pagination-->
         <div class="col-sm-7 text-right text-center-xs">                
-          <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li>
-              <a href="{{ $categories->url(0) }}">
-                <i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>
-              </a>
-            </li>
-            @if($categories->currentPage() < 2)
-            <li>
-              <a href="{{ $categories->url(0) }}">
-                <i class="fa fa-chevron-left"></i>
-                </a>
-            </li>
-            @else
-            <li>
-              <a href="{{ $categories->previousPageUrl() }}">
-                <i class="fa fa-chevron-left"></i>
-                </a>
-            </li>
+            @if(isset($keywords))
+            {{ $categories->appends(['keywords' => $keywords])->links('admin.pagination') }}
             @endif
-            <li>
-              <a href="{{ $categories->nextPageUrl() }}">
-                <i class="fa fa-chevron-right"></i>
-              </a>
-            </li>
-            <li>
-              <a href="{{ $categories->url($categories->lastPage()) }}">
-                <i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>
-              </a>
-            </li> 
-          </ul>
+            
+            @if(isset($filter_id))
+            {{ $categories->appends(['filter' => $filter_id])->links('admin.pagination') }}
+            @endif
         </div>
       </div>
     </footer>
