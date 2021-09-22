@@ -215,10 +215,10 @@ class ProductController extends Controller
 
         $this->loginAuthentication();
 
-        $all_product = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orderby('products.product_id', 'asc')->get();
+        $products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orderby('products.product_id', 'asc')->paginate(5);
         //dd($all_product);
         $manager_product = view('admin.product.all_products_view') 
-                     -> with('all_products', $all_product);
+                     -> with('products', $products);
 
         return view('admin_layout_view')->with('admin.product.all_products_view', $manager_product);
     }
@@ -280,13 +280,16 @@ class ProductController extends Controller
 
         $result = Product::where('product_name', 'LIKE BINARY', '%'.$keywords.'%')->get();
 
-        session::put('keywords', $keywords);
+        Session::put('keywords', $keywords);
+        Session::forget('filter');
+        Session::forget('filter_id');
         return view('admin.product.search_product')->with('result', $result);
     }
 
     public function filter(Request $request)
     {
         $filter_value = $request->filter;
+        Session::forget('keywords');
         //dd($filter_value);
         $all_products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id');
         switch ($filter_value) {
@@ -294,27 +297,33 @@ class ProductController extends Controller
                 return Redirect::to('/admin/product/view-all');
             case '1':
                 Session::put('filter', 'A-Z');
-                $result = $all_products->orderBy('product_name')->get();
+                Session::put('filter_id', 1);
+                $result = $all_products->orderBy('product_name')->paginate(5);
                 return view('admin.product.search_product')->with('result', $result);
             case '2':
                 Session::put('filter', 'Z-A');
-                $result = $all_products->orderByDesc('product_name')->get();
+                Session::put('filter_id', 2);
+                $result = $all_products->orderByDesc('product_name')->paginate(5);
                 return view('admin.product.search_product')->with('result', $result);
             case '3':
                 Session::put('filter', 'Giá tăng dần');
-                $result = $all_products->orderBy('price')->get();
+                Session::put('filter_id', 3);
+                $result = $all_products->orderBy('price')->paginate(5);
                 return view('admin.product.search_product')->with('result', $result);
             case '4':
                 Session::put('filter', 'Giá giảm dần');
-                $result = $all_products->orderByDesc('price')->get();
+                Session::put('filter_id', 4);
+                $result = $all_products->orderByDesc('price')->paginate(5);
                 return view('admin.product.search_product')->with('result', $result);
             case '5':
                 Session::put('filter', 'Đang hiển thị trên web');
-                $result = $all_products->where('product_status', 1)->get();
+                Session::put('filter_id', 5);
+                $result = $all_products->where('product_status', 1)->paginate(5);
                 return view('admin.product.search_product')->with('result', $result);
             case '6':
                 Session::put('filter', 'Đang bị ẩn khỏi web');
-                $result = $all_products->where('product_status', 0)->get();
+                Session::put('filter_id', 6);
+                $result = $all_products->where('product_status', 0)->paginate(5);
                 return view('admin.product.search_product')->with('result', $result);
             default:
                 return Redirect::to('/admin/product/view-all');

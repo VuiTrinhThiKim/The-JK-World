@@ -3,8 +3,14 @@
 @section('admin_content')
 <div class="table-agile-info">
   <div class="panel panel-default">
+  	<?php
+  		$keywords = Session::get('keywords');
+
+    	$filter = Session::get('filter');
+    	$filter_id = Session::get('filter_id');
+    ?>
     <div class="panel-heading">
-      Danh sách sản phẩm
+      Danh sách sản phẩm {{$filter}}
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -25,9 +31,6 @@
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
-        <?php
-          $keywords = Session::get('keywords');
-        ?>
         <form action="{{URL::to('/admin/product/search')}}" method="get">
             {{csrf_field()}}
           <div class="input-group">
@@ -102,21 +105,24 @@
         </tbody>
       </table>
     </div>
+    <?php
+    	$products = $result;
+    ?>
     <footer class="panel-footer">
       <div class="row">
-        
-        <div class="col-sm-5 text-center">
-          <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+
+        <div class="col-sm-5 text-left">
+          <small class="text-muted inline m-t-sm m-b-sm">Trang {{$products->currentPage()}} của {{$products->lastPage()}}</small>
         </div>
+        <!--Pagination-->
         <div class="col-sm-7 text-right text-center-xs">                
-          <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
-          </ul>
+          	@if(isset($keywords))
+            {{ $products->appends(['keywords' => $keywords])->links('admin.pagination') }}
+            @endif
+            
+            @if(isset($filter_id))
+            {{ $products->appends(['filter' => $filter_id])->links('admin.pagination') }}
+            @endif
         </div>
       </div>
     </footer>
