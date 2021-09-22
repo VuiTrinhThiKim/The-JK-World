@@ -132,23 +132,21 @@ Route::prefix('admin')->group(function(){
 		Route::get('/filter', [ProductController::class, 'filter']);
 	});
 
-	Route::group(['prefix'=>'user'], function(){
-		//All Product
-		Route::get('/view-all', [UserController::class, 'view_all']);
-		//Add Product
-		Route::get('/add', [UserController::class, 'create']);
+	Route::group(['prefix'=>'member'], function(){
+		//All Admin
+		Route::get('/view-all', [AdminController::class, 'view_all']);
+		//Add Admin
+		Route::get('/add', [AdminController::class, 'create']);
 		//Add to db
-		Route::post('/add', [UserController::class, 'store']);
-		//Product Status
-		Route::get('/public-user/{user_id}', [UserController::class, 'update_product_status']);
-		Route::get('/unpublic-user/{user_id}', [UserController::class, 'update_product_status']);
-		//Edit Product
-		Route::get('/edit/{user_id}', [UserController::class, 'edit']);
-		//Update Product
-		Route::post('/update/{user_id}', [UserController::class, 'update']);
-		//Delete Product
-		Route::get('/delete/{user_id}', [UserController::class, 'destroy']);
-
+		Route::post('/add', [AdminController::class, 'store']);
+		//Edit Admin
+		Route::get('/edit/{admin_id}', [AdminController::class, 'edit']);
+		//Update Admin
+		Route::post('/update/{admin_id}', [AdminController::class, 'update']);
+		//Delete Admin
+		Route::get('/delete/{admin_id}', [AdminController::class, 'destroy']);
+		//Delete Admin
+		Route::get('/info/{admin_id}', [AdminController::class, 'show_info']);
 	});
 });
 
