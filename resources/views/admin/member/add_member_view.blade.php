@@ -5,18 +5,18 @@
 	<div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                Thêm người dùng - user
+                Thêm quản trị viên - admin
             </header>
             <?php 
-            $addUser_message = Session::get('messUser');
-            if($addUser_message) {
-                echo '<span class="text-danger">'.$addUser_message.'</span>';
-                Session::put('messUser', null);
+            $addMember_message = Session::get('messMember');
+            if($addMember_message) {
+                echo '<span class="text-danger">'.$addMember_message.'</span>';
+                Session::put('messMember', null);
             }
             ?>
             <div class="panel-body">
                 <div class="position-center">
-                    <form action="{{URL::to('/admin/user/add')}}" role="form" method="post"  enctype="multipart/form-data">
+                    <form action="{{URL::to('/admin/member/add')}}" role="form" method="post"  enctype="multipart/form-data">
                     {{csrf_field() }}
                     <div class="form-group">
                         <span class="required-field">Bắt buộc nhập các trường có dấu (*)</span>
@@ -33,10 +33,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userEmail">E-mail<span class="required-field"> (*)</span></label>
-                        <input type="email" class="form-control" id="userEmail" name="userEmail" value="{{old('userEmail')}}"placeholder="example@gmail.com">
-                        @if ($errors->has('userEmail'))
-                            @error('userEmail')
+                        <label for="adEmail">E-mail<span class="required-field"> (*)</span></label>
+                        <input type="email" class="form-control" id="adEmail" name="adEmail" value="{{old('adEmail')}}"placeholder="example@gmail.com">
+                        @if ($errors->has('adEmail'))
+                            @error('adEmail')
                                     <div class="text-danger">
                                         {{$message}}
                                     </div>
@@ -88,10 +88,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userPhone">Số điện thoại<span class="required-field"> (*)</span></label>
-                        <input type="number" class="form-control" id="userPhone" name="userPhone" value="{{old('userPhone')}}" placeholder="0928090577">
-                        @if ($errors->has('userPhone'))
-                            @error('userPhone')
+                        <label for="adPhone">Số điện thoại<span class="required-field"> (*)</span></label>
+                        <input type="number" class="form-control" id="adPhone" name="adPhone" value="{{old('adPhone')}}" placeholder="0928090577">
+                        @if ($errors->has('adPhone'))
+                            @error('adPhone')
                                 <div class="text-danger">
                                     {{$message}}
                                 </div>
@@ -99,10 +99,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userAddress">Địa chỉ<span class="required-field"> (*)</span></label>
-                        <textarea style="resize: none;" rows=4 class="form-control" id="userAddress" name="userAddress" value="{{old('userAddress')}}" placeholder="Nhập thông tin" ></textarea>
-                        @if ($errors->has('userAddress'))
-                            @error('userAddress')
+                        <label for="adAddress">Địa chỉ<span class="required-field"> (*)</span></label>
+                        <textarea style="resize: none;" rows=4 class="form-control" id="adAddress" name="adAddress" value="{{old('adAddress')}}" placeholder="Nhập thông tin" ></textarea>
+                        @if ($errors->has('adAddress'))
+                            @error('adAddress')
                                 <div class="text-danger">
                                     {{$message}}
                                 </div>
@@ -110,10 +110,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userAvatar">Ảnh đại diện</label>
-                        <input type="file" class="" id="userAvatar" name="userAvatar" onchange="imagesFileAsURL()">
-                        @if ($errors->has('userAvatar'))
-                            @error('userAvatar')
+                        <label for="adAvatar">Ảnh đại diện</label>
+                        <input type="file" class="" id="adAvatar" name="adAvatar" onchange="imagesFileAsURL()">
+                        @if ($errors->has('adAvatar'))
+                            @error('adAvatar')
                                 <div class="text-danger">
                                     {{$message}}
                                 </div>
@@ -126,7 +126,7 @@
                        
                         function imagesFileAsURL(){
 
-                            var fileSelected = document.getElementById('userAvatar').files;
+                            var fileSelected = document.getElementById('adAvatar').files;
 
                             if(fileSelected.length > 0){
 
@@ -160,7 +160,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <button type="submit" name="addProduct" class="btn btn-info">Thêm người dùng</button>
+                    <button type="submit" name="addAdmin" class="btn btn-info">Thêm quản trị viên</button>
                 	</form>
                 </div>
             </div>

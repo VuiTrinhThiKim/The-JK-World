@@ -52,21 +52,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
         <!-- user login dropdown start-->
+        <?php
+            $ad_username = Session::get('ad_username');
+            $ad_id = Session::get('admin_id');
+            $ad_avatar = Session::get('ad_avatar');
+        ?>
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="{{asset('public/backend/images/avt.jpg')}}">
+                <img width="30" height="30" alt="ad_avatar" src="{{URL::to('public/upload/avatar/admin/'.$ad_avatar)}}">
                 <span class="username">
-                    <?php
-                        $ad_username = Session::get('ad_username');
-                        if($ad_username){
-                            echo $ad_username;
-                        }
-                    ?>
+                    {{$ad_username}}
                 </span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
-                <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
+                <li><a href="{{URL::to('/admin/member/info/'.$ad_id)}}"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
                 <li><a href="{{URL::to('/admin/logout')}}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
@@ -93,12 +93,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 
                 <li class="sub-menu">
                     <a href="javascript:;">
-                        <i class="fa fa-user"></i>
-                        <span>Người dùng - User</span>
+                        <i class="fa fa-users"></i>
+                        <span>Quản trị viên - Admin</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{URL::to('/admin/user/add')}}">Thêm người dùng mới</a></li>
-                        <li><a href="{{URL::to('/admin/user/view-all')}}">Danh sách người dùng</a></li>
+                        <li><a href="{{URL::to('/admin/member/add')}}">Thêm quản trị viên</a></li>
+                        <li><a href="{{URL::to('/admin/member/view-all')}}">Danh sách quản trị viên</a></li>
+                    </ul>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-user"></i>
+                        <span>Khách hàng - Customer</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{URL::to('/admin/customer/add')}}">Thêm khách hàng</a></li>
+                        <li><a href="{{URL::to('/admin/customer/view-all')}}">Danh sách khách hàng</a></li>
                     </ul>
                 </li>
 

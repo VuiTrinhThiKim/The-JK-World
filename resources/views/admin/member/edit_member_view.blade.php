@@ -5,26 +5,26 @@
 	<div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                Chỉnh sửa thông tin người dùng
+                Chỉnh sửa thông tin quản trị viên
             </header>
             <?php 
-            $addUser_message = Session::get('messUser');
-            if($addUser_message) {
-                echo '<span class="text-danger">'.$addUser_message.'</span>';
-                Session::put('messUser', null);
+            $addMember_message = Session::get('messMember');
+            if($addMember_message) {
+                echo '<span class="text-danger">'.$addMember_message.'</span>';
+                Session::put('messMember', null);
             }
             ?>
             <div class="panel-body">
-                @foreach($edit_user as $key => $edit_user)
+                @foreach($admin as $key => $edit_ad)
                 <div class="position-center">
-                    <form role="form" action="{{URL::to('/admin/user/update/'.$edit_user->user_id)}}" method="post" enctype="multipart/form-data">
+                    <form role="form" action="{{URL::to('/admin/member/update/'.$edit_ad->admin_id)}}" method="post" enctype="multipart/form-data">
                     {{csrf_field() }}
                     <div class="form-group">
                         <span class="required-field">Bắt buộc nhập các trường có dấu (*)</span>
                     </div>
                     <div class="form-group">
                         <label for="username">Tên đăng nhập<span class="required-field"> (*)</span></label>
-                        <input type="text" class="form-control" id="username" name="username" value="{{$edit_user->username}}" placeholder="Nhập tên đăng nhập">
+                        <input type="text" class="form-control" id="username" name="username" value="{{$edit_ad->username}}" placeholder="Nhập tên đăng nhập">
                         @if ($errors->has('username'))
                             @error('username')
                                     <div class="text-danger">
@@ -34,10 +34,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userEmail">E-mail<span class="required-field"> (*)</span></label>
-                        <input type="email" class="form-control" id="userEmail" name="userEmail" value="{{$edit_user->email}}"placeholder="example@gmail.com">
-                        @if ($errors->has('userEmail'))
-                            @error('userEmail')
+                        <label for="adEmail">E-mail<span class="required-field"> (*)</span></label>
+                        <input type="email" class="form-control" id="adEmail" name="adEmail" value="{{$edit_ad->email}}"placeholder="example@gmail.com">
+                        @if ($errors->has('adEmail'))
+                            @error('adEmail')
                                     <div class="text-danger">
                                         {{$message}}
                                     </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group">
                         <label for="firstName">Tên<span class="required-field"> (*)</span></label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" value="{{$edit_user->first_name}}" placeholder="Nhập họ">
+                        <input type="text" class="form-control" id="firstName" name="firstName" value="{{$edit_ad->first_name}}" placeholder="Nhập họ">
                         @if ($errors->has('firstName'))
                             @error('firstName')
                                     <div class="text-danger">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="form-group">
                         <label for="lastName">Họ<span class="required-field"> (*)</span></label>
-                        <input type="text" class="form-control" id="lastName" name="lastName"  value="{{$edit_user->last_name}}" placeholder="Nhập tên">
+                        <input type="text" class="form-control" id="lastName" name="lastName"  value="{{$edit_ad->last_name}}" placeholder="Nhập tên">
                         @if ($errors->has('lastName'))
                             @error('lastName')
                                     <div class="text-danger">
@@ -89,10 +89,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userPhone">Số điện thoại<span class="required-field"> (*)</span></label>
-                        <input type="number" class="form-control" id="userPhone" name="userPhone" value="{{$edit_user->phone}}" placeholder="0928090577">
-                        @if ($errors->has('userPhone'))
-                            @error('userPhone')
+                        <label for="adPhone">Số điện thoại<span class="required-field"> (*)</span></label>
+                        <input type="number" class="form-control" id="adPhone" name="adPhone" value="{{$edit_ad->phone}}" placeholder="0928090577">
+                        @if ($errors->has('adPhone'))
+                            @error('adPhone')
                                 <div class="text-danger">
                                     {{$message}}
                                 </div>
@@ -100,10 +100,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userAddress">Địa chỉ<span class="required-field"> (*)</span></label>
-                        <textarea style="resize: none;" rows=4 class="form-control" id="userAddress" name="userAddress"placeholder="Nhập thông tin">{{$edit_user->address}}</textarea>
-                        @if ($errors->has('userAddress'))
-                            @error('userAddress')
+                        <label for="adAddress">Địa chỉ<span class="required-field"> (*)</span></label>
+                        <textarea style="resize: none;" rows=4 class="form-control" id="adAddress" name="adAddress"placeholder="Nhập thông tin">{{$edit_ad->address}}</textarea>
+                        @if ($errors->has('adAddress'))
+                            @error('adAddress')
                                 <div class="text-danger">
                                     {{$message}}
                                 </div>
@@ -111,10 +111,10 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="userAvatar">Ảnh đại diện</label>
-                        <input type="file" class="" id="userAvatar" name="userAvatar" onchange="imagesFileAsURL()">
-                        @if ($errors->has('userAvatar'))
-                            @error('userAvatar')
+                        <label for="adAvatar">Ảnh đại diện</label>
+                        <input type="file" class="" id="adAvatar" name="adAvatar" onchange="imagesFileAsURL()">
+                        @if ($errors->has('adAvatar'))
+                            @error('adAvatar')
                                 <div class="text-danger">
                                     {{$message}}
                                 </div>
@@ -127,7 +127,7 @@
                        
                         function imagesFileAsURL(){
 
-                            var fileSelected = document.getElementById('userAvatar').files;
+                            var fileSelected = document.getElementById('adAvatar').files;
 
                             if(fileSelected.length > 0){
 
@@ -157,7 +157,7 @@
                         <label for="role_id">Chọn loại tài khoản<span class="required-field"> (*)</span></label>
                         <select class="form-control input-sm m-bot15" name="role_id" >
                             @foreach($role_list as $key => $role)
-                                @if($role->role_id == $edit_user->role_id)
+                                @if($role->role_id == $edit_ad->role_id)
                                 <option selected value="{{$role->role_id}}" style="height: 150px; font-size: 14px;">{{$role->role_name}}</option>
                                 @else
                                 <option value="{{$role->role_id}}" style="height: 150px; font-size: 14px;">{{$role->role_name}}</option>

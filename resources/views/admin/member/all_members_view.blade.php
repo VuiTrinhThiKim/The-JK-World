@@ -4,7 +4,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Danh sách người dùng
+      Danh sách quản trị viên
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -29,10 +29,10 @@
     </div>
     <div class="table-responsive">
       <?php 
-        $statusUser_message = Session::get('messUser');
-        if($statusUser_message) {
-            echo '<span class="status_alert">'.$statusUser_message.'</span>';
-            Session::put('messUser', null);
+        $statusMember_message = Session::get('messMember');
+        if($statusMember_message) {
+            echo '<span class="status_alert">'.$statusMember_message.'</span>';
+            Session::put('messMember', null);
         }
       ?>
       <table class="table table-striped b-t b-light">
@@ -53,22 +53,22 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($all_users as $key => $user)
+          @foreach($admins as $key => $admin)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>{{$user->username}}</td>
+            <td>{{$admin->username}}</td>
             <td>
-                <img src="{{URL::to('/public/upload/avatar/'.$user->avatar)}}" url="{{$user->avatar}}" width="80" height="80"></span>
+                <img src="{{URL::to('/public/upload/avatar/admin/'.$admin->avatar)}}" url="{{$admin->avatar}}" width="80" height="80"></span>
             </td>
-            <td>{{$user->first_name}} {{$user->last_name}}</span></td>
-            <td>{{$user->phone}}</span></td>
-            <td style="width:10%;">{{$user->address}}</span></td>
-            <td>{{$user->role_name}}</span></td>
+            <td>{{$admin->first_name}} {{$admin->last_name}}</span></td>
+            <td>{{$admin->phone}}</span></td>
+            <td style="width:10%;">{{$admin->address}}</span></td>
+            <td>{{$admin->role_name}}</span></td>
             <td>
-              <a href="{{URL::to('/admin/user/edit/'.$user->user_id)}}" class="edit-product" ui-toggle-class="">
+              <a href="{{URL::to('/admin/member/edit/'.$admin->admin_id)}}" class="edit-product" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-edit"></i>
               </a>
-              <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')" href="{{URL::to('/admin/user/delete/'.$user->user_id)}}" class="delete-product" ui-toggle-class="">
+              <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')" href="{{URL::to('/admin/member/delete/'.$admin->user_id)}}" class="delete-product" ui-toggle-class="">
                 <i class="fa fa-times text-danger text"></i>
               </a>
             </td>

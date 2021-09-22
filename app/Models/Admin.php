@@ -10,8 +10,14 @@ class Admin extends Model
     use HasFactory;
 
     protected $table = 'admin';
+
+    protected $primaryKey = 'admin_id';
     
-    function __construct(){
-        parent::__construct();
+    protected $fillable = ['username'];
+    //protected $hidden = ['password'];
+    
+   	public function role()
+    {
+        return $this->hasOne(Role::class, 'role_id', 'role_id');
     }
 }
