@@ -26,6 +26,7 @@
 }
 
 @media (min-width: 480px) and (max-width: 767px) {
+    
   .header{
     position: relative! important;
     margin-top: 80px ! important;
@@ -138,7 +139,9 @@
 
 }
 @media (max-width:767px){
-
+    .panel{
+        height: 1200px;
+    }
     .fixed-width #container, .fixed-width #container .header {
         width: 100%;
     }
