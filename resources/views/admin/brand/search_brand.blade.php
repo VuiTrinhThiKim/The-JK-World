@@ -100,22 +100,14 @@
     </div>
 
     <footer class="panel-footer">
-      <div class="row">
-
-        <div class="col-sm-5 text-left">
-          <small class="text-muted inline m-t-sm m-b-sm">Tìm thấy {{$brands->total()}} kết quả. Trang {{$brands->currentPage()}} của {{$brands->lastPage()}}</small>
-        </div>
-        <!--Pagination-->
-        <div class="col-sm-7 text-right text-center-xs">                
-            @if(isset($filter_id))
-            {{ $brands->appends(['filter' => $filter_id])->links('admin.pagination') }}
-            @endif
-            
-            @if(isset($keywords))
-            {{ $brands->appends(['keywords' => $keywords])->links('admin.pagination') }}
-            @endif
-        </div>
-      </div>
+      <!--Pagination-->
+       @if(isset($filter_id))
+        {{ $brands->appends(['filter' => $filter_id])->links('admin.pagination') }}
+        @endif
+        
+        @if(isset($keywords))
+        {{ $brands->appends(['keywords' => $keywords])->links('admin.pagination') }}
+        @endif
     </footer>
   </div>
 </div>

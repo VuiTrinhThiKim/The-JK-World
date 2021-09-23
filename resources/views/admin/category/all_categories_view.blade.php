@@ -45,12 +45,8 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th style="width:20px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
-            </th>
-            <th style="width:40%;">Tên danh mục</th>
+            <th style="width:5%;">ID</th>
+            <th style="width:30%;">Tên danh mục</th>
             <th>Thông tin danh mục</th>
             <th>Hiển thị</th>
             <th style="width:30px;"></th>
@@ -59,7 +55,7 @@
         <tbody>
           @foreach($categories as $key => $cate_item)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            <td>{{ $cate_item->category_id}}</td>
             <td>{{ $cate_item->category_name}}</td>
             <td>{{ $cate_item->category_description}}</span></td>
             <td>
@@ -90,18 +86,8 @@
       </table>
     </div>
     <footer class="panel-footer">
-      <div class="row">
-
-        <div class="col-sm-5 text-left">
-          <small class="text-muted inline m-t-sm m-b-sm">Trang {{$categories->currentPage()}} của {{$categories->lastPage()}}</small>
-        </div>
-        <!--Pagination-->
-        <div class="col-sm-7 text-right text-center-xs">                
-          
-            {{ $categories->links('admin.pagination') }}
-
-        </div>
-      </div>
+      <!--Pagination-->
+      {{ $categories->links('admin.pagination') }}
     </footer>
   </div>
 </div>

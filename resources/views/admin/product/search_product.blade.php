@@ -109,22 +109,14 @@
     	$products = $result;
     ?>
     <footer class="panel-footer">
-      <div class="row">
-
-        <div class="col-sm-5 text-left">
-          <small class="text-muted inline m-t-sm m-b-sm">Trang {{$products->currentPage()}} của {{$products->lastPage()}}</small>
-        </div>
-        <!--Pagination-->
-        <div class="col-sm-7 text-right text-center-xs">                
-          	@if(isset($keywords))
-            {{ $products->appends(['keywords' => $keywords])->links('admin.pagination') }}
-            @endif
-            
-            @if(isset($filter_id))
-            {{ $products->appends(['filter' => $filter_id])->links('admin.pagination') }}
-            @endif
-        </div>
-      </div>
+      <!--Pagination-->
+        @if(isset($keywords))
+        {{ $products->appends(['keywords' => $keywords])->links('admin.pagination') }}
+        @endif
+        
+        @if(isset($filter_id))
+        {{ $products->appends(['filter' => $filter_id])->links('admin.pagination') }}
+        @endif
     </footer>
   </div>
 </div>

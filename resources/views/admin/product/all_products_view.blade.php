@@ -10,9 +10,10 @@
       <div class="col-sm-5 m-b-xs">
         <form action="{{URL::to('/admin/product/filter')}}">
           {{csrf_field()}}
+
           <select class="input-sm form-control w-sm inline v-middle" name="filter">
             <option value="0">Xem tất cả</option>
-            <option value="1">Sắp xếp theo tên từ A-Z</option>
+            <option value="1">Sắp xếp theo tên từ A-Z </option>
             <option value="2">Sắp xếp theo tên từ Z-A</option>
             <option value="3">Sắp xếp theo giá tăng</option>
             <option value="4">Sắp xếp theo giá giảm</option>
@@ -44,14 +45,11 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th style="width:10px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
-            </th>
+            <th style="width:5%;">ID</th>
             <th style="width:20%;">Tên sản phẩm</th>
             <th>Hình ảnh</th>
             <th>Giá niêm yết</th>
+            <th>Tồn kho</th>
             <th>Danh mục</th>
             <th>Brand</th>
             <th>Hiển thị</th>
@@ -61,12 +59,18 @@
         <tbody>
           @foreach($products as $key => $product_item)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            <td>{{$product_item->product_id}}</td>
             <td>{{$product_item->product_name}}</td>
             <td>
                 <img src="{{URL::to('/public/upload/products/'.$product_item->product_image)}}" url="{{$product_item->product_image}}" width="80" height="80"></span>
             </td>
             <td>{{$product_item->price}}</span></td>
+            <td>
+              {{$product_item->product_qty}}
+              @if($product_item->product_qty <= 5)
+              <i class="fa fa-exclamation" style="color: red;"></i>
+              @endif
+            </td>
             <td>{{$product_item->category_name}}</span></td>
             <td>{{$product_item->brand_name}}</span></td>
             <td>
@@ -97,18 +101,8 @@
       </table>
     </div>
     <footer class="panel-footer">
-      <div class="row">
-
-        <div class="col-sm-5 text-left">
-          <small class="text-muted inline m-t-sm m-b-sm">Trang {{$products->currentPage()}} của {{$products->lastPage()}}</small>
-        </div>
-        <!--Pagination-->
-        <div class="col-sm-7 text-right text-center-xs">                
-          
-            {{ $products->links('admin.pagination') }}
-
-        </div>
-      </div>
+      <!--Pagination-->
+      {{ $products->links('admin.pagination') }}
     </footer>
   </div>
 </div>

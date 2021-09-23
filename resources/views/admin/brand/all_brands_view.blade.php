@@ -45,12 +45,8 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th style="width:20px;">
-              <label class="i-checks m-b-none">
-                <input type="checkbox"><i></i>
-              </label>
-            </th>
-            <th style="width:40%;">Tên brand</th>
+            <th style="width:5%;">ID</th>
+            <th style="width:30%;">Tên brand</th>
             <th>Thông tin brand</th>
             <th>Hiển thị</th>
             <th style="width:30px;"></th>
@@ -59,7 +55,7 @@
         <tbody>
           @foreach($brands as $key => $brand_item)
           <tr>
-            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+            <td>{{ $brand_item->brand_id}}</td>
             <td>{{ $brand_item->brand_name}}</td>
             <td>{{ $brand_item->brand_description}}</span></td>
             <td>
@@ -90,17 +86,9 @@
       </table>
     </div>
     <footer class="panel-footer">
-      <div class="row">
+      
+      {{ $brands->links('admin.pagination') }}
 
-        <div class="col-sm-5 text-left">
-          <small class="text-muted inline m-t-sm m-b-sm">Tìm thấy {{$brands->count()}} kết quả. Trang {{$brands->currentPage()}} của {{$brands->lastPage()}}</small>
-        </div>
-        <!--Pagination-->
-        <div class="col-sm-7 text-right text-center-xs">                
-          
-            {{ $brands->links('admin.pagination') }}
-        </div>
-      </div>
     </footer>
   </div>
 </div>

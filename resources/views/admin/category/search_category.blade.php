@@ -99,21 +99,14 @@
       $categories = $result;
     ?>
     <footer class="panel-footer">
-      <div class="row">
-
-        <div class="col-sm-5 text-left">
-          <small class="text-muted inline m-t-sm m-b-sm">Trang {{$categories->currentPage()}} của {{$categories->lastPage()}}</small>
-        </div>
-        <!--Pagination-->
-        <div class="col-sm-7 text-right text-center-xs">                
-            @if(isset($keywords))
-            {{ $categories->appends(['keywords' => $keywords])->links('admin.pagination') }}
-            @endif
-            
-            @if(isset($filter_id))
-            {{ $categories->appends(['filter' => $filter_id])->links('admin.pagination') }}
-            @endif
-        </div>
+      <!--Pagination-->
+        @if(isset($keywords))
+        {{ $categories->appends(['keywords' => $keywords])->links('admin.pagination') }}
+        @endif
+        
+        @if(isset($filter_id))
+        {{ $categories->appends(['filter' => $filter_id])->links('admin.pagination') }}
+        @endif
       </div>
     </footer>
   </div>
