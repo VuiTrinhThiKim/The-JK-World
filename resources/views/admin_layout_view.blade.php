@@ -38,7 +38,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <header class="header fixed-top clearfix">
 <!--logo start-->
 <div class="brand">
-    <a href="index.html" class="logo" style="font-size: 28px;">
+    <a href="{{URL::to('/admin/dashboard')}}" class="logo" style="font-size: 28px;">
         ADMIN PANEL
     </a>
     <div class="sidebar-toggle-box">
@@ -56,6 +56,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             $ad_username = Session::get('ad_username');
             $ad_id = Session::get('admin_id');
             $ad_avatar = Session::get('ad_avatar');
+            $admin_role = Session::get('admin_role');
         ?>
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -66,9 +67,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
-                <li><a href="{{URL::to('/admin/member/info/'.$ad_id)}}"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
-                <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
-                <li><a href="{{URL::to('/admin/logout')}}"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                <li><a href="{{URL::to('/admin/member/info/'.$ad_id)}}"><i class=" fa fa-suitcase"></i> Thông tin</a></li>
+                <li><a href="{{URL::to('/admin/member/change-password/'.$ad_id)}}"><i class="fa fa-cog"></i> Đổi mật khẩu</a></li>
+                <li><a href="{{URL::to('/admin/logout')}}"><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -97,7 +98,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Quản trị viên - Admin</span>
                     </a>
                     <ul class="sub">
+                        @if($admin_role == 1)
                         <li><a href="{{URL::to('/admin/member/add')}}">Thêm quản trị viên</a></li>
+                        @endif
                         <li><a href="{{URL::to('/admin/member/view-all')}}">Danh sách quản trị viên</a></li>
                     </ul>
                 </li>
