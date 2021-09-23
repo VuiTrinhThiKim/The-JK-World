@@ -88,6 +88,22 @@
                         @endif
                     </div>
                     <div class="form-group">
+                        <label for="adDOB">Ngày sinh</label>
+                        <input type="date" class="form-control" id="adDOB" name="adDOB" value="{{$admin->dob}}" >
+                    </div>
+                    <div class="form-group">
+                        <label for="adGender">Giới tính</label>
+                        <select type="date" class="form-control" id="adGender" name="adGender">
+                            @if($admin->gender == 0)
+                            <option value="0" selected>Nam</option>
+                            <option value="1">Nữ</option>
+                            @else
+                            <option value="0">Nam</option>
+                            <option value="1" selected>Nữ</option>
+                            @endif
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="adPhone">Số điện thoại<span class="required-field"> (*)</span></label>
                         <input type="number" class="form-control" id="adPhone" name="adPhone" value="{{old('adPhone')}}" placeholder="0928090577">
                         @if ($errors->has('adPhone'))

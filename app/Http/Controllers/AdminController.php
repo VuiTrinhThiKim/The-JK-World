@@ -51,6 +51,8 @@ class AdminController extends Controller
         $password = $request->password;
         $result = Admin::where('username', $username)->first();
         $ad_avatar = $result->avatar;
+        $admin_role = $result->role_id;
+        //dd($admin_role);
         if($result) {
             $hashedPassword = $result->password;
             if (Hash::check($password, $hashedPassword)) {
@@ -58,6 +60,7 @@ class AdminController extends Controller
                 Session::put('ad_username', $username);
                 Session::put('ad_avatar', $ad_avatar);
                 Session::put('admin_id', $result->admin_id);
+                Session::put('admin_role', $admin_role);
                 return Redirect::to('admin/dashboard');
             }
             else {
@@ -106,6 +109,8 @@ class AdminController extends Controller
         $admin->password= $hash_pass;
         $admin->first_name = $request->get('firstName');
         $admin->last_name = $request->get('lastName');
+        $admin->dob = $request->get('adDOB');
+        $admin->gender = $request->get('adGender');
         $admin->phone = $request->get('adPhone');
         $admin->email = $request->get('adEmail');
         $admin->address = $request->get('adAddress');
@@ -185,6 +190,8 @@ class AdminController extends Controller
         $admin->password= $hash_pass;
         $admin->first_name = $request->get('firstName');
         $admin->last_name = $request->get('lastName');
+        $admin->dob = $request->get('adDOB');
+        $admin->gender = $request->get('adGender');
         $admin->phone = $request->get('adPhone');
         $admin->email = $request->get('adEmail');
         $admin->address = $request->get('adAddress');
@@ -215,7 +222,7 @@ class AdminController extends Controller
                 // Save product
                 $admin->save();
                 // Get product_id
-                Session::put('messUser','Cập nhật thông tin người dùng thành công');
+                Session::put('messMember','Cập nhật thông tin tài khoản thành công');
                 return Redirect::to('/admin/member/view-all');
         }
         $user_img = Admin::where('admin_id', $admin_id)->value('avatar');
@@ -223,7 +230,7 @@ class AdminController extends Controller
         // Save product
         $admin->save();
         // Get product_id
-        Session::put('messUser','Cập nhật thông người dùng thành công');
+        Session::put('messMember','Cập nhật thông tin tài khoản thành công');
         return Redirect::to('/admin/member/view-all');
     }
 
@@ -233,11 +240,11 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user_id)
+    public function destroy($admin_id)
     {
         $user = Admin::find($user_id)->delete();
-        Session::put('messUser','Xóa tài khoản người dùng thành công!!!');
-        return Redirect::to('/admin/user/view-all');
+        Session::put('messUser','Xóa tài khoản thành công!!!');
+        return Redirect::to('/admin/member/view-all');
     }
 
     public function view_all(){
@@ -245,7 +252,7 @@ class AdminController extends Controller
         //$this->loginAuthentication();
 
         $admins = Admin::join('roles', 'roles.role_id', '=', 'admin.role_id')
-                            ->orderby('roles.role_id', 'asc')->get();
+                            ->orderby('roles.role_id', 'asc')->paginate(5);
         //dd($admins);
         $manager_admin = view('admin.member.all_members_view')-> with('admins', $admins);
 
@@ -259,8 +266,80 @@ class AdminController extends Controller
         //dd($admin);
         $admin_role = Admin::find($admin_id)->role->value('role_name');
         //dd($admin_role);
-        $manager_admin = view('admin.admin_info')->with('admin', $admin)->with('admin_role', $admin_role);
+        $manager_admin = view('admin.show_info')->with('admin_id',$admin_id)->with('admin', $admin)->with('admin_role', $admin_role);
+
+        return view('admin_layout_view')->with('admin.show_info', $manager_admin);
+    }
+
+    public function show_change_password($admin_id){
+        $manager_admin = view('admin.change_password')->with('admin_id',$admin_id);
+        return view('admin_layout_view')->with('admin.change_password', $manager_admin);
+    }
+
+    public function change_password(Request $request, $admin_id){
+
+        $admin = Admin::where('admin_id', $admin_id)->get();
+        //dd($admin);
+        $admin_role = Admin::find($admin_id)->role->value('role_name');
+        //dd($admin_role);
+        $manager_admin = view('admin.admin_info')->with('admin_id',$admin_id)->with('admin', $admin)->with('admin_role', $admin_role);
 
         return view('admin_layout_view')->with('admin.admin_info', $manager_admin);
+    }
+
+    public function search(Request $request)
+    {
+        $keywords = $request->keywords;
+
+        $result = Admin::where('username', 'LIKE BINARY', '%'.$keywords.'%')->get();
+
+        Session::put('keywords', $keywords);
+        Session::forget('filter');
+        Session::forget('filter_id');
+        return view('admin.member.search_member')->with('result', $result);
+    }
+
+    public function filter(Request $request)
+    {
+        $filter_value = $request->filter;
+        Session::forget('keywords');
+        //dd($filter_value);
+        //$all_admin = Admin::;
+        switch ($filter_value) {
+            case '0':
+                return Redirect::to('/admin/member/view-all');
+            case '1':
+                Session::put('filter', 'ID tăng dần');
+                Session::put('filter_id', 1);
+                $result = Admin::orderBy('admin_id')->paginate(5);
+                return view('admin.member.search_member')->with('result', $result);
+            case '2':
+                Session::put('filter', 'ID giảm dần');
+                Session::put('filter_id', 2);
+                $result = Admin::orderByDesc('admin_id')->paginate(5);
+                return view('admin.member.search_member')->with('result', $result);
+            case '3':
+                Session::put('filter', 'Tên A-Z');
+                Session::put('filter_id', 3);
+                $result = Admin::orderBy('first_name')->paginate(5);
+                return view('admin.member.search_member')->with('result', $result);
+            case '4':
+                Session::put('filter', 'Tên Z-A');
+                Session::put('filter_id', 4);
+                $result = Admin::orderByDesc('first_name')->paginate(5);
+                return view('admin.member.search_member')->with('result', $result);
+            case '5':
+                Session::put('filter', 'Manager');
+                Session::put('filter_id', 5);
+                $result = Admin::where('role_id', 1)->paginate(5);
+                return view('admin.member.search_member')->with('result', $result);
+            case '6':
+                Session::put('filter', 'Staff');
+                Session::put('filter_id', 6);
+                $result = Admin::where('role_id', 0)->paginate(5);
+                return view('admin.member.search_member')->with('result', $result);
+            default:
+                return Redirect::to('/admin/member/view-all');
+        }
     }
 }

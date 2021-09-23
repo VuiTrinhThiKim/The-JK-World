@@ -47,6 +47,7 @@
         }
         $admin_role = Session::get('admin_role');
         $ad_usename = Session::get('ad_usename');
+        $admins = $result;
       ?>
       <table class="table table-striped b-t b-light">
         <thead>
@@ -63,7 +64,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($admins as $key => $admin)
+          @foreach($result as $key => $admin)
           <tr>
             <td>{{$admin->admin_id}}</td>
             <td>{{$admin->username}}</td>
@@ -80,7 +81,13 @@
               Nữ
               @endif
             </td>
-            <td>{{$admin->role_name}}</td>
+            <td>
+            	@if($admin->role_id == 1)
+            	Manager
+            	@else
+            	Staff
+            	@endif
+            </td>
             <td>
               @if($admin_role == '1' || $ad_usename == $admin->username)
               <a href="{{URL::to('/admin/member/edit/'.$admin->admin_id)}}" class="edit-product" ui-toggle-class="">

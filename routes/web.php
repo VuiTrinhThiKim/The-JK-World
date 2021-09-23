@@ -145,8 +145,14 @@ Route::prefix('admin')->group(function(){
 		Route::post('/update/{admin_id}', [AdminController::class, 'update']);
 		//Delete Admin
 		Route::get('/delete/{admin_id}', [AdminController::class, 'destroy']);
-		//Delete Admin
+		//Search Product
+		Route::get('/search', [AdminController::class, 'search']);
+		//Filter Product
+		Route::get('/filter', [AdminController::class, 'filter']);
+		//Show Admin Information
 		Route::get('/info/{admin_id}', [AdminController::class, 'show_info']);
+		//Change Password
+		Route::get('/change-password/{admin_id}', [AdminController::class, 'show_change_password']);
 	});
 });
 
