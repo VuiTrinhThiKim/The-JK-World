@@ -155,4 +155,3 @@ Route::prefix('admin')->group(function(){
 		Route::get('/change-password/{admin_id}', [AdminController::class, 'show_change_password']);
 	});
 });
-

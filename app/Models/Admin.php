@@ -13,9 +13,10 @@ class Admin extends Model
 
     protected $primaryKey = 'admin_id';
     
-    protected $fillable = ['username'];
-    //protected $hidden = ['password'];
-    
+    protected $fillable = ['username', 'phone', 'email', 'gender', 'dob',];
+    protected $hidden = [
+        'password',
+    ];
    	public function role()
     {
         return $this->hasOne(Role::class, 'role_id', 'role_id');
