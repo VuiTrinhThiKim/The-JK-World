@@ -16,8 +16,8 @@
             <option value="2">Sắp xếp theo ID giảm</option>
             <option value="3">Sắp xếp theo tên từ A-Z</option>
             <option value="4">Sắp xếp theo tên từ Z-A</option>
-            <option value="5">Đang hiển thị trên web</option>
-            <option value="6">Đang bị ẩn khỏi web</option>
+            <option value="5">Quản lí - Manager</option>
+            <option value="6">Nhân viên - Staff</option>
           </select>
           <button class="btn btn-sm btn-default" type="submit">Áp dụng</button>
         </form>               

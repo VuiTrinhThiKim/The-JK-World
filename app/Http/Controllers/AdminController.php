@@ -28,14 +28,14 @@ class AdminController extends Controller
     }
     public function index(){
 
-    	return view('admin_login_view');
+        return view('admin_login_view');
     }
 
     public function showDashboard(){
         
         $this->loginAuthentication();
 
-    	return view('admin.dashboard_view');
+        return view('admin.dashboard_view');
     }
 
     public function showCreate(){
@@ -336,7 +336,7 @@ class AdminController extends Controller
             case '6':
                 Session::put('filter', 'Staff');
                 Session::put('filter_id', 6);
-                $result = Admin::where('role_id', 0)->paginate(5);
+                $result = Admin::where('role_id', 2)->paginate(5);
                 return view('admin.member.search_member')->with('result', $result);
             default:
                 return Redirect::to('/admin/member/view-all');
