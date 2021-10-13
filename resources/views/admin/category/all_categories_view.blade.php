@@ -10,6 +10,7 @@
       <div class="col-sm-5 m-b-xs">
         <form action="{{URL::to('/admin/category/filter')}}">
           {{csrf_field()}}
+           <!-- <label for="filter">Lọc dữ liệu</label> -->
           <select class="input-sm form-control w-sm inline v-middle" name="filter">
             <option value="0">Xem tất cả</option>
             <option value="1">Sắp xếp theo tên từ A-Z</option>
@@ -18,7 +19,7 @@
             <option value="4">Đang bị ẩn khỏi web</option>
           </select>
           <button class="btn btn-sm btn-default" type="submit">Áp dụng</button>
-        </form>            
+        </form>
       </div>
       <div class="col-sm-4">
       </div>
@@ -35,7 +36,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <?php 
+      <?php
         $statusCate_message = Session::get('messCate');
         if($statusCate_message) {
             echo '<span class="status_alert">'.$statusCate_message.'</span>';

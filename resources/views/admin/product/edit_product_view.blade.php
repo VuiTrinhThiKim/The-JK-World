@@ -38,7 +38,7 @@
                         <input type="file" class="" id="productImage" name="productImage" onload="imagesFileAsURL()">
                     </div>
                     <div class="form-group" id="showImage">
-                        <img src="{{URL::to('/public/upload/products/'.$edit_product->product_image)}}" alt="{{('$edit_product->product_name')}}" width="250" height="250">
+                        <img src="{{asset('/upload/products/'.$edit_product->product_image)}}" alt="{{('$edit_product->product_name')}}" width="250" height="250">
                     </div>
                     <script type="text/javascript">
                        

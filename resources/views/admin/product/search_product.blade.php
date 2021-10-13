@@ -73,7 +73,7 @@
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$product_item->product_name}}</td>
             <td>
-                <img src="{{URL::to('/public/upload/products/'.$product_item->product_image)}}" url="{{$product_item->product_image}}" width="80" height="80"></span>
+                <img src="{{asset('/upload/products/'.$product_item->product_image)}}" url="{{$product_item->product_image}}" width="80" height="80"></span>
             </td>
             <td>{{$product_item->price}}</span></td>
             <td>{{$product_item->category_name}}</span></td>

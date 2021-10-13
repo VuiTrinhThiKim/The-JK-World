@@ -6,19 +6,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Trang chủ | The JK World</title>
-    <link href="{{asset('public/frontend/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet">
-    <link href="{{asset('public/frontend/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="{{asset('public/frontend/css/prettyPhoto.css')}}" rel="stylesheet">
-    <link href="{{asset('public/frontend/css/price-range.css')}}" rel="stylesheet">
-    <link href="{{asset('public/frontend/css/animate.css')}}" rel="stylesheet">
-    <link href="{{asset('public/frontend/css/main.css')}}" rel="stylesheet">
-    <link href="{{asset('public/frontend/css/responsive.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/sweetalert.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/prettyPhoto.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/price-range.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/main.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->       
-    <!--<link rel="shortcut icon" href="{{'public/frontend/images/ico/favicon.ico'}}">
+    <!--<link rel="shortcut icon" href="{{asset('frontend/images/ico/favicon.ico')}}">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
@@ -30,6 +30,8 @@
     $keywords = Session::get('keywords');
     echo Session::get('customer_id');
     echo Session::get('shipping_id');
+    $customer_id = Session::get('customer_id');
+    $shipping_id = Session::get('shipping_id');
     ?>
     <header id="header"><!--header-->
         <div class="header_top"><!--header_top-->
@@ -63,7 +65,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="index.html"><img src="{{URL::to('public/frontend/images/home/thejkworld_logo.png')}}" alt="" width="139" height="39" /></a>
+                            <a href="index.html"><img src="{{URL::to('frontend/images/home/thejkworld_logo.png')}}" alt="" width="139" height="39" /></a>
                         </div>
                         <div class="btn-group pull-right">
                             <div class="btn-group">
@@ -96,7 +98,7 @@
                                     $customer_name = Session::get('username');
                                     if ($customer_name != null) {
                                 ?>
-                                        <li><a href="#"><i class="fa fa-user"></i> Chào, {{$customer_name}}</a></li>
+                                        <li><a href="{{URL::to('/tai-khoan/'.$customer_id)}}"><i class="fa fa-user"></i> Chào, {{$customer_name}}</a></li>
                                 <?php
                                     }
                                     else {
@@ -108,8 +110,7 @@
                                 
                                 <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li>
                                 <?php
-                                    $customer_id = Session::get('customer_id');
-                                    $shipping_id = Session::get('shipping_id');
+                                    
                                     if($customer_id != null && $shipping_id != null) {
                                 ?>
                                         <li><a href="{{URL::to('/thanh-toan')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
@@ -194,68 +195,7 @@
     </header><!--/header-->
     
     <section id="slider"><!--slider-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#slider-carousel" data-slide-to="1"></li>
-                            <li data-target="#slider-carousel" data-slide-to="2"></li>
-                        </ol>
-                        
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <div class="col-sm-6">
-                                    <h1>The JK World</h1>
-                                    <h2>Thế giới JK</h2>
-                                    <p>Mang JK đến gần bạn hơn</p>
-                                    <button type="button" class="btn btn-default get">Mua ngay</button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img src="{{URL::to('public/frontend/images/nhat-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <!--<img src="{{('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />-->
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="col-sm-6">
-                                    <h1>The JK World</h1>
-                                    <h2>Thế giới JK</h2>
-                                    <p>Mang JK đến gần bạn hơn</p>
-                                    <button type="button" class="btn btn-default get">Mua ngay</button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img src="{{URL::to('public/frontend/images/nhi-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <img src="{{URL::to('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />
-                                </div>
-                            </div>
-                            
-                            <div class="item">
-                                <div class="col-sm-6">
-                                    <h1>The JK World</h1>
-                                    <h2>Thế giới JK</h2>
-                                    <p>Mang JK đến gần bạn hơn</p>
-                                    <button type="button" class="btn btn-default get">Get it now</button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img src="{{URL::to('public/frontend/images/tam-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <img src="{{URL::to('public/frontend/images/pricing.png')}}"  class="pricing" alt="" />
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
-                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                            <i class="fa fa-angle-left"></i>
-                        </a>
-                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
+        @yield('slider')
     </section><!--/slider-->
     
     <section>
@@ -335,7 +275,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="{{('public/frontend/images/iframe1.png')}}" alt="" />
+                                        <img src="{{asset('frontend/images/iframe1.png')}}" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -350,7 +290,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="{{('public/frontend/images/iframe1.png')}}" alt="" />
+                                        <img src="{{asset('frontend/images/iframe1.png')}}" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -365,7 +305,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="{{('public/frontend/images/iframe1.png')}}" alt="" />
+                                        <img src="{{asset('frontend/images/iframe1.png')}}" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -380,7 +320,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="{{('public/frontend/images/iframe1.png')}}" alt="" />
+                                        <img src="{{asset('frontend/images/iframe1.png')}}" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -418,11 +358,11 @@
                         <div class="single-widget">
                             <h2>Danh mục</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="{{URL::to('/')}}">Chân váy JK</a></li>
-                                <li><a href="{{URL::to('/')}}">Áo Blouse</a></li>
-                                <li><a href="{{URL::to('/')}}">Seifuku</a></li>
-                                <li><a href="{{URL::to('/')}}">Phụ kiện</a></li>
-                                <li><a href="{{URL::to('/')}}">Giày</a></li>
+                                <li><a href="{{URL::to('/danh-muc/chan-vay-jk')}}">Chân váy JK</a></li>
+                                <li><a href="{{URL::to('/danh-muc/ao-blouse')}}">Áo Blouse</a></li>
+                                <li><a href="{{URL::to('/danh-muc/seifuku')}}">Seifuku</a></li>
+                                <li><a href="{{URL::to('/danh-muc/phu-kien')}}">Phụ kiện</a></li>
+                                <li><a href="{{URL::to('/danh-muc/giay')}}">Giày</a></li>
                             </ul>
                         </div>
                     </div>
@@ -475,14 +415,14 @@
     
 
   
-    <script src="{{asset('public/frontend/js/jquery.js')}}"></script>
-    <script src="{{asset('public/frontend/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
-    <script src="{{asset('public/frontend/js/jquery.scrollUp.min.js')}}"></script>
-    <script src="{{asset('public/frontend/js/price-range.js')}}"></script>
-    <script src="{{asset('public/frontend/js/jquery.prettyPhoto.js')}}"></script>
-    <script src="{{asset('public/frontend/js/main.js')}}"></script>
-    <script src="{{asset('public/backend/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('frontend/js/jquery.js')}}"></script>
+    <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('frontend/js/sweetalert.min.js')}}"></script>
+    <script src="{{asset('frontend/js/jquery.scrollUp.min.js')}}"></script>
+    <script src="{{asset('frontend/js/price-range.js')}}"></script>
+    <script src="{{asset('frontend/js/jquery.prettyPhoto.js')}}"></script>
+    <script src="{{asset('frontend/js/main.js')}}"></script>
+    <script src="{{asset('backend/ckeditor/ckeditor.js')}}"></script>
     <script type="text/javascript">
         CKEDITOR.inline( 'productContent', {
             removePlugins: 'toolbar'

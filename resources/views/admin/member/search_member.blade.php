@@ -69,7 +69,7 @@
             <td>{{$admin->admin_id}}</td>
             <td>{{$admin->username}}</td>
             <td>
-                <img src="{{URL::to('/public/upload/avatar/admin/'.$admin->avatar)}}" url="{{$admin->avatar}}" width="80" height="80"></span>
+                <img src="{{asset('/upload/avatar/admin/'.$admin->avatar)}}" url="{{$admin->avatar}}" width="80" height="80"></span>
             </td>
             <td>{{$admin->first_name}}</td>
             <td>{{$admin->last_name}}</td>

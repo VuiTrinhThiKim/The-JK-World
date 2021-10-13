@@ -62,7 +62,7 @@
             <td>{{$product_item->product_id}}</td>
             <td>{{$product_item->product_name}}</td>
             <td>
-                <img src="{{URL::to('/public/upload/products/'.$product_item->product_image)}}" url="{{$product_item->product_image}}" width="80" height="80"></span>
+                <img src="{{URL::to('/upload/products/'.$product_item->product_image)}}" url="{{$product_item->product_image}}" width="80" height="80"></span>
             </td>
             <td>{{$product_item->price}}</span></td>
             <td>
