@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Shipping;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Hash;
 use Redirect;
@@ -19,6 +21,28 @@ class CustomerController extends Controller
     public function index()
     {
         //
+    }
+    public function loginAuthentication() {
+        $ad_username = Session::get('ad_username');
+
+        if($ad_username){
+            return Redirect::to('admin_login_view');
+        }
+        else {
+            return Redirect::to('admin')->send('Vui lòng đăng nhập');
+        }
+    }
+    public function view_all(){
+
+        $this->loginAuthentication();
+
+        $customers = Customer::paginate(5);
+        //dd($customers->links());
+        $count_customer = Customer::count();
+        $manager_customer = view('admin.customer.all_customers_view') 
+                     -> with('customers', $customers);
+
+        return view('admin_layout_view')->with('admin.customer.all_customers_view', $manager_customer);
     }
     /**
      * Store a newly created resource in storage.
@@ -96,12 +120,21 @@ class CustomerController extends Controller
      *
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
-     */
-    public function show(Customer $customer)
-    {
-        //
-    }
+    **/
+    public function show_info($customer_id){
 
+        $customer = Customer::where('customer_id', $customer_id)->get();
+        //dd($customer);
+
+        $shipping_default = Shipping::where('customer_id', $customer_id)->where('is_default', '1')->get();
+        $shipping_not_default = Shipping::where('customer_id', $customer_id)->where('is_default', '0')->get();
+
+        $orders = Order::where('customer_id', $customer_id)->get();
+        return view('page.customer.account')->with('customer', $customer)
+                                            ->with('shipping_default', $shipping_default)
+                                            ->with('shipping_not_default', $shipping_not_default)
+                                            ->with('orders', $orders);
+    }
     /**
      * Show the form for editing the specified resource.
      *

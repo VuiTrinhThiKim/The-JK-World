@@ -27,13 +27,13 @@ class CheckoutController extends Controller
 	            ->with('category_list', $category_list)->with('brand_list', $brand_list);
     }
 
-    public function create_shipping(){
+    public function create_shipping($customer_id){
 
-	    $category_list = Category::orderby('category_name', 'asc')->get();
-	    $brand_list = Brand::orderby('brand_name', 'asc')->get();
+        $shipping_default = Shipping::where('customer_id', $customer_id)->where('is_default', '1')->get();
+        $shipping_not_default = Shipping::where('customer_id', $customer_id)->where('is_default', '0')->get();
 
-	    return view('page.checkout.shipping_view')
-	            ->with('category_list', $category_list)->with('brand_list', $brand_list);
+	    return view('page.checkout.shipping_view')->with('shipping_default', $shipping_default)
+                                                  ->with('shipping_not_default', $shipping_not_default);
     }
 
     public function save_shipping(Request $request){

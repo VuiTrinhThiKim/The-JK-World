@@ -20,7 +20,38 @@
 				<div class="row">
 					<div class="col-sm-12 clearfix">
 						<div class="bill-to">
-							<p>Thông tin giao hàng</p>
+							<h2 class="title text-center">Địa chỉ giao hàng</h2>
+							@foreach($shipping_default as $key => $shipping)
+				            <div class="position-content">
+			                	<div class="shipping_info">
+			                	<address>
+									<h4>{{$shipping->customer_name}} - [Địa chỉ mặc định]</h4>
+									<p>{{$shipping->customer_phone}}</p>
+									<p>{{$shipping->shipping_address}}</p>
+									<p>{{$shipping->customer_email}}</p>
+								</address>	
+								</div>
+			                </div>
+			                @endforeach
+			                @foreach($shipping_not_default as $key => $shipping)
+			                <div class="position-content">
+			                	<div class="shipping_info">
+			                	<address>
+									<h4>{{$shipping->customer_name}}</h4>
+									<p>{{$shipping->customer_phone}}</p>
+									<p>{{$shipping->shipping_address}}</p>
+									<p>{{$shipping->customer_email}}</p>
+								</address>	
+								</div>
+			                </div>
+                			@endforeach
+						</div>
+					</div>			
+				</div>
+				<div class="row" style="margin-top: 15px;">
+					<div class="col-sm-12 clearfix">
+						<div class="bill-to">
+							<h2 class="title text-center">Thêm địa chỉ giao hàng</h2>
 							<div class="form-one">
 								<form action="{{URL::to('/luu-thong-tin-giao-hang')}}" method="post">
 									{{csrf_field()}}

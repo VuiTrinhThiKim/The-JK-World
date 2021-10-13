@@ -43,7 +43,7 @@ Route::get('/tim-kiem', [HomeController::class, 'search']);
 Route::get('/lien-he', [ContactUsController::class, 'index']);
 
 Route::get('/login-to-checkout', [CheckoutController::class, 'checkout_login']);
-Route::get('/thong-tin-giao-hang', [CheckoutController::class, 'create_shipping']);
+Route::get('/thong-tin-giao-hang/{customer_id}', [CheckoutController::class, 'create_shipping']);
 Route::post('/luu-thong-tin-giao-hang', [CheckoutController::class, 'save_shipping']);
 Route::get('/thanh-toan', [CheckoutController::class, 'payment']);
 Route::post('/dat-hang', [CheckoutController::class, 'order']);
@@ -52,7 +52,7 @@ Route::post('/tao-tai-khoan', [CustomerController::class, 'create_customer']);
 Route::post('/dang-nhap', [CustomerController::class, 'login']);
 Route::get('/dang-xuat', [CustomerController::class, 'logout']);
 
-
+Route::get('/tai-khoan/{customer_id}', [CustomerController::class, 'show_info']);
 //Admin page
 Route::prefix('admin')->group(function(){
 
@@ -153,5 +153,12 @@ Route::prefix('admin')->group(function(){
 		Route::get('/info/{admin_id}', [AdminController::class, 'show_info']);
 		//Change Password
 		Route::get('/change-password/{admin_id}', [AdminController::class, 'show_change_password']);
+	});
+
+	Route::group(['prefix'=>'customer'], function(){
+		//All Customer
+		Route::get('/view-all', [CustomerController::class, 'view_all']);
+		//Add Admin
+		//Route::get('/add', [AdminController::class, 'create']);
 	});
 });
