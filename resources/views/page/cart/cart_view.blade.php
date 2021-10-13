@@ -28,7 +28,7 @@
 					@foreach($cart_content as $key => $cart_item)
 					<tr>
 						<td class="cart_product">
-							<a href="#"><img src="{{URL::to('/public/upload/products/'.$cart_item->options->image)}}" alt="{{$cart_item->image}}" width="60" height="60" /></a>
+							<a href="#"><img src="{{asset('/upload/products/'.$cart_item->options->image)}}" alt="{{$cart_item->image}}" width="60" height="60" /></a>
 						</td>
 						<td class="cart_description" style="width: 30%;">
 							<h4><a href="">{{$cart_item->name}}</a></h4>
@@ -134,7 +134,7 @@
                             $customer_id = Session::get('customer_id');
                             if ($customer_id != null) {
                         ?>
-                                <a class="btn btn-default check_out" href="{{URL::to('/thong-tin-giao-hang')}}">Tiếp tục</a>
+                                <a class="btn btn-default check_out" href="{{URL::to('/thong-tin-giao-hang/'.$customer_id)}}">Tiếp tục</a>
                         <?php
                             }
                             else {

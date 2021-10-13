@@ -9,7 +9,7 @@
 	        <div class="product-image-wrapper">
 	            <div class="single-products">
 	                    <div class="productinfo text-center">
-	                        <img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+	                        <img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
 	                        <h2>{{number_format($product->price).' ₫'}}</h2>
 	                        <p>{{$product->product_name}}</p>
 	                        <form action="{{URL::to('/gio-hang')}}" method="post">

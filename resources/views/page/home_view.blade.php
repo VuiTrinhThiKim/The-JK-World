@@ -1,7 +1,72 @@
 @extends('layout_view')
 
-@section('content')
+@section('slider')
+<div class="container">
+            <div class="row">
+                silder
+                <div class="col-sm-12">
+                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#slider-carousel" data-slide-to="1"></li>
+                            <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        </ol>
+                        
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="col-sm-6">
+                                    <h1>The JK World</h1>
+                                    <h2>Thế giới JK</h2>
+                                    <p>Mang JK đến gần bạn hơn</p>
+                                    <button type="button" class="btn btn-default get">Mua ngay</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="{{asset('frontend/images/nhat-nguyet.jpg')}}" class="girl img-responsive" alt="" />
+                                    <!--<img src="{{('frontend/images/pricing.png')}}"  class="pricing" alt="" />-->
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1>The JK World</h1>
+                                    <h2>Thế giới JK</h2>
+                                    <p>Mang JK đến gần bạn hơn</p>
+                                    <button type="button" class="btn btn-default get">Mua ngay</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="{{asset('frontend/images/nhi-nguyet.jpg')}}" class="girl img-responsive" alt="" />
+                                    <img src="{{asset('frontend/images/pricing.png')}}"  class="pricing" alt="" />
+                                </div>
+                            </div>
+                            
+                            <div class="item">
+                                <div class="col-sm-6">
+                                    <h1>The JK World</h1>
+                                    <h2>Thế giới JK</h2>
+                                    <p>Mang JK đến gần bạn hơn</p>
+                                    <button type="button" class="btn btn-default get">Get it now</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="{{asset('frontend/images/tam-nguyet.jpg')}}" class="girl img-responsive" alt="" />
+                                    <img src="{{asset('frontend/images/pricing.png')}}"  class="pricing" alt="" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+@endsection
 
+@section('content')
 <div class="features_items"><!--features_items-->
     <h2 class="title text-center">Sản phẩm mới</h2>
     @foreach($product_list as $key => $product)
@@ -12,7 +77,7 @@
                     <form>
                         {{csrf_field()}}
                         <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_slug)}}">
-                            <img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+                            <img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
                             <h2>{{number_format($product->price).' ₫'}}</h2>
                             <p>{{$product->product_name}}</p>
                         </a>
@@ -46,7 +111,7 @@
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">
-                            <img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="" />
+                            <img src="{{URL::to('/upload/products/'.$product->product_image)}}" alt="" />
                             <h2>260000 VNĐ</h2>
                             <p>Chân váy Đông Lâm Xã</p>
                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -72,7 +137,7 @@ category-tab-->
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img width="250" height="250" src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+                                    <img width="250" height="250" src="{{URL::to('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
                                     <h2>{{number_format($product->price).' ₫'}}</h2>
                                     <p>{{$product->product_name}}</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -90,7 +155,7 @@ category-tab-->
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img width="250" height="250" src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+                                    <img width="250" height="250" src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
                                     <h2>{{number_format($product->price).' ₫'}}</h2>
                                     <p>{{$product->product_name}}</p>
                                     <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>

@@ -18,7 +18,7 @@
                         <input type="hidden" name="productQuantity" class="cart_product_qty_{{$product->product_id}}" value="1">
 
                         <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}">
-                            <img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+                            <img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
                             <h2>{{number_format($product->price).' ₫'}}</h2>
                             <p>{{$product->product_name}}</p>
                         </a>

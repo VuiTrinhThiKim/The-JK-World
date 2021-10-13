@@ -6,7 +6,7 @@
 <div class="product-details"><!--product-details-->
 	<div class="col-sm-5">
 		<div class="view-product">
-			<img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+			<img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
 			<h3>ZOOM</h3>
 		</div>
 		<div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -14,15 +14,15 @@
 			  <!-- Wrapper for slides -->
 			    <div class="carousel-inner">
 					<div class="item active">
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
+					  <a href=""><img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
+					  <a href=""><img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
+					  <a href=""><img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
 					</div>
 					<div class="item">
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
+					  <a href=""><img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
 					</div>
 					<div class="item">
-					  <a href=""><img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
+					  <a href=""><img src="{{asset('/upload/products/'.$product->product_image)}}" alt="{{$product->product_name}}" width="85px" height="85px"></a>
 					</div>
 					
 				</div>
@@ -39,7 +39,7 @@
 	</div>
 	<div class="col-sm-7">
 		<div class="product-information"><!--/product-information-->
-			<img src="{{asset('public/frontend/images/new.jpg')}}" class="newarrival" alt="" />
+			<img src="{{asset('frontend/images/new.jpg')}}" class="newarrival" alt="" />
 			<h2>{{$product->product_name}}</h2>
 			<p>Mã sản phẩm: {{$product->product_id}}</p>
 			<img src="images/product-details/rating.png" alt="" />
@@ -170,7 +170,7 @@
 	                    <div class="product-image-wrapper">
 	                        <div class="single-products">
 	                            <div class="productinfo text-center">
-	                                <img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+	                                <img src="{{URL::to('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
 	                                <h2>{{number_format($product->price).' ₫'}}</h2>
 	                                <p>{{$product->product_name}}</p>
 	                                <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -188,7 +188,7 @@
 	                    <div class="product-image-wrapper">
 	                        <div class="single-products">
 	                            <div class="productinfo text-center">
-	                                <img src="{{URL::to('/public/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
+	                                <img src="{{URL::to('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
 	                                <h2>{{number_format($product->price).' ₫'}}</h2>
 	                                <p>{{$product->product_name}}</p>
 	                                <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
