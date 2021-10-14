@@ -63,7 +63,7 @@
                                 <input type="text" class="form-control" id="adPhone" name="adPhone" value="{{$admin->phone}}">
                             </div>
                             <div class="form-group">
-                                <label for="adAddress">Địa chỉ</label>
+                                <label for="adPhone">Địa chỉ</label>
                                 <textarea style="resize: none;" rows=4 class="form-control" id="adAddress" name="adAddress"placeholder="Nhập thông tin" >{{$admin->address}}</textarea>
                             </div>
                             <div class="form-group update-avt">
