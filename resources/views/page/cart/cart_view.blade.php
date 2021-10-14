@@ -27,7 +27,7 @@
 				<tbody>
 					@foreach($cart_content as $key => $cart_item)
 					<tr>
-						<td class="cart_product">
+						<td class="cart_product"style="width: 10%;>
 							<a href="#"><img src="{{asset('/upload/products/'.$cart_item->options->image)}}" alt="{{$cart_item->image}}" width="60" height="60" /></a>
 						</td>
 						<td class="cart_description" style="width: 30%;">
@@ -63,18 +63,19 @@
 				</tbody>
 			</table>
 		</div>
-		<div>
+		<!--<div>
 			<button>Xóa giỏ hàng</button>
 		</div>
+	-->
 	</div>
 </section> <!--/#cart_items-->
 <section id="do_action">
 	<div class="container" style="width:100%;">
 		<div class="heading">
 			<h3>Thanh toán</h3>
-			<p>Ví dụ</p>
 		</div>
 		<div class="row">
+			<!--
 			<div class="col-sm-6">
 				<div class="chose_area">
 					<ul class="user_option">
@@ -121,15 +122,15 @@
 					<a class="btn btn-default check_out" href="">Continue</a>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-6">-->
+			<div class="col-sm-12">
 				<div class="total_area">
 					<ul>
-						<li>Tổng<span>{{Cart::subtotal().' ₫'}}</span></li>
-						<li>VAT (5%)<span>{{Cart::tax().' ₫'}}</span></li>
-						<li>Phí vận chuyển<span>Free</span></li>
+						<li>Tổng (đã bao gồm VAT)<span>{{Cart::subtotal().' ₫'}}</span></li>
+						<li>Phí vận chuyển<span>Miễn phí</span></li>
 						<li>Thành tiền<span>{{Cart::total().' ₫'}}</span></li>
 					</ul>
-						<a class="btn btn-default update" href="">Cập nhật</a>
+						<!--<a class="btn btn-default update" href="">Cập nhật</a>-->
 						<?php
                             $customer_id = Session::get('customer_id');
                             if ($customer_id != null) {

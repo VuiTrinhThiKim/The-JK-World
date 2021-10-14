@@ -9,11 +9,40 @@
 				  <li class="active">Thanh toán</li>
 				</ol>
 			</div><!--/breadcrums-->
-
+			<?php
+				$shipping_detail = Session::get('shipping_detail');
+			?>
 			<div class="review-payment">
 				<h2>Xem lại và thanh toán</h2>
 			</div>
-
+			<div class="shopper-informations">
+				<div class="row">
+					<div class="col-sm-12 clearfix">
+						<div class="bill-to">
+							<div class="table-responsive shipping_info">
+								<table class="table table-condensed">
+									<thead>
+										<tr class="shipping_menu">
+											<td>Thông tin giao hàng</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+											@foreach($shipping_detail as $key => $shipping)
+							                		<h4>{{$shipping->customer_name}} - {{$shipping->customer_phone}}</h4>
+													<p>{{$shipping->shipping_address}}</p>
+													<p> {{$shipping->customer_email}}</p>
+							                @endforeach
+								            </td>
+								        </tr>
+								    </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<?php
@@ -88,14 +117,18 @@
 				</table>
 			</div>
 			<div class="payment-options">
-				<h4>Phương thức thanh toán</h4>
+				
 				<form action="{{URL::to('/dat-hang')}}" method="post">
 					{{csrf_field()}}
+					<label for="customerNote">Ghi chú</label>
+					<textarea name="customerNote" placeholder="  Nhập ghi chú cho đơn hàng của bạn" rows="5"></textarea>
+					<h4>Phương thức thanh toán</h4>
 					<select class="form-control input-sm m-bot15" name="paymentMethod" required>
 	                    <option value="1" style="height: 150px; font-size: 14px;">Thanh toán khi nhận hàng</option>
 	                    <option value="2" style="height: 150px; font-size: 14px;">Thanh toán qua thẻ ATM</option>
 	                    <option value="3" style="height: 150px; font-size: 14px;">Thanh toán qua thẻ ghi nợ nội địa</option>
 	                </select>
+	                <input type="hidden" name="orderPaid" value="0">
 	                <button type="submit" class="btn btn-default btn-order">Đặt hàng</button>
 	            </form>
 			</div>

@@ -18,7 +18,7 @@ use Cart;
 session_start();
 class CheckoutController extends Controller
 {
-    public function checkout_login(){
+    public function checkout_login() {
 
 	    $category_list = Category::orderby('category_name', 'asc')->get();
 	    $brand_list = Brand::orderby('brand_name', 'asc')->get();
@@ -27,16 +27,26 @@ class CheckoutController extends Controller
 	            ->with('category_list', $category_list)->with('brand_list', $brand_list);
     }
 
-    public function create_shipping($customer_id){
+    public function create_shipping($customer_id) {
 
         $shipping_default = Shipping::where('customer_id', $customer_id)->where('is_default', '1')->get();
         $shipping_not_default = Shipping::where('customer_id', $customer_id)->where('is_default', '0')->get();
 
 	    return view('page.checkout.shipping_view')->with('shipping_default', $shipping_default)
-                                                  ->with('shipping_not_default', $shipping_not_default);
+                                                ->with('shipping_not_default', $shipping_not_default);
     }
 
-    public function save_shipping(Request $request){
+    public function chosse_shipping_by_id(Request $request) {
+
+        $current_shipping_id = $request->get('shippingIdSelected');      
+        $shipping_detail = Shipping::where('shipping_id', $current_shipping_id)->get();
+
+        Session::put('shipping_id', $current_shipping_id);
+        Session::put('shipping_detail', $shipping_detail);
+        return Redirect::to('/thanh-toan');
+    }
+
+    public function save_shipping(Request $request) {
 
         $shipping = new Shipping();
 
@@ -45,26 +55,24 @@ class CheckoutController extends Controller
         $shipping->customer_email = $request->get('customerEmail');
         $shipping->customer_phone = $request->get('customerPhone');
         $shipping->shipping_address = $request->get('customerAddress');
-        $shipping->shipping_note = $request->get('customerNote');
+        $shipping->is_default = $request->get('isDefault');
         
         $shipping->save();
         $current_shipping_id = $shipping->shipping_id;
+        $shipping_detail = Shipping::where('shipping_id', $current_shipping_id)->get();
         //dd($current_shipping_id);
         Session::put('shipping_id', $current_shipping_id);
+        Session::put('shipping_detail', $shipping_detail);
 
         return Redirect::to('/thanh-toan');
     }
 
     public function payment(){
 
-        $category_list = Category::orderby('category_name', 'asc')->get();
-        $brand_list = Brand::orderby('brand_name', 'asc')->get();
-
-        return view('page.checkout.preview_payment')
-                ->with('category_list', $category_list)->with('brand_list', $brand_list);
+        return view('page.checkout.preview_payment');
     }
 
-    public function order(Request $request){
+    public function order(Request $request) {
 
         $order  = new Order();
 
@@ -73,6 +81,8 @@ class CheckoutController extends Controller
         $order->payment_id = $request->get('paymentMethod');
         $order->order_total = Cart::total();
         $order->order_status = 'Chờ xử lí';
+        $order->order_paid = $request->get('orderPaid');
+        $order->order_note = $request->get('orderNote');
         //dd($request->get('paymentMethod'));
         $order->save();
 

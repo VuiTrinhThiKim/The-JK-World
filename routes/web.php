@@ -44,6 +44,7 @@ Route::get('/lien-he', [ContactUsController::class, 'index']);
 
 Route::get('/login-to-checkout', [CheckoutController::class, 'checkout_login']);
 Route::get('/thong-tin-giao-hang/{customer_id}', [CheckoutController::class, 'create_shipping']);
+Route::post('/chon-dia-chi-giao-hang', [CheckoutController::class, 'chosse_shipping_by_id']);
 Route::post('/luu-thong-tin-giao-hang', [CheckoutController::class, 'save_shipping']);
 Route::get('/thanh-toan', [CheckoutController::class, 'payment']);
 Route::post('/dat-hang', [CheckoutController::class, 'order']);

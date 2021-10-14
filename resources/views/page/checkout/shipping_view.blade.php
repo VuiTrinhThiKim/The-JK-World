@@ -10,9 +10,6 @@
 				</ol>
 			</div><!--/breadcrums-->
 
-			<!--<div class="register-req">
-				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-			</div>/register-req-->
 			<?php
 				$customer_id = Session::get('customer_id');
 			?>
@@ -20,138 +17,95 @@
 				<div class="row">
 					<div class="col-sm-12 clearfix">
 						<div class="bill-to">
-							<h2 class="title text-center">Địa chỉ giao hàng</h2>
+							<div class="chosse-shipping">
+								<h2>Chọn địa chỉ giao hàng</h2>
+							</div>
+							<!-- Modal -->
+							<div class="modal fade" id="addNewShippingModal" tabindex="-1" role="dialog" aria-labelledby="addNewShippingModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="addNewShippingModalLabel">Thêm địa chỉ mới</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        <div class="form-one">
+										<form action="{{URL::to('/luu-thong-tin-giao-hang')}}" method="post">
+											{{csrf_field()}}
+											<input type="hidden" name="customerId" value="{{$customer_id}}">
+											<label for="customerEmail">Email</label>
+											<input type="email"name="customerEmail" placeholder="example@gmail.com">
+											<label for="customerFullName">Họ và tên</label>
+											<input type="text" name="customerFullName" placeholder="Nguyễn Văn A">
+											<label for="customerAddress">Địa chỉ</label>
+											<input type="text" name="customerAddress"placeholder="97 Võ Văn Tần, phường 6, quận 3, TP. HCM">
+											<label for="customerPhone">Điện thoại</label>
+											<input type="text"name="customerPhone" placeholder="0123456789">
+											<input type="hidden" name="isDefault" value="0">
+											<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Lưu thông tin giao hàng</button>
+										</form>
+									</div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-shipping-save" data-dismiss="modal">Đóng</button>
+							      </div>
+
+							    </div>
+							  </div>
+							</div>
+							
 							@foreach($shipping_default as $key => $shipping)
-				            <div class="position-content">
-			                	<div class="shipping_info">
-			                	<address>
-									<h4>{{$shipping->customer_name}} - [Địa chỉ mặc định]</h4>
-									<p>{{$shipping->customer_phone}}</p>
-									<p>{{$shipping->shipping_address}}</p>
-									<p>{{$shipping->customer_email}}</p>
-								</address>	
+								<div class="position-content">
+								<div class="col-sm-1">
+									<div class="custom-control custom-radio">
+										<label class="custom-control-label" for="customRadio" style="display: none;">Toggle this custom radio</label>
+									  	<input class="custom-control-input" type="radio" id="shippingId_{{$shipping->shipping_id}}" name="customRadio" checked="checked" onclick="changeShippingIdChecked('shippingId_{{$shipping->shipping_id}}')">
+									</div>
+					            </div>
+					            <div class="col-sm-11">
+				                	<div class="shipping_content">
+				                		<h4>{{$shipping->customer_name}} {{$shipping->customer_phone}} - [Địa chỉ mặc định]</h4>
+										<p>{{$shipping->shipping_address}}</p>
+										<p> {{$shipping->customer_email}}</p>
+									</div>
 								</div>
 			                </div>
 			                @endforeach
 			                @foreach($shipping_not_default as $key => $shipping)
-			                <div class="position-content">
-			                	<div class="shipping_info">
-			                	<address>
-									<h4>{{$shipping->customer_name}}</h4>
-									<p>{{$shipping->customer_phone}}</p>
-									<p>{{$shipping->shipping_address}}</p>
-									<p>{{$shipping->customer_email}}</p>
-								</address>	
+								<div class="position-content">
+								<div class="col-sm-1">
+									<div class="custom-control custom-radio">
+										<label class="custom-control-label" for="customRadio" style="display: none;">Toggle this custom radio</label>
+									  <input class="custom-control-input" id="shippingId_{{$shipping->shipping_id}}" type="radio" name="customRadio" onclick="changeShippingIdChecked('shippingId_{{$shipping->shipping_id}}')">
+									</div>
+					            </div>
+					            <div class="col-sm-11">
+				                	<div class="shipping_content">
+				                		<h4>{{$shipping->customer_name}} {{$shipping->customer_phone}}</h4>
+										<p>{{$shipping->shipping_address}}</p>
+										<p> {{$shipping->customer_email}}</p>
+									</div>
 								</div>
 			                </div>
                 			@endforeach
-						</div>
-					</div>			
-				</div>
-				<div class="row" style="margin-top: 15px;">
-					<div class="col-sm-12 clearfix">
-						<div class="bill-to">
-							<h2 class="title text-center">Thêm địa chỉ giao hàng</h2>
-							<div class="form-one">
-								<form action="{{URL::to('/luu-thong-tin-giao-hang')}}" method="post">
-									{{csrf_field()}}
-									<input type="hidden" name="customerId" value="{{$customer_id}}">
-									<label for="customerEmail">Email</label>
-									<input type="email"name="customerEmail" placeholder="Email*">
-									<label for="customerFullName">Họ và tên</label>
-									<input type="text" name="customerFullName" placeholder="Họ và tên">
-									<label for="customerAddress">Địa chỉ</label>
-									<input type="text" name="customerAddress"placeholder="Địa chỉ">
-									<label for="customerPhone">Điện thoại</label>
-									<input type="text"name="customerPhone" placeholder="VD: 0123456789">
-									<label for="customerNote">Ghi chú</label>
-									<textarea name="customerNote" placeholder="  Nhập ghi chú cho đơn hàng của bạn" rows="5"></textarea>
-									<button type="submit" class="btn btn-default btn-save shipping-save"><i class="fa fa-save"></i> Lưu thông tin giao hàng</button>
-								</form>
-							</div>
-						</div>
-					</div>			
-				</div>
-			</div>
-			<!--<div class="review-payment">
-				<h2>Xem lại và thanh toán</h2>
-			</div>
 
-			<div class="table-responsive cart_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="cart_menu">
-							<td class="image">Sản phẩm</td>
-							<td class="description"></td>
-							<td class="price">Giá</td>
-							<td class="quantity">Số lượng</td>
-							<td class="total">Tạm tính</td>
-							<td></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/three.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4">&nbsp;</td>
-							<td colspan="2">
-								<table class="table table-condensed total-result">
-									<tr>
-										<td>Cart Sub Total</td>
-										<td>$59</td>
-									</tr>
-									<tr>
-										<td>Exo Tax</td>
-										<td>$2</td>
-									</tr>
-									<tr class="shipping-cost">
-										<td>Shipping Cost</td>
-										<td>Free</td>										
-									</tr>
-									<tr>
-										<td>Total</td>
-										<td><span>$61</span></td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+                			<form action="{{URL::to('/chon-dia-chi-giao-hang')}}" method="post">
+                				{{csrf_field()}}
+                				@foreach($shipping_default as $key => $shipping)
+	                			<input type="hidden" id="shippingIdSelected" name="shippingIdSelected" value="{{$shipping->shipping_id}}">
+	                			@endforeach
+	                			<button class="btn btn-primary" type="submit">Tiếp tục</button>
+	                			<button type="button" class="btn btn-shipping-save" data-toggle="modal" data-target="#addNewShippingModal">
+								  Thêm thông tin giao hàng
+								</button>
+                			</form>
+						</div>
+						
+					</div>			
+				</div>
 			</div>
-			<div class="payment-options">
-				<span>
-					<label><input type="checkbox"> Direct Bank Transfer</label>
-				</span>
-				<span>
-					<label><input type="checkbox"> Check Payment</label>
-				</span>
-				<span>
-					<label><input type="checkbox"> Paypal</label>
-				</span>
-			</div>-->
 		</div>
 	</section> <!--/#cart_items-->
 @endsection
