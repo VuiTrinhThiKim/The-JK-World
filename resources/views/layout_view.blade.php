@@ -28,8 +28,6 @@
 <body>
     <?php 
     $keywords = Session::get('keywords');
-    echo Session::get('customer_id');
-    echo Session::get('shipping_id');
     $customer_id = Session::get('customer_id');
     $shipping_id = Session::get('shipping_id');
     ?>
@@ -414,7 +412,7 @@
     </footer><!--/Footer-->
     
 
-  
+    <script src="{{asset('frontend/js/custom.js')}}"></script>
     <script src="{{asset('frontend/js/jquery.js')}}"></script>
     <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('frontend/js/sweetalert.min.js')}}"></script>
