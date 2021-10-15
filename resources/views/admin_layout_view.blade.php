@@ -154,8 +154,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Đơn hàng - Order</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{URL::to('/admin/product/add')}}">Thêm sản phẩm mới</a></li>
-                        <li><a href="{{URL::to('/admin/product/view-all')}}">Danh sách đơn hàng</a></li>
+                        <li><a href="{{URL::to('/admin/order/add')}}">Thêm đơn hàng mới</a></li>
+                        <li><a href="{{URL::to('/admin/order/view-all')}}">Danh sách đơn hàng</a></li>
                     </ul>
                 </li>
                 <!-- <li>
@@ -259,7 +259,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('backend/js/jquery.nicescroll.js')}}"></script>
 <script src="{{asset('backend/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('backend/ckeditor/ckfinder/ckfinder.js')}}"></script>
-<script src="{{asset('backend/js/jQuery-3.5.0.min.js')}}"></script>
+<!--<script src="{{asset('backend/js/jQuery-3.5.0.min.js')}}"></script>-->
 <script type="text/javascript">
     CKEDITOR.replace('productContent');
 </script>

@@ -9,6 +9,7 @@
 			  <li class="active">Giỏ hàng</li>
 			</ol>
 		</div>
+		@if(Cart::content()->isNotEmpty())
 		<div class="table-responsive cart_info">
 			<?php
 				$cart_content = Cart::content();
@@ -43,7 +44,7 @@
 									{{csrf_field()}}
 									<input class="cart_quantity_input" type="number" name="itemQuantity" min="1" max="10" value="{{$cart_item->qty}}" autocomplete="off" size="2">
 									<input type="hidden" name="rowId" value="{{$cart_item->rowId}}">
-									<button type="submit" class="btn btn-default btn-save"><i class="fa fa-save"></i></button>
+									<button type="submit" class="btn-save"><i class="fa fa-save"></i></button>
 								</form>
 							</div>
 						</td>
@@ -63,12 +64,17 @@
 				</tbody>
 			</table>
 		</div>
+		@else
+		<h2>Bạn chưa có sản phẩm nào trong giỏ hàng</h2>
+
+		@endif
 		<!--<div>
 			<button>Xóa giỏ hàng</button>
 		</div>
 	-->
 	</div>
 </section> <!--/#cart_items-->
+@if(Cart::content()->isNotEmpty())
 <section id="do_action">
 	<div class="container" style="width:100%;">
 		<div class="heading">
@@ -150,4 +156,5 @@
 		</div>
 	</div>
 </section><!--/#do_action-->
+@endif
 @endsection

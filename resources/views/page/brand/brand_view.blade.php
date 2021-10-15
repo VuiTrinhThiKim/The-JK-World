@@ -16,9 +16,18 @@
 	                        	{{csrf_field()}}
 		                        <input type="hidden" name="productId" value="{{$product->product_id}}">
 		                        <input name="productQuantity" type="hidden" value="1" />
-		                        <button type="submit" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+		                        @if($product->product_qty > 0)
+                                <button type="submit" class="btn btn-default add-to-cart">
+                                    <i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
+                                </button>
+                                @else
+                                <button type="submit" class="btn btn-default add-to-cart" disabled>
+                                    <i class="fa fa-shopping-cart"></i>Hết hàng
+                                </button>
+                                @endif
 		                    </form>
 	                    </div>
+	                    
 	            </div>
 	            <div class="choose">
 	                <ul class="nav nav-pills nav-justified">

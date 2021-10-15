@@ -42,27 +42,37 @@
 			<img src="{{asset('frontend/images/new.jpg')}}" class="newarrival" alt="" />
 			<h2>{{$product->product_name}}</h2>
 			<p>Mã sản phẩm: {{$product->product_id}}</p>
-			<img src="images/product-details/rating.png" alt="" />
+			<!--<img src="images/product-details/rating.png" alt="" />-->
 
 			<form action="{{URL::to('/gio-hang')}}" method="post">
 				{{csrf_field()}}
+				@if($product->product_qty > 0)
 				<span>
 					<span>{{number_format($product->price).' ₫'}}</span>
 				</span>
-				<span>
-					<label>Số lượng:</label>
-					<input name="productQuantity" type="number" min="1" max="{{$product->product_qty}}" value="1" />
-					<input name="productId" type="hidden" value="{{$product->product_id}}" />
-					<button type="submit" class="btn btn-fefault cart">
-						<i class="fa fa-shopping-cart"></i>
-						Thêm vào giỏ hàng
-					</button>
-				</span>
+					<span>
+						<label>Số lượng:</label>
+						<input name="productQuantity" type="number" min="1" max="{{$product->product_qty}}" value="1" />
+						<input name="productId" type="hidden" value="{{$product->product_id}}" />
+						<button type="submit" class="btn btn-default cart">
+							<i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
+						</button>
+					</span>
+				@else
+					<span class="out-of-stock">Hết hàng</span>
+				@endif				
 			</form>
 			<p><b>Khối lượng:</b> {{$product->weight}} kg</p>
 			<p><b>Brand:</b> {{$product->brand_name}}</p>
 			<p><b>Danh mục:</b> {{$product->category_name}}</p>
-			<p><b>Trạng thái:</b> In Stock</p>
+			<p>
+				<b>Trạng thái:</b>
+				@if($product->product_qty > 0)
+				In Stock
+				@else
+				Out of stock
+				@endif
+			</p>
 			<p><b>Tình trạng sản phẩm:</b> New</p>
 			
 			<a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
@@ -75,59 +85,48 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#description" data-toggle="tab">Mô tả</a></li>
 			<li><a href="#details" data-toggle="tab">Chi tiết sản phẩm</a></li>
-			<li><a href="#brand" data-toggle="tab">Thông tin brand</a></li>
-			<li><a href="#tag" data-toggle="tab">Tag</a></li>
+			<li><a href="#brand" data-toggle="tab">Thông tin thương hiệu</a></li>
+			<li><a href="#delivery-policy" data-toggle="tab">Chính sách giao hàng</a></li>
 			<li><a href="#reviews" data-toggle="tab">Đánh giá (5)</a></li>
 		</ul>
 	</div>
 	<div class="tab-content">
 		<div class="tab-pane fade active in" id="description" >
 			<div class="col-sm-12">
-				<div class="product-image-wrapper">
-					<div class="single-products">
-						<div class="productinfo">
-							<img src="images/home/gallery1.jpg" alt="" />
-							<h2>Mô tả:</h2>
-							<p>{{$product->product_description}}</p>
-						</div>
-					</div>
+				<div class="content_margin">
+					<div><p>{{$product->product_description}}</p></div>
+
+					<div class="how-to-use-product">
+						<div >&nbsp;</div><strong><strong>HƯỚNG DẪN SỬ DỤNG</strong></strong>&nbsp;<br>
+						Giặt máy ở chế độ nhẹ, nhiệt độ thường.<br>
+						Không sử dụng hoá chất, thuốc tẩy có chứa Clo.<br>
+						Phơi sản phẩm trong bóng mát.<br>
+						Sấy thùng, chế độ nhẹ nhàng.<br>
+						Là ở nhiệt độ trung bình 150°C.<br>
+						Giặt với sản phẩm cùng màu.<br>
+						Không là lên chi tiết trang trí.
+				</div>
 				</div>
 			</div>
 		</div>
 		<div class="tab-pane fade" id="details" >
 			<div class="col-sm-12">
-				<div class="product-image-wrapper">
-					<div class="single-products">
-						<p>{!!$product->content!!}</p>
-						<!--<textarea rows=9 class="form-control cke_inner cke_top" id="productContent" name="productContent" disabled>{{$product->content}}</textarea>-->
-					</div>
+				<div class="content_margin">
+					<p>{!!$product->content!!}</p>
 				</div>
 			</div>
 		</div>
 		<div class="tab-pane fade" id="brand" >
 			<div class="col-sm-12">
-				<div class="product-image-wrapper">
-					<div class="single-products">
-						<div class="productinfo">
-							<img src="images/home/gallery1.jpg" alt="" />
-							<h2>Brand</h2>
-							<p>{{$product->brand_description}}</p>
-						</div>
-					</div>
+				<div class="content_margin">
+					<p>{{$product->brand_description}}</p>
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane fade" id="tag" >
-			<div class="col-sm-3">
-				<div class="product-image-wrapper">
-					<div class="single-products">
-						<div class="productinfo text-center">
-							<img src="images/home/gallery4.jpg" alt="" />
-							<h2>$56</h2>
-							<p>Easy Polo Black Edition</p>
-							<button type="submit" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-						</div>
-					</div>
+		<div class="tab-pane fade" id="delivery-policy" >
+			<div class="col-sm-12">
+				<div class="content_margin">
+					<p>Đơn hàng sẽ được giao cho Quý khách trong vòng 05 - 07 ngày làm việc kể từ ngày đặt đơn. Quý khách có thể liên hệ với TheJKWorld qua Email, Điện thoại, Facebook để được biết về lộ trình đơn hàng của mình</p>
 				</div>
 			</div>
 		</div>
@@ -158,6 +157,7 @@
 		
 	</div>
 </div><!--/category-tab-->
+@if($related_products_active->isNotEmpty())
 <div class="recommended_items"><!--recommended_items-->
     <h2 class="title text-center">Sản phẩm gợi ý</h2>
     
@@ -173,7 +173,7 @@
 	                                <img src="{{URL::to('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
 	                                <h2>{{number_format($product->price).' ₫'}}</h2>
 	                                <p>{{$product->product_name}}</p>
-	                                <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+	                                <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
 	                            </div>    
 	                        </div>
 	                    </div>
@@ -191,7 +191,7 @@
 	                                <img src="{{URL::to('/upload/products/'.$product->product_image)}}" alt="{{$product->product_image}}" />
 	                                <h2>{{number_format($product->price).' ₫'}}</h2>
 	                                <p>{{$product->product_name}}</p>
-	                                <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+	                                <a href="{{URL::to('/chi-tiet-san-pham/'.$product->product_id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
 	                            </div>    
 	                        </div>
 	                    </div>
@@ -208,5 +208,5 @@
           </a>          
     </div>
 </div><!--/recommended_items-->
-
+@endif
 @endsection
