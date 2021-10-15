@@ -77,7 +77,7 @@
               <a href="{{URL::to('/admin/category/edit/'.$cate_item->category_id)}}" class="edit-category" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-edit"></i>
               </a>
-              <a onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')" href="{{URL::to('/admin/category/delete/'.$cate_item->category_id)}}" class="delete-category" ui-toggle-class="">
+              <a onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục {{ $cate_item->category_name}}?')" href="{{URL::to('/admin/category/delete/'.$cate_item->category_id)}}" class="delete-category" ui-toggle-class="">
                 <i class="fa fa-times text-danger text"></i>
               </a>
             </td>

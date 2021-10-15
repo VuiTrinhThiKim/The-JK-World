@@ -89,18 +89,13 @@
                     </div>
                     <div class="form-group">
                         <label for="adDOB">Ngày sinh</label>
-                        <input type="date" class="form-control" id="adDOB" name="adDOB" value="{{$admin->dob}}" >
+                        <input type="date" class="form-control" id="adDOB" name="adDOB" value="{{old('adDOB')}}" >
                     </div>
                     <div class="form-group">
                         <label for="adGender">Giới tính</label>
                         <select type="date" class="form-control" id="adGender" name="adGender">
-                            @if($admin->gender == 0)
                             <option value="0" selected>Nam</option>
                             <option value="1">Nữ</option>
-                            @else
-                            <option value="0">Nam</option>
-                            <option value="1" selected>Nữ</option>
-                            @endif
                         </select>
                     </div>
                     <div class="form-group">
@@ -116,7 +111,7 @@
                     </div>
                     <div class="form-group">
                         <label for="adAddress">Địa chỉ<span class="required-field"> (*)</span></label>
-                        <textarea style="resize: none;" rows=4 class="form-control" id="adAddress" name="adAddress" value="{{old('adAddress')}}" placeholder="Nhập thông tin" ></textarea>
+                        <textarea style="resize: none;" rows=4 class="form-control" id="adAddress" name="adAddress" placeholder="Nhập thông tin" > {{old('adAddress')}}</textarea>
                         @if ($errors->has('adAddress'))
                             @error('adAddress')
                                 <div class="text-danger">

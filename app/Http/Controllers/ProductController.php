@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Str;
 use Session;
 use Redirect;
 
@@ -59,11 +60,21 @@ class ProductController extends Controller
         $product->product_name = $request->get('productName');
         $product->product_description = $request->get('productDescription');
         $product->content = $request->get('productContent');
+        $product->product_qty = $request->get('productQty');
         $product->price = $request->get('productPrice');
         $product->weight = $request->get('productWeight');
         $product->category_id = $request->get('categoryID');
         $product->brand_id = $request->get('brandID');
         $product->product_status = $request->get('productStatus');
+
+        $slug = Str::of($product->product_name)->slug('-');
+        if(Product::where('product_slug', $slug)->first() == null)
+        {
+            $product->product_slug = $slug;
+        }
+        else {
+            $product->product_slug = $slug.'-'.rand(0,255);
+        }
 
         $image = $request->file('productImage');
         //Check file upload
@@ -145,15 +156,27 @@ class ProductController extends Controller
         $product->product_name = $request->get('productName');
         $product->product_description = $request->get('productDescription');
         $product->content = $request->get('productContent');
+        $product->product_qty = $request->get('productQty');
         $product->price = $request->get('productPrice');
         $product->weight = $request->get('productWeight');
         $product->category_id = $request->get('categoryID');
         $product->brand_id = $request->get('brandID');
 
+
         if(Product::where('product_name', 'LIKE BINARY', $product->product_name)->where('product_id', '<>', $product_id)->first() != null) {
             Session::put('messProduct','Lỗi: Trùng tên sản phẩm!!!');
             return Redirect::to('/admin/product/edit/'.$product_id);
-        } 
+        }
+
+        $slug = Str::of($product->product_name)->slug('-');
+
+        if(Product::where('product_slug', $slug)->where('product_id', $product_id)->first() != null) {
+            $product->product_slug = $slug;
+        }
+        else {
+            $product->product_slug = $slug.'-'.rand(0,255);
+        }
+        
         $image = $request->file('productImage');
         //Check file upload
         if($image) {
@@ -173,7 +196,7 @@ class ProductController extends Controller
                 $get_image_name = $image->getClientOriginalName();
                 $new_image_name = current(explode('.',$get_image_name));
                 $new_image =  $new_image_name.'-'.rand(0,128).'.'.$extension;
-                $image->move('public/upload/products', $new_image);
+                $image->move('upload/products', $new_image);
 
                 $product->product_image = $new_image;
                 // Save product
@@ -215,7 +238,10 @@ class ProductController extends Controller
 
         $this->loginAuthentication();
 
-        $products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')->orderby('products.product_id', 'asc')->paginate(5);
+        $products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')
+                            ->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+                            ->orderbyDesc('products.product_id')
+                            ->paginate(5);
         //dd($all_product);
         $manager_product = view('admin.product.all_products_view') 
                      -> with('products', $products);
@@ -252,25 +278,26 @@ class ProductController extends Controller
     {
         $product_id = Product::where('product_slug', $product_slug)->value('product_id');
 
-        $product_details = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
-            ->where('products.product_id', $product_id)->get();
+        $product_details = Product::join('categories', 'categories.category_id', '=', 'products.category_id')
+                                    ->join('brands', 'brands.brand_id', '=', 'products.brand_id')
+                                    ->where('products.product_id', $product_id)->get();
 
         //Get category id
         foreach ($product_details as $key => $value) {
             $category_id = $value->category_id;
         }
 
-        $related_products_active = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
-            ->where('categories.category_id', $category_id)
-            ->whereNotIn('products.product_id', [$product_id])->limit(3)->get();
-
         $related_products = Product::join('categories', 'categories.category_id', '=', 'products.category_id')->join('brands', 'brands.brand_id', '=', 'products.brand_id')
             ->where('categories.category_id', $category_id)
-            ->whereNotIn('products.product_id', [$product_id])->skip(3)->take(6)->get();
+            ->whereNotIn('products.product_id', [$product_id]);
+
+        $related_products_active = $related_products->limit(3)->get();
+
+        $related_products_no_active = $related_products->skip(3)->take(6)->get();
 
         return view('page.product.product_view')
                     ->with('product_details', $product_details)
-                    ->with('related_products', $related_products)
+                    ->with('related_products', $related_products_no_active)
                     ->with('related_products_active', $related_products_active);
     }
 

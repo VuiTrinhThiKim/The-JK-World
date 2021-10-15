@@ -114,20 +114,20 @@ class BrandController extends Controller
 
         $slug = Str::of($brand->brand_name)->slug('-');
 
-        if(Brand::where('brand_slug', $slug)
-                ->where('brand_id', $brand_id)->first() != null)
-        {
-            $brand->brand_slug = $slug;
-        }
-        else {
-            $brand->brand_slug = $slug.'-'.rand(0,255);
-        }
         if(Brand::where('brand_name', 'LIKE BINARY', $brand->brand_name)
                 ->where('brand_id', '<>', $brand_id)->first() != null)
         {
             Session::put('messBrand','Lỗi: Trùng tên với sản phẩm khác!!!');
             return Redirect::to('/admin/brand/edit/'.$brand_id);
         } 
+
+        if(Brand::where('brand_slug', $slug)->where('brand_id', $brand_id)->first() != null) {
+            $brand->brand_slug = $slug;
+        }
+        else {
+            $brand->brand_slug = $slug.'-'.rand(0,255);
+        }
+        
         $brand->save();
         Session::put('messBrand','Cập nhật brand thành công!!!');
         return Redirect::to('/admin/brand/view-all');

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Str;
 use Session;
 use Redirect;
 
@@ -57,6 +58,14 @@ class CategoryController extends Controller
         $category->category_description = $request->get('categoryDescription');
         $category->category_status = $request->get('categoryStatus');
 
+        $slug = Str::of($category->category_name)->slug('-');
+        if(Category::where('category_slug', $slug)->first() == null)
+        {
+            $category->category_slug = $slug;
+        }
+        else {
+            $category->category_slug = $slug.'-'.rand(0,255);
+        }
         if(Category::where('category_name','LIKE BINARY', $request->categoryName)->first() == null){
                 
             $category->save();
@@ -95,15 +104,25 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category, $category_id)
     {
-        $cate = Category::where('category_id',$category_id)->first();
+        $category = Category::where('category_id',$category_id)->first();
 
-        $cate->category_name = $request->get('categoryName');
-        $cate->category_description = $request->get('categoryDescription');
-        if(Category::where('category_name',$cate->category_name)->where('category_id', '<>', $category_id)->first() != null) {
+        $category->category_name = $request->get('categoryName');
+        $category->category_description = $request->get('categoryDescription');
+
+        if(Category::where('category_name', 'LIKE BINARY' ,$category->category_name)->where('category_id', '<>', $category_id)->first() != null) {
             Session::put('messCate','Lỗi: Trùng tên với danh mục khác!!!');
             return Redirect::to('/admin/category/edit/'.$category_id);
         } 
-        $cate->save();
+        $slug = Str::of($category->category_name)->slug('-');
+
+        if(Category::where('category_slug', $slug)->where('category_id', $category_id)->first() != null) {
+            $category->category_slug = $slug;
+        }
+        else {
+            $category->category_slug = $slug.'-'.rand(0,255);
+        }
+        
+        $category->save();
         Session::put('messCate','Cập nhật danh mục thành công!!!');
         return Redirect::to('/admin/category/view-all');
     }

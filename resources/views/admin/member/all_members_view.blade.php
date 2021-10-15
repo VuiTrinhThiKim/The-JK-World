@@ -86,7 +86,7 @@
               <a href="{{URL::to('/admin/member/edit/'.$admin->admin_id)}}" class="edit-product" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-edit"></i>
               </a>
-              <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')" href="{{URL::to('/admin/member/delete/'.$admin->user_id)}}" class="delete-product" ui-toggle-class="">
+              <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')" href="{{URL::to('/admin/member/delete/'.$admin->admin_id)}}" class="delete-product" ui-toggle-class="">
                 <i class="fa fa-times text-danger text"></i>
               </a>
               @endif

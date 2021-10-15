@@ -69,6 +69,17 @@
                         }
                     </script>
                     <div class="form-group">
+                        <label for="productQty">Số lượng<span class="required-field"> (*)</span></label>
+                        <input type="text" class="form-control" id="productQty" name="productQty" value="{{old('productQty')}}" placeholder="Chân Váy JK">
+                        @if ($errors->has('productQty'))
+                            @error('productQty')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                            @enderror
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <label for="productPrice">Giá niêm yết<span class="required-field"> (*)</span></label>
                         <input type="text" class="form-control" id="productPrice" name="productPrice" value="{{old('productPrice')}}" placeholder="Chân Váy JK">
                         @if ($errors->has('productPrice'))

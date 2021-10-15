@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use App\Models\Role;
+use App\Models\Order;
 use Redirect;
 use Session;
 use Hash;
@@ -35,7 +36,9 @@ class AdminController extends Controller
         
         $this->loginAuthentication();
 
-        return view('admin.dashboard_view');
+        $orders = Order::all(); 
+
+        return view('admin.dashboard_view')->with('orders', $orders);
     }
 
     public function showCreate(){
@@ -133,7 +136,7 @@ class AdminController extends Controller
                 $get_image_name = $image->getClientOriginalName();
                 $new_image_name = current(explode('.',$get_image_name));
                 $new_image =  $new_image_name.'-'.rand(0,128).'.'.$extension;
-                $image->move('public/upload/avatar/admin/', $new_image);
+                $image->move('upload/avatar/admin/', $new_image);
 
                 $admin->avatar = $new_image;
                 // Save product
@@ -216,7 +219,7 @@ class AdminController extends Controller
             $get_image_name = $image->getClientOriginalName();
                 $new_image_name = current(explode('.',$get_image_name));
                 $new_image =  $new_image_name.'-'.rand(0,128).'.'.$extension;
-                $image->move('public/upload/avatar/admin/', $new_image);
+                $image->move('upload/avatar/admin/', $new_image);
 
                 $admin->avatar = $new_image;
                 // Save product
@@ -242,7 +245,7 @@ class AdminController extends Controller
      */
     public function destroy($admin_id)
     {
-        $user = Admin::find($user_id)->delete();
+        $user = Admin::find($admin_id)->delete();
         Session::put('messUser','Xóa tài khoản thành công!!!');
         return Redirect::to('/admin/member/view-all');
     }
