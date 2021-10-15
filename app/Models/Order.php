@@ -12,5 +12,13 @@ class Order extends Model
     protected $table = 'orders';
     protected $primaryKey = 'order_id';
 
-    
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'order_id', 'order_id');
+    }
+
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class, 'order_id', 'order_id');
+    }
 }

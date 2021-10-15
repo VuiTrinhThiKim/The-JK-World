@@ -11,4 +11,9 @@ class OrderDetail extends Model
 
     protected $table = 'order_details';
     protected $primaryKey = 'orderdetail_id';
+
+    public function order()
+    {
+        return $this->belongTo(Order::class, 'order_id', 'order_id');
+    }
 }
