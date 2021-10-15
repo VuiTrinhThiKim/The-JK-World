@@ -943,6 +943,9 @@ h2.title {
   color: #fff;
 }
 
+.content_margin {
+  margin: 20px;
+}
 
 
 .add-to-cart {
@@ -1004,7 +1007,7 @@ h2.title {
   background: #40403E;
   border-bottom: 1px solid #EF6C7D;
   list-style: none outside none;
-  margin: 0 0 30px;
+  /*margin: 0 0 30px;*/
   padding: 0;
   width: 100%;
 }
@@ -1221,9 +1224,9 @@ h2.title {
 .product-information {
   border: 1px solid #F7F7F0;
   overflow: hidden;
-  padding-bottom: 60px;
-  padding-left: 60px;
-  padding-top: 60px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-top: 30px;
   position: relative;
 }
 
@@ -1236,7 +1239,7 @@ h2.title {
 .product-information h2 {
   color: #363432;
   font-family: 'Roboto', sans-serif;
-  font-size: 20px;
+  font-size: 32px;
   margin-top: 0;
 }
 
@@ -1248,15 +1251,15 @@ h2.title {
 
 .product-information span {
   display: inline-block;
-  margin-bottom: 8px;
-  margin-top: 18px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .product-information span span {
   color: #EF6C7D;
   float: left;
   font-family: 'Roboto', sans-serif;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
   margin-right: 20px;
   margin-top: 0px;
@@ -1292,7 +1295,7 @@ h2.title {
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   margin-left: 20px;
 }
 
@@ -1648,7 +1651,6 @@ h2.title {
   font-weight: 500;
 }
 
-
 .cart_quantity_input {
   color: #696763;
   float: left;
@@ -1657,8 +1659,9 @@ h2.title {
   text-align: center;
   font-family: 'Roboto',sans-serif;
   margin-right: 5px;
+  height: 33px;
+  width: 45px;
 }
-
 
 .cart_delete  {
   display: block;
@@ -2555,6 +2558,18 @@ h2.title {
   font-weight: bold;
   font-size: 16px;
 }
+
+.btn-save {
+  height: 33px;
+  width: 45px;
+  background: #FFFFFF;
+  border: 1px solid #EF6C7D;
+}
+
+.fa-save {
+  font-size: 16px;
+}
+
 .shipping_content {
   display: block;
   border-bottom:  1px solid black;
@@ -2603,4 +2618,15 @@ h2.title {
   border-top: 0 none;
   vertical-align: inherit;
   text-indent: 1em;
+}
+
+/*out-of-stock*/
+.out-of-stock {
+  font-size: 30px;
+  color: #EF6C7D;
+  font-weight: 700;
+}
+
+.default_address {
+  color: #EF6C7D;
 }

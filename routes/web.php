@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 
 
 /*
@@ -47,7 +48,7 @@ Route::get('/thong-tin-giao-hang/{customer_id}', [CheckoutController::class, 'cr
 Route::post('/chon-dia-chi-giao-hang', [CheckoutController::class, 'chosse_shipping_by_id']);
 Route::post('/luu-thong-tin-giao-hang', [CheckoutController::class, 'save_shipping']);
 Route::get('/thanh-toan', [CheckoutController::class, 'payment']);
-Route::post('/dat-hang', [CheckoutController::class, 'order']);
+Route::post('/dat-hang', [OrderController::class, 'order']);
 
 Route::post('/tao-tai-khoan', [CustomerController::class, 'create_customer']);
 Route::post('/dang-nhap', [CustomerController::class, 'login']);
@@ -159,6 +160,13 @@ Route::prefix('admin')->group(function(){
 	Route::group(['prefix'=>'customer'], function(){
 		//All Customer
 		Route::get('/view-all', [CustomerController::class, 'view_all']);
+		//Add Admin
+		//Route::get('/add', [AdminController::class, 'create']);
+	});
+
+	Route::group(['prefix'=>'order'], function(){
+		//All Order
+		Route::get('/view-all', [OrderController::class, 'view_all']);
 		//Add Admin
 		//Route::get('/add', [AdminController::class, 'create']);
 	});
