@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Shipping;
 use App\Models\Order;
+use App\Models\OrderDetails;
 use Illuminate\Http\Request;
 use Hash;
 use Redirect;
@@ -32,6 +33,7 @@ class CustomerController extends Controller
             return Redirect::to('admin')->send('Vui lòng đăng nhập');
         }
     }
+
     public function view_all(){
 
         $this->loginAuthentication();
@@ -83,7 +85,7 @@ class CustomerController extends Controller
 
         Session::put('customer_id', $customer->customer_id);
         Session::put('username', $customer->username);
-        return Redirect::to('/thanh-toan');
+        return Redirect::to('/trang-chu');
     }
 
     public function login(Request $request){
@@ -122,18 +124,30 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
     **/
     public function show_info($customer_id){
+        //$customer_id = $customer_id_check;
+        $current_customer_id = Session::get('customer_id');
 
-        $customer = Customer::where('customer_id', $customer_id)->get();
-        //dd($customer);
+        if($current_customer_id == $customer_id) {
 
-        $shipping_default = Shipping::where('customer_id', $customer_id)->where('is_default', '1')->get();
-        $shipping_not_default = Shipping::where('customer_id', $customer_id)->where('is_default', '0')->get();
+            $customer = Customer::where('customer_id', $customer_id)->get();
 
-        $orders = Order::where('customer_id', $customer_id)->get();
-        return view('page.customer.account')->with('customer', $customer)
-                                            ->with('shipping_default', $shipping_default)
-                                            ->with('shipping_not_default', $shipping_not_default)
-                                            ->with('orders', $orders);
+            $shipping_default = Shipping::where('customer_id', $customer_id)->where('is_default', '1')->get();
+            $shipping_not_default = Shipping::where('customer_id', $customer_id)->where('is_default', '0')->get();
+
+            $orders = Order::where('customer_id', $customer_id)->join('payment', 'payment.payment_id', '=', 'orders.payment_id')->orderByDesc('order_id')->get();
+            $order_details = Order::where('customer_id', $customer_id)
+                                    ->join('order_details', 'order_details.order_id', '=', 'orders.order_id')
+                                    ->join('products', 'products.product_id', '=', 'order_details.product_id')
+                                    ->get();
+            //dd($order_details);
+            return view('page.customer.account')->with('customer', $customer)
+                                                ->with('shipping_default', $shipping_default)
+                                                ->with('shipping_not_default', $shipping_not_default)
+                                                ->with('orders', $orders)
+                                                ->with('order_details', $order_details);
+        }
+        else
+            return view('page.error404');
     }
     /**
      * Show the form for editing the specified resource.

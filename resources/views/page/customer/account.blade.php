@@ -125,72 +125,182 @@
             </div>
         </div>
         <div class="tab-pane fade" id="orders" >
+            <section id="order_items">
             <div class="col-sm-12">
                 <div class="content_margin">
-                    <div class="table-responsive cart_info">
+                    <div class="table-responsive order_info">
                         <table class="table table-condensed">
                             <thead>
-                                <tr class="cart_menu">
-                                    <td class="image">Mã đơn hàng</td>
-                                    <td class="description">Ngày đặt</td>
-                                    <td class="total">Phương thức thanh toán</td>
-                                    <td class="price">Tổng</td>
-                                    <td class="quantity">Đã trả</td>
-                                    <td class="total">Còn lại</td>
-                                    <td class="total">Trạng thái đơn hàng</td>
+                                <tr class="order_menu">
+                                    <td class="id">Mã đơn</td>
+                                    <td class="date" style='width:12%;'>Ngày đặt</td>
+                                    <td class="method">Phương thức thanh toán</td>
+                                    <td class="total">Tổng</td>
+                                    <td class="paid">Đã trả</td>
+                                    <td class="remain">Còn lại</td>
+                                    <td class="status">Trạng thái đơn hàng</td>
                                     <td></td>
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($orders->isNotEmpty())
                                 @foreach($orders as $key => $order)
                                 <tr>
-                                    <td class="cart_product"style="width: 10%;">
+                                    <td class="order_id"style="width: 10%;">
                                        <p>{{$order->order_id}}</p>
                                     </td>
-                                    <td class="cart_description">
+                                    <td class="order_date">
                                         <p>{{$order->created_at}}</p>
                                     </td>
-                                    <td class="total">
+                                    <td class="payment_method">
                                         <p>{{$order->payment_method}}</p>
                                     </td>
-                                    <td class="cart_price">
+                                    <td class="total">
                                         <span>
                                             <span>{{number_format($order->order_total).' ₫'}}</span>
                                         </span>
                                     </td>
-                                    <td class="cart_quantity">
+                                    <td class="order_paid">
                                         <span>
                                             <span>{{number_format($order->order_paid).' ₫'}}</span>
                                         </span>
                                     </td>
-                                    <td class="cart_total">
+                                    <td class="order_remain">
                                         <span>
                                             <span>{{number_format($order->order_total - $order->order_paid).' ₫'}}</span>
                                         </span>
                                     </td>
-                                    <td class="cart_quantity">
+                                    <td class="order_status">
                                         <p>{{$order->order_status}}</p>
                                     </td>
-                                    <td class="cart_delete">
-                                        <a onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')"  class="cart_quantity_delete" href="{{URL::to('/xoa-san-pham-khoi-gio-hang/'.$order->rowId)}}"><i class="fa fa-times"></i></a>
+                                    <td class="order_view">
+                                        <button type="button" class="cart_quantity_delete" data-toggle="modal" data-target="#orderDetailsModal{{$order->order_id}}">
+                                          <i class="fa fa-eye"></i>
+                                        </button>
                                     </td>
                                 </tr>
                                 @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+        </section>
         </div>       
     </div>
 </div><!--/category-tab-->
-
-<!--Shipping-->
-
-
-<div class="row">
-    <div class="col-lg-12">
-        
+@if($orders->isNotEmpty())
+@foreach($orders as $key => $order)
+<div class="modal fade" id="orderDetailsModal{{$order->order_id}}" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModalLabel{{$order->order_id}}" aria-hidden="true">
+      <div class="modal-dialog modal-resize" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="orderDetailsModalLabel{{$order->order_id}}">Thông tin đơn hàng #{{$order->order_id}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <section id="order_items">
+            <div class="col-sm-12">
+                <div class="content_margin">
+                    <div class="table-responsive order_info ">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr class="order_menu">
+                                    <td class="id">Mã SP</td>
+                                    <td class="date">Sản phẩm</td>
+                                    <td class="date"></td>
+                                    <td class="method">Giá</td>
+                                    <td class="total">Số lượng</td>
+                                    <td class="total">Tạm tính</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($order_details as $key => $detail)
+                                @if($detail->order_id == $order->order_id)
+                                <tr>
+                                    <td class="order_id"style="width: 10%;">
+                                       <p>{{$detail->product_id}}</p>
+                                    </td>
+                                    <td class="order_date">
+                                        <a href=""><img src="{{asset('/upload/products/'.$detail->product_image)}}" alt="{{$detail->product_name}}" width="85px" height="85px"></a>
+                                    </td>
+                                    <td class="payment_method">
+                                        <p>{{$detail->product_name}}</p>
+                                    </td>
+                                    <td class="total">
+                                        <p>
+                                            <span>{{number_format($detail->price).' ₫'}}</span>
+                                        </p>
+                                    </td>
+                                    <td class="order_status">
+                                        <p>{{$detail->product_sale_qty}}</p>
+                                    </td>
+                                    <td class="order_total">
+                                        <p>{{number_format($detail->product_sale_qty * $detail->price).' ₫'}}</p>
+                                    </td>
+                                </tr>
+                                @endif
+                                @endforeach
+                                <tr>
+                                    <td colspan="4">&nbsp;</td>
+                                    <td colspan="2">
+                                        <table class="table table-condensed">
+                                            <tr>
+                                                <td>Tổng</td>
+                                                <td>{{number_format($order->order_total).' ₫'}}</td>
+                                            </tr>
+                                            <tr class="shipping-cost">
+                                                <td>Phí vận chuyển</td>
+                                                <td>Miễn phí</td>                                       
+                                            </tr>
+                                            <tr>
+                                                <td>Đã thanh toán</td>
+                                                <td><span>{{number_format($order->order_paid).' ₫'}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Thành tiền</td>
+                                                <td class='order_total'>
+                                                    <span>{{number_format($order->order_total - $order->order_paid).' ₫'}}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @if($order->order_paid > 0 || $order->order_status != 'Chờ xử lí')
+        <div class="modal-thanks">
+            <p>Cảm ơn quý khách đã đặt hàng tại TheJKWorld!</p>
+            <div class='modal-print'>
+                <a href="#" class="btn btn-primary">In hóa đơn</a>
+            </div>
+        </div>
+        @else
+        <div class="modal-thanks">
+            <p>Cảm ơn quý khách đã đặt hàng tại TheJKWorld!!<br>
+            Quý khách có thể thực hiện hủy đơn đối với các đơn hàng chưa thanh toán!</p>
+            <div>
+                <a href="#" class="btn btn-primary">In hóa đơn</a>
+                <div class="order_view">
+                    <a class="cart_quantity_delete" href="#">Hủy đơn hàng</a>
+                </div>
+            </div>
+        </div>
+        @endif
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-shipping-save" data-dismiss="modal">Đóng</button>
+          </div>
+        </div>
     </div>
 </div>
+@endforeach
+@endif
 @endsection
