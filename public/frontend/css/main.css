@@ -1,4 +1,4 @@
-﻿
+
 /*************************
 *******Typography******
 **************************/
@@ -287,7 +287,8 @@ a#scrollUp i{
   -moz-animation: fadeInUp 400ms;
   -ms-animation: fadeInUp 400ms;
   -o-animation: fadeInUp 400ms;
-  animation: fadeInUp 400ms;
+  animation: 
+  InUp 400ms;
 }
 
 ul.sub-menu {
@@ -1393,8 +1394,8 @@ h2.title {
 *******404 CSS******
 **************************/
 
-.logo-404 {
-  margin-top: 60px;
+.page-404__bkgr {
+  background: #FFF4F0;
 }
 
 .content-404 h1 {
@@ -1409,6 +1410,7 @@ h2.title {
 }
 
 .content-404 p {
+  text-transform: uppercase;
   color: #363432;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
@@ -1663,22 +1665,24 @@ h2.title {
   width: 45px;
 }
 
-.cart_delete  {
+.cart_delete, .order_view {
   display: block;
   margin-right: -12px;
   overflow: hidden;
 }
 
 
-.cart_delete a {
+.cart_delete a, .order_view button {
   background:#F0F0E9;
-  color: #FFFFFF;
+  color: #EF6C7D;
   padding: 5px 7px;
-  font-size: 16px
+  font-size: 16px;
+  border: none;
 }
 
-.cart_delete a:hover {
-  background:#EF6C7D
+.order_view button:hover, .cart_delete a:hover {
+  background:#EF6C7D;
+  color: #FFFFFF;
 }
 
 
@@ -1902,7 +1906,14 @@ h2.title {
   margin-top: 20px;
 }
 
-
+.btn-back {
+  background: #F0F0E980;
+  border: 0 none;
+  border-radius: 0;
+  margin-right: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 /*.form-two, .form-one {
   float: left;
   width: 47%
@@ -2585,6 +2596,19 @@ h2.title {
   font-size: 20px;
 }
 
+.modal-resize {
+  width:  50%;
+}
+
+.modal-thanks {
+  margin-left: 35px;
+}
+
+.modal-thanks .order_view {
+  float: right;
+  margin-top: 15px;
+  margin-right: 35px;
+}
 /*radio button*/
 .custom-radio {
   margin-top:  50px;
@@ -2620,6 +2644,10 @@ h2.title {
   text-indent: 1em;
 }
 
+.add-new-shipping {
+  float: right;
+}
+
 /*out-of-stock*/
 .out-of-stock {
   font-size: 30px;
@@ -2628,5 +2656,56 @@ h2.title {
 }
 
 .default_address {
+  color: #EF6C7D;
+  display: inline;
+}
+
+/*Custom orders of customer*/
+#order_items .order_info {
+  border: 1px solid #E6E4DF;
+}
+
+
+#order_items .order_info .order_menu {
+  background: #EF6C7D;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+}
+
+#order_items .order_info .table.table-condensed thead tr {
+  height: 51px;
+}
+
+#order_items .order_info .table.table-condensed tbody tr {
+  height: 51px;
+}
+
+
+#order_items .order_info .table.table-condensed tr {
+  
+  border-bottom: 1px solid #F7F7F0;
+}
+
+#order_items .order_info .table.table-condensed tbody tr:nth-child(even) {
+  background: #F0F0E980;
+}
+
+#order_items .order_info .table.table-condensed tr:last-child {
+  border-bottom: 0;
+}
+
+.order_info table tr td {
+  border-top: 0 none;
+  vertical-align: inherit;
+}
+.order_id {
+  font-size: 16px;
+  text-align: center;
+}
+
+.order_total {
+  font-size: 20px;
   color: #EF6C7D;
 }

@@ -111,7 +111,11 @@
                                     
                                     if($customer_id != null && $shipping_id != null) {
                                 ?>
+                                        @if(Cart::content()->isNotEmpty())
                                         <li><a href="{{URL::to('/thanh-toan')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                        @else
+                                        <li><a href="{{URL::to('/xem-gio-hang')}}"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
+                                        @endif
                                 <?php
                                     }
                                     else if($customer_id != null) {
