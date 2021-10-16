@@ -19,7 +19,13 @@
 						<div class="bill-to">
 							<div class="chosse-shipping">
 								<h2>Chọn địa chỉ giao hàng</h2>
+								
 							</div>
+							<div class="add-new-shipping">
+									<button type="button" class="btn btn-shipping-save" data-toggle="modal" data-target="#addNewShippingModal">
+								  Thêm thông tin giao hàng
+								</button>
+								</div>
 							<!-- Modal -->
 							<div class="modal fade" id="addNewShippingModal" tabindex="-1" role="dialog" aria-labelledby="addNewShippingModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
@@ -55,7 +61,7 @@
 							    </div>
 							  </div>
 							</div>
-							
+							<a class="btn btn-back" href="{{URL::to('/xem-gio-hang')}}">Trở lại</a>
 							@foreach($shipping_default as $key => $shipping)
 								<div class="position-content">
 								<div class="col-sm-1">
@@ -66,7 +72,8 @@
 					            </div>
 					            <div class="col-sm-11">
 				                	<div class="shipping_content">
-				                		<h4>{{$shipping->customer_name}} {{$shipping->customer_phone}} - [Địa chỉ mặc định]</h4>
+				                		<h4>{{$shipping->customer_name}} - {{$shipping->customer_phone}}
+				                			<div class="default_address">[Địa chỉ mặc định]</div></h4>
 										<p>{{$shipping->shipping_address}}</p>
 										<p> {{$shipping->customer_email}}</p>
 									</div>
@@ -83,7 +90,7 @@
 					            </div>
 					            <div class="col-sm-11">
 				                	<div class="shipping_content">
-				                		<h4>{{$shipping->customer_name}} {{$shipping->customer_phone}}</h4>
+				                		<h4>{{$shipping->customer_name}} - {{$shipping->customer_phone}}</h4>
 										<p>{{$shipping->shipping_address}}</p>
 										<p> {{$shipping->customer_email}}</p>
 									</div>
@@ -97,9 +104,6 @@
 	                			<input type="hidden" id="shippingIdSelected" name="shippingIdSelected" value="{{$shipping->shipping_id}}">
 	                			@endforeach
 	                			<button class="btn btn-primary" type="submit">Tiếp tục</button>
-	                			<button type="button" class="btn btn-shipping-save" data-toggle="modal" data-target="#addNewShippingModal">
-								  Thêm thông tin giao hàng
-								</button>
                 			</form>
 						</div>
 						

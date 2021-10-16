@@ -11,10 +11,12 @@
 			</div><!--/breadcrums-->
 			<?php
 				$shipping_detail = Session::get('shipping_detail');
+				$customer_id = Session::get('customer_id');
 			?>
 			<div class="review-payment">
 				<h2>Xem lại và thanh toán</h2>
 			</div>
+			<a class="btn btn-back" href="{{URL::to('/thong-tin-giao-hang/'.$customer_id)}}">Trở lại</a>
 			<div class="shopper-informations">
 				<div class="row">
 					<div class="col-sm-12 clearfix">
@@ -73,12 +75,7 @@
 						</td>
 						<td class="cart_quantity">
 							<div class="cart_quantity_button">
-								<form action="{{URL::to('/cap-nhat-so-luong/'.$cart_item->rowId)}}" method="post">
-									{{csrf_field()}}
-									<input class="cart_quantity_input" type="number" name="itemQuantity" min="1" max="10" value="{{$cart_item->qty}}" autocomplete="off" size="2">
-									<input type="hidden" name="rowId" value="{{$cart_item->rowId}}">
-									<button type="submit" class="btn btn-default btn-save"><i class="fa fa-save"></i></button>
-								</form>
+								<input class="cart_quantity_input" type="number" name="itemQuantity" value="{{$cart_item->qty}}" autocomplete="off" size="2" disabled>
 							</div>
 						</td>
 						<td class="cart_total">
@@ -88,9 +85,6 @@
 									echo number_format($subtotal).' ₫';
 								?>
 							</p>
-						</td>
-						<td class="cart_delete">
-							<a onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')"  class="cart_quantity_delete" href="{{URL::to('/xoa-san-pham-khoi-gio-hang/'.$cart_item->rowId)}}"><i class="fa fa-times"></i></a>
 						</td>
 					</tr>
 					@endforeach
