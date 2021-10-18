@@ -118,9 +118,9 @@
 					<textarea name="customerNote" placeholder="  Nhập ghi chú cho đơn hàng của bạn" rows="5"></textarea>
 					<h4>Phương thức thanh toán</h4>
 					<select class="form-control input-sm m-bot15" name="paymentMethod" required>
-	                    <option value="1" style="height: 150px; font-size: 14px;">Thanh toán khi nhận hàng</option>
-	                    <option value="2" style="height: 150px; font-size: 14px;">Thanh toán qua thẻ ATM</option>
-	                    <option value="3" style="height: 150px; font-size: 14px;">Thanh toán qua thẻ ghi nợ nội địa</option>
+						@foreach($payment_methods as $key => $payment_method)
+	                    <option value="{{$payment_method->payment_id}}" style="height: 150px; font-size: 14px;">{{$payment_method->payment_method}}</option>
+	                    @endforeach
 	                </select>
 	                <input type="hidden" name="orderPaid" value="0">
 	                <button type="submit" class="btn btn-default btn-order">Đặt hàng</button>
