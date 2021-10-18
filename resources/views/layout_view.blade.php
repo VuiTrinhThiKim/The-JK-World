@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="index.html"><img src="{{URL::to('frontend/images/home/thejkworld_logo.png')}}" alt="" width="139" height="39" /></a>
+                            <a href="index.html"><img src="{{asset('frontend/images/home/thejkworld_logo.png')}}" alt="" width="139" height="39" /></a>
                         </div>
                         <div class="btn-group pull-right">
                             <div class="btn-group">

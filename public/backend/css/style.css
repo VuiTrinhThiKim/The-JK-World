@@ -3148,9 +3148,19 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
     padding: 0;
 }
 }
+
 .status_alert {
     color: red;
+    text-align: center;
 }
+
+.status_error {
+    color: red;
+    font-size: 28px;
+    font-weight:  700;
+    text-align: center;
+}
+
 .required-field {
     color: red;
     font-weight: bold;
