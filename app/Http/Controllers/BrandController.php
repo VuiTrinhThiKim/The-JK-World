@@ -173,17 +173,19 @@ class BrandController extends Controller
     public function update_brand_status($brand_id){
 
         $this->loginAuthentication();
+        //Get brand from id
+        $brand = Brand::where('brand_id', $brand_id);
 
-        $status = Brand::find($brand_id)->value('brand_status');
+        //Get brand status
+        $status = $brand->value('brand_status');
         if($status == 0) {
-            Brand::where('brand_id', $brand_id)
-                                   ->update(['brand_status' => 1]);
+            $brand->update(['brand_status' => 1]);
 
             Session::put('messBrand','Hiển thị brand thành công!!!');
         }
         else {
-            Brand::where('brand_id', $brand_id)
-                                   ->update(['brand_status' => 0]);
+            $brand->update(['brand_status' => 0]);
+
             Session::put('messBrand','Ẩn brand thành công!!!');
         }
 

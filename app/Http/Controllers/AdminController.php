@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\Order;
@@ -78,7 +79,7 @@ class AdminController extends Controller
     public function logout(){
 
         Session::put('ad_username', null);
-        Session::put('ad_id', null);
+        Session::put('admin_id', null);
 
         return Redirect::to('/admin');
     }
@@ -275,19 +276,51 @@ class AdminController extends Controller
     }
 
     public function show_change_password($admin_id){
+
+        $current_admin = Session::get('admin_id');
+
+        $admin = Admin::where('admin_id', $admin_id)->first();
+        if($admin == null) {
+            Session::put('messError', 'Không tìm thấy dữ liệu!!!');
+
+            $manager_admin = view('admin.error')->with('admin_id',$admin_id);
+            return view('admin_layout_view')->with('admin.error', $manager_admin);
+        }
+        else {
+            if( $current_admin != $admin_id || $admin->admin_role != 1) {
+                Session::put('messError', 'Bạn không có quyền đổi password của tài khoản này!!!');
+
+                $manager_admin = view('admin.error')->with('admin_id',$admin_id);
+                return view('admin_layout_view')->with('admin.error', $manager_admin);
+            }
+        }
         $manager_admin = view('admin.change_password')->with('admin_id',$admin_id);
         return view('admin_layout_view')->with('admin.change_password', $manager_admin);
     }
 
-    public function change_password(Request $request, $admin_id){
+    public function change_password(ChangePasswordRequest $request, $admin_id){
 
-        $admin = Admin::where('admin_id', $admin_id)->get();
-        //dd($admin);
-        $admin_role = Admin::find($admin_id)->role->value('role_name');
-        //dd($admin_role);
-        $manager_admin = view('admin.admin_info')->with('admin_id',$admin_id)->with('admin', $admin)->with('admin_role', $admin_role);
+        $curent_password = $request->get('current_password');
+        $hashed_password = $admin->password;
 
-        return view('admin_layout_view')->with('admin.admin_info', $manager_admin);
+        //Check current password and change if 
+        if (Hash::check($curent_password, $hashed_password)) {
+            
+            
+            $new_password = $request->get('password');
+            $hashed_new_password = Hash::make($new_password);
+
+            $admin->password = $hashed_new_password;
+            $admin->save();
+
+            Session::put('messUpdate', 'Đổi mật khẩu thành công!!!');
+        }
+        else {
+            Session::put('messUpdate', 'Sai mật khẩu hiện tại!!!');
+        }
+        
+        $manager_admin = view('admin.change_password')->with('admin_id',$admin_id);
+        return view('admin_layout_view')->with('admin.change_password', $manager_admin);
     }
 
     public function search(Request $request)

@@ -165,17 +165,19 @@ class CategoryController extends Controller
     public function update_category_status($category_id){
 
         $this->loginAuthentication();
+        //Get category by id
+        $category = Category::where('category_id', $category_id);
 
-        $status_cate = Category::find($category_id)->value('category_status');
-        if($status_cate == 0) {
-            Category::where('category_id', $category_id)
-                                   ->update(['category_status' => 1]);
+        //Get category status
+        $status = $category->value('category_status');
+        if($status == 0) {
+            $category->update(['category_status' => 1]);
 
             Session::put('messCate','Hiển thị danh mục thành công!!!');
         }
         else {
-            Category::where('category_id', $category_id)
-                                   ->update(['category_status' => 0]);
+            $category->update(['category_status' => 0]);
+
             Session::put('messCate','Ẩn danh mục thành công!!!');
         }
 

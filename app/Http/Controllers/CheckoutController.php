@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Shipping;
+use App\Models\Payment;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Session;
@@ -74,6 +75,8 @@ class CheckoutController extends Controller
 
     public function payment(){
 
-        return view('page.checkout.preview_payment');
+        $payment_methods_available = Payment::where('payment_status' ,'=', 1)->get();
+
+        return view('page.checkout.preview_payment')->with('payment_methods',$payment_methods_available);
     }
 }

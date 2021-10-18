@@ -253,17 +253,18 @@ class ProductController extends Controller
 
         $this->loginAuthentication();
 
-        $status_product = Product::find($product_id)->value('product_status');
+        $status_product = Product::where('product_id', $product_id)->value('product_status');
+
         if($status_product == 0) {
-            Product::where('product_id', $product_id)
-                                   ->update(['product_status' => 1]);
+            $re = Product::where('product_id', $product_id)->update(['product_status' => 1]);
 
             Session::put('messProduct','Hiển thị sản phẩm thành công!!!');
+            //dd($status_product);  
         }
         else {
-            Product::where('product_id', $product_id)
-                                   ->update(['product_status' => 0]);
+            Product::where('product_id', $product_id)->update(['product_status' => 0]);
             Session::put('messProduct','Ẩn sản phẩm thành công!!!');
+            //dd($status_product);  
         }
 
         return Redirect::to('/admin/product/view-all');

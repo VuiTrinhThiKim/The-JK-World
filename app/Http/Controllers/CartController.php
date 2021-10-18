@@ -40,13 +40,8 @@ class CartController extends Controller
     
     public function show_cart()
     {
-        $category_list = Category::where('category_status', '1')->orderby('category_id', 'desc')->get();
-        $brand_list = Brand::where('brand_status', '1')->orderby('brand_id', 'desc')->get();
-        $product_list = Product::where('product_status', '1')->orderby('product_id', 'desc')->get();
         
-        return view('page.cart.cart_view')->with('category_list', $category_list)
-                                          ->with('brand_list', $brand_list)
-                                          ->with('product_list', $product_list);
+        return view('page.cart.cart_view');
     }
 
     /**
