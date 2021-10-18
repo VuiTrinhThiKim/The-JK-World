@@ -40,11 +40,6 @@
     </div>
     <div class="table-responsive">
       <?php 
-        $statusMember_message = Session::get('messMember');
-        if($statusMember_message) {
-            echo '<span class="status_alert">'.$statusMember_message.'</span>';
-            Session::put('messMember', null);
-        }
         $admin_role = Session::get('admin_role');
         $ad_usename = Session::get('ad_usename');
         $admins = $result;
@@ -64,6 +59,7 @@
           </tr>
         </thead>
         <tbody>
+          @if($result->isNotEmpty())
           @foreach($result as $key => $admin)
           <tr>
             <td>{{$admin->admin_id}}</td>
@@ -100,6 +96,15 @@
             </td>
           </tr>
           @endforeach
+          @else
+          <?php
+            $statusMember_message = Session::get('messMember');
+            if($statusMember_message) {
+                echo '<div class="status_alert">'.$statusMember_message.'</div>';
+                Session::put('messMember', null);
+            }
+          ?>
+          @endif
         </tbody>
       </table>
     </div>

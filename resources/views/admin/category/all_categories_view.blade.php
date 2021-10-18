@@ -39,7 +39,7 @@
       <?php
         $statusCate_message = Session::get('messCate');
         if($statusCate_message) {
-            echo '<span class="status_alert">'.$statusCate_message.'</span>';
+            echo '<div class="status_alert">'.$statusCate_message.'</div>';
             Session::put('messCate', null);
         }
       ?>

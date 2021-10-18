@@ -10,7 +10,7 @@
             <?php 
             $addProduct_message = Session::get('messProduct');
             if($addProduct_message) {
-                echo '<span class="text-alert">'.$addProduct_message.'</span>';
+                echo '<div class="text-alert">'.$addProduct_message.'</div>';
                 Session::put('messProduct', null);
             }
             ?>

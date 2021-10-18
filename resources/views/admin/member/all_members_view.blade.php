@@ -42,7 +42,7 @@
       <?php 
         $statusMember_message = Session::get('messMember');
         if($statusMember_message) {
-            echo '<span class="status_alert">'.$statusMember_message.'</span>';
+            echo '<div class="status_alert">'.$statusMember_message.'</div>';
             Session::put('messMember', null);
         }
         $admin_role = Session::get('admin_role');

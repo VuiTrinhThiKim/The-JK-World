@@ -10,7 +10,7 @@
             <?php 
             $editBrand_message = Session::get('messBrand');
             if($editBrand_message) {
-                echo '<span class="text-alert">'.$editBrand_message.'</span>';
+                echo '<div class="text-alert">'.$editBrand_message.'</div>';
                 Session::put('messBrand', null);
             }
             ?>

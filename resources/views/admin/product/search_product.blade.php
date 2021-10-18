@@ -43,13 +43,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <?php 
-        $statusProduct_message = Session::get('messProduct');
-        if($statusProduct_message) {
-            echo '<span class="status_alert">'.$statusProduct_message.'</span>';
-            Session::put('messProduct', null);
-        }
-      ?>
+      
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
@@ -68,6 +62,7 @@
           </tr>
         </thead>
         <tbody>
+          @if($result->isNotEmpty())
           @foreach($result as $key => $product_item)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
@@ -102,6 +97,15 @@
             </td>
           </tr>
           @endforeach
+          @else
+            <?php 
+              $statusProduct_message = Session::get('messProduct');
+              if($statusProduct_message) {
+                  echo '<div class="status_alert">'.$statusProduct_message.'</div>';
+                  Session::put('messProduct', null);
+              }
+            ?>
+          @endif
         </tbody>
       </table>
     </div>

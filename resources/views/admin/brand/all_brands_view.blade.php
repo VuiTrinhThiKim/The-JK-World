@@ -38,7 +38,7 @@
       <?php 
         $statusBrand_message = Session::get('messBrand');
         if($statusBrand_message) {
-            echo '<span class="status_alert">'.$statusBrand_message.'</span>';
+            echo '<div class="status_alert">'.$statusBrand_message.'</div>';
             Session::put('messBrand', null);
         }
       ?>

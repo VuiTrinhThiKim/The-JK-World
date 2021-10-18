@@ -10,7 +10,7 @@
             <?php 
             $addMember_message = Session::get('messMember');
             if($addMember_message) {
-                echo '<span class="text-danger">'.$addMember_message.'</span>';
+                echo '<div class="text-danger">'.$addMember_message.'</div>';
                 Session::put('messMember', null);
             }
             ?>

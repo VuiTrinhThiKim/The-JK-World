@@ -41,13 +41,6 @@
       </div>
     </div>
     <div class="table-responsive">
-      <?php 
-        $statusCate_message = Session::get('messCate');
-        if($statusCate_message) {
-            echo '<span class="status_alert">'.$statusCate_message.'</span>';
-            Session::put('messCate', null);
-        }
-      ?>
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
@@ -63,6 +56,7 @@
           </tr>
         </thead>
         <tbody>
+          @if($result->isNotEmpty())
           @foreach($result as $key => $cate_item)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
@@ -92,6 +86,15 @@
             </td>
           </tr>
           @endforeach
+          @else
+          <?php 
+            $statusCate_message = Session::get('messCate');
+            if($statusCate_message) {
+                echo '<div class="status_alert">'.$statusCate_message.'</div>';
+                Session::put('messCate', null);
+            }
+          ?>
+          @endif
         </tbody>
       </table>
     </div>
