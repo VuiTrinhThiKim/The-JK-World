@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use Schema;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,7 +36,9 @@ class AppServiceProvider extends ServiceProvider
 
         $categories_actived = Category::where('category_status', '1')->orderby('category_name', 'asc')->get();
         $brands_actived = Brand::where('brand_status', '1')->orderby('brand_name', 'asc')->get();
+        $product_list = Product::where('product_status', '1')->orderby('product_id', 'desc')->get();
         View::share('categories_actived', $categories_actived);
         View::share('brands_actived', $brands_actived);
+        View::share('product_list', $product_list);
     }
 }

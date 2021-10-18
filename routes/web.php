@@ -155,13 +155,14 @@ Route::prefix('admin')->group(function(){
 		Route::get('/info/{admin_id}', [AdminController::class, 'show_info']);
 		//Change Password
 		Route::get('/change-password/{admin_id}', [AdminController::class, 'show_change_password']);
+		Route::post('/change-password/{admin_id}', [AdminController::class, 'change_password']);
 	});
 
 	Route::group(['prefix'=>'customer'], function(){
 		//All Customer
 		Route::get('/view-all', [CustomerController::class, 'view_all']);
-		//Add Admin
-		//Route::get('/add', [AdminController::class, 'create']);
+		//Add Customer
+		//Route::get('/add', [CustomerController::class, 'create']);
 	});
 
 	Route::group(['prefix'=>'order'], function(){
