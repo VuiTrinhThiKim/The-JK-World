@@ -266,13 +266,23 @@ class AdminController extends Controller
 
     public function show_info($admin_id){
 
-        $admin = Admin::where('admin_id', $admin_id)->get();
-        //dd($admin);
-        $admin_role = Admin::find($admin_id)->role->value('role_name');
-        //dd($admin_role);
-        $manager_admin = view('admin.show_info')->with('admin_id',$admin_id)->with('admin', $admin)->with('admin_role', $admin_role);
+        $current_admin = Session::get('admin_id');
+        if($current_admin == $admin_id) {
+            $admin = Admin::where('admin_id', $admin_id)->get();
+            //dd($admin);
+            $admin_role = Admin::find($admin_id)->role->value('role_name');
+            //dd($admin_role);
+            $manager_admin = view('admin.show_info')->with('admin_id',$admin_id)
+                                                    ->with('admin', $admin)
+                                                    ->with('admin_role', $admin_role);
+            return view('admin_layout_view')->with('admin.show_info', $manager_admin);
+        }
+        else {
+            Session::put('messError', 'Bạn không có quyền này!!!');
 
-        return view('admin_layout_view')->with('admin.show_info', $manager_admin);
+            $manager_admin = view('admin.error')->with('admin_id',$admin_id);
+            return view('admin_layout_view')->with('admin.error', $manager_admin);
+        }
     }
 
     public function show_change_password($admin_id){

@@ -111,6 +111,7 @@ class OrderController extends Controller
         $orders = Order::join('customers', 'customers.customer_id', '=', 'orders.customer_id')
                         ->join('shipping', 'shipping.shipping_id', '=', 'orders.shipping_id')
                         ->join('payment', 'payment.payment_id', '=', 'orders.payment_id')
+                        ->join('status', 'status.status_id', '=', 'orders.status_id')
                         ->orderbyDesc('orders.order_id')
                         ->paginate(5);
         //dd($brands->links());
@@ -120,7 +121,28 @@ class OrderController extends Controller
         return view('admin_layout_view')->with('admin.order.all_orders_view', $manager_order);
     }
 
+    public function pendding_orders(){
+        $this->loginAuthentication();
 
+        $orders = Order::join('customers', 'customers.customer_id', '=', 'orders.customer_id')
+                        ->join('shipping', 'shipping.shipping_id', '=', 'orders.shipping_id')
+                        ->join('payment', 'payment.payment_id', '=', 'orders.payment_id')
+                        ->join('status', 'status.status_id', '=', 'orders.status_id')
+                        ->where('orders.status_id', 1)
+                        ->orderbyDesc('orders.order_id')
+                        ->paginate(5);
+        //dd($brands->links());
+        $count_order = Order::count();
+        $manager_order = view('admin.order.pendding_orders_view')->with('orders', $orders);
+
+        return view('admin_layout_view')->with('admin.order.pendding_orders_view', $manager_order);
+    }
+
+    public function confirm($order_id) {
+        $order = Order::where('order_id')->get();
+
+        
+    }
     //Customer order
     public function order(Request $request) {
 
@@ -130,7 +152,7 @@ class OrderController extends Controller
         $order->shipping_id = Session::get('shipping_id');
         $order->payment_id = $request->get('paymentMethod');
         $order->order_total = (int) str_replace(',', '', Cart::total());
-        $order->order_status = 'Chờ xử lí';
+        $order->status_id = 1;
         $order->order_paid = $request->get('orderPaid');
         $order->order_note = $request->get('orderNote');
         //dd($request->get('paymentMethod'));
@@ -161,10 +183,16 @@ class OrderController extends Controller
                                                         ->with('order_id', $order->order_id);
                 break;
             case 2:
-                echo 'Thanh toán bằng thẻ ATM';
+                $customer_name = Customer::where('customer_id', $order->customer_id)->value('username');
+                Cart::destroy();
+                return view('page.checkout.thanks_view')->with('customer_name', $customer_name)
+                                                        ->with('order_id', $order->order_id);
                 break;
             case 3:
-                echo 'Thanh toán bằng thẻ ghi nợ nội địa';
+                $customer_name = Customer::where('customer_id', $order->customer_id)->value('username');
+                Cart::destroy();
+                return view('page.checkout.thanks_view')->with('customer_name', $customer_name)
+                                                        ->with('order_id', $order->order_id);
                 break;
             default:
                 echo 'default';

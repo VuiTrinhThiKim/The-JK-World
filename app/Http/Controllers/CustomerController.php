@@ -133,8 +133,12 @@ class CustomerController extends Controller
 
             $shipping_default = Shipping::where('customer_id', $customer_id)->where('is_default', '1')->get();
             $shipping_not_default = Shipping::where('customer_id', $customer_id)->where('is_default', '0')->get();
-
-            $orders = Order::where('customer_id', $customer_id)->join('payment', 'payment.payment_id', '=', 'orders.payment_id')->orderByDesc('order_id')->get();
+            $orders = Order::where('customer_id', $customer_id)
+                                ->join('payment', 'payment.payment_id', '=', 'orders.payment_id')
+                                ->join('status', 'status.status_id', '=', 'orders.status_id')
+                                ->select('orders.*', 'payment.payment_method', 'status.status_name')
+                                ->orderByDesc('order_id')->get();
+                                
             $order_details = Order::where('customer_id', $customer_id)
                                     ->join('order_details', 'order_details.order_id', '=', 'orders.order_id')
                                     ->join('products', 'products.product_id', '=', 'order_details.product_id')
