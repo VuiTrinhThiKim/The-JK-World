@@ -168,6 +168,8 @@ Route::prefix('admin')->group(function(){
 	Route::group(['prefix'=>'order'], function(){
 		//All Order
 		Route::get('/view-all', [OrderController::class, 'view_all']);
+
+		Route::get('/pendding', [OrderController::class, 'pendding_orders']);
 		//Add Admin
 		//Route::get('/add', [AdminController::class, 'create']);
 	});

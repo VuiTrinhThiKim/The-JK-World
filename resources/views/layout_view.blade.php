@@ -48,9 +48,11 @@
                             <ul class="nav navbar-nav">
                                 <li><a href="https://facebook.com/im.dzui"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <!-- Fa icon
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                 <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -65,6 +67,7 @@
                         <div class="logo pull-left">
                             <a href="index.html"><img src="{{asset('frontend/images/home/thejkworld_logo.png')}}" alt="" width="139" height="39" /></a>
                         </div>
+                        <!--Language
                         <div class="btn-group pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
@@ -87,7 +90,7 @@
                                     <li><a href="#">Pound</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">

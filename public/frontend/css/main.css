@@ -2709,3 +2709,7 @@ h2.title {
   font-size: 20px;
   color: #EF6C7D;
 }
+
+.row-total td {
+  background: #ffffff;
+}

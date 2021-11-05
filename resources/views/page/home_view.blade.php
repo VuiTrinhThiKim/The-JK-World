@@ -33,7 +33,6 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <img src="{{asset('frontend/images/nhi-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <img src="{{asset('frontend/images/pricing.png')}}"  class="pricing" alt="" />
                                 </div>
                             </div>
                             
@@ -42,11 +41,10 @@
                                     <h1>The JK World</h1>
                                     <h2>Thế giới JK</h2>
                                     <p>Mang JK đến gần bạn hơn</p>
-                                    <button type="button" class="btn btn-default get">Get it now</button>
+                                    <button type="button" class="btn btn-default get">Mua ngay</button>
                                 </div>
                                 <div class="col-sm-6">
                                     <img src="{{asset('frontend/images/tam-nguyet.jpg')}}" class="girl img-responsive" alt="" />
-                                    <img src="{{asset('frontend/images/pricing.png')}}"  class="pricing" alt="" />
                                 </div>
                             </div>
                             

@@ -4,7 +4,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Danh sách đơn hàng
+      Danh sách đơn hàng chờ xử lí
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -74,12 +74,17 @@
             </td>
             <td>{{$order->status_name}}</td>
             <td>
+              <button class="btn btn-default btn-success" type="button">Xác nhận</button>
+            </td>
+            <td>
+
               <a href="{{URL::to('/admin/order/edit/'.$order->order_id)}}" class="edit-product" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-edit"></i>
               </a>
               <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')" href="{{URL::to('/admin/order/delete/'.$order->order_id)}}" class="delete-product" ui-toggle-class="">
                 <i class="fa fa-times text-danger text"></i>
               </a>
+
             </td>
           </tr>
           @endforeach

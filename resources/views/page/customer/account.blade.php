@@ -171,7 +171,7 @@
                                         </span>
                                     </td>
                                     <td class="order_status">
-                                        <p>{{$order->order_status}}</p>
+                                        <p>{{$order->status_name}}</p>
                                     </td>
                                     <td class="order_view">
                                         <button type="button" class="cart_quantity_delete" data-toggle="modal" data-target="#orderDetailsModal{{$order->order_id}}">
@@ -244,7 +244,7 @@
                                 </tr>
                                 @endif
                                 @endforeach
-                                <tr>
+                                <tr class="row-total">
                                     <td colspan="4">&nbsp;</td>
                                     <td colspan="2">
                                         <table class="table table-condensed">
@@ -275,7 +275,7 @@
                 </div>
             </div>
         </section>
-        @if($order->order_paid > 0 || $order->order_status != 'Chờ xử lí')
+        @if($order->order_paid > 0 || $order->status_id != 1)
         <div class="modal-thanks">
             <p>Cảm ơn quý khách đã đặt hàng tại TheJKWorld!</p>
             <div class='modal-print'>

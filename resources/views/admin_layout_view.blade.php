@@ -155,7 +155,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                     <ul class="sub">
                         <li><a href="{{URL::to('/admin/order/add')}}">Thêm đơn hàng mới</a></li>
-                        <li><a href="{{URL::to('/admin/order/view-all')}}">Danh sách đơn hàng</a></li>
+                        <li><a href="{{URL::to('/admin/order/view-all')}}">Tất cả đơn hàng</a></li>
+                        <li><a href="{{URL::to('/admin/order/pendding')}}">Chờ xử lí</a></li>
                     </ul>
                 </li>
                 <!-- <li>
